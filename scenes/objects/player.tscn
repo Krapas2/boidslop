@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bk4dc6fwfu0eg"]
+
+[ext_resource type="Texture2D" uid="uid://copgn73blnket" path="res://sprites/icon.svg" id="1_2147m"]
+[ext_resource type="Script" uid="uid://d4f7a1g66u5pb" path="res://scripts/game/player/player-walk.gd" id="2_h5uus"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
+friction = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p7rwu"]
+
+[node name="PlayerBody" type="RigidBody2D"]
+physics_material_override = SubResource("PhysicsMaterial_p7rwu")
+gravity_scale = 0.0
+lock_rotation = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_2147m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_p7rwu")
+
+[node name="PlayerWalk" type="Node" parent="."]
+script = ExtResource("2_h5uus")
+speed = 600.0
+acceleration = 10.0
+metadata/_custom_type_script = "uid://d4f7a1g66u5pb"

@@ -1,0 +1,56 @@
+[gd_scene load_steps=9 format=3 uid="uid://cw80rud4gnng3"]
+
+[ext_resource type="Texture2D" uid="uid://copgn73blnket" path="res://sprites/icon.svg" id="1_bp83j"]
+[ext_resource type="Script" uid="uid://dplu3s6lm2ywv" path="res://scripts/game/boid/movement/boid-movement-manager.gd" id="2_qy03a"]
+[ext_resource type="Script" uid="uid://cuun88qfb41fr" path="res://scripts/game/square-bounds.gd" id="3_mp35r"]
+[ext_resource type="Script" uid="uid://bmhvb88dkxmnk" path="res://scripts/game/boid/movement/boid-alignment.gd" id="3_ny18s"]
+[ext_resource type="Script" uid="uid://dkemqu0ujp6aa" path="res://scripts/game/boid/movement/boid-cohesion.gd" id="4_rmqti"]
+[ext_resource type="Script" uid="uid://clqnrvkncoydx" path="res://scripts/game/boid/movement/boid-separation.gd" id="5_o8dcb"]
+[ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="7_acsp6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4n1no"]
+
+[node name="Boid" type="RigidBody2D" groups=["boid"]]
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_bp83j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4n1no")
+disabled = true
+
+[node name="BoidMovementManager" type="Node" parent="."]
+script = ExtResource("2_qy03a")
+metadata/_custom_type_script = "uid://bq72epg03jkoi"
+
+[node name="BoidAlignment" type="Node" parent="BoidMovementManager"]
+script = ExtResource("3_ny18s")
+perception_radius = 150.0
+max_force = 1.0
+strength = 200.0
+metadata/_custom_type_script = "uid://bmhvb88dkxmnk"
+
+[node name="BoidCohesion" type="Node" parent="BoidMovementManager"]
+script = ExtResource("4_rmqti")
+perception_radius = 200.0
+max_force = 1.0
+strength = 100.0
+metadata/_custom_type_script = "uid://dkemqu0ujp6aa"
+
+[node name="BoidSeparation" type="Node" parent="BoidMovementManager"]
+script = ExtResource("5_o8dcb")
+perception_radius = 100.0
+max_force = 1.5
+strength = 300.0
+metadata/_custom_type_script = "uid://clqnrvkncoydx"
+
+[node name="Bounds" type="Node" parent="."]
+script = ExtResource("3_mp35r")
+bounds = Rect2(-1200, -700, 2400, 1400)
+metadata/_custom_type_script = "uid://cuun88qfb41fr"
+
+[node name="PointForward" type="Node" parent="."]
+script = ExtResource("7_acsp6")
+metadata/_custom_type_script = "uid://cjdac54qa2tx8"
