@@ -15,7 +15,7 @@ func _enter_manager() -> void:
 
 func boid_velocity() -> Vector2:
 	var flockmates: Array[RigidBody2D] = \
-		movement_manager.flock_manager._get_flockmates(
+		movement_manager.flock_manager.get_flockmates(
 			movement_manager.body,
 			perception_radius
 		)

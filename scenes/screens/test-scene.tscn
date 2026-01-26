@@ -1,21 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://b2qo1nalqy85m"]
+[gd_scene load_steps=5 format=3 uid="uid://b2qo1nalqy85m"]
 
 [ext_resource type="Script" uid="uid://b7gk42klnf12u" path="res://scripts/game/boid/boid-flock-manager.gd" id="1_wj1i5"]
 [ext_resource type="PackedScene" uid="uid://cw80rud4gnng3" path="res://scenes/objects/boid.tscn" id="2_cgxnh"]
 [ext_resource type="Script" uid="uid://mgrkskhoild8" path="res://scripts/game/boid/boid-populator.gd" id="2_p7rwu"]
+[ext_resource type="PackedScene" uid="uid://bk4dc6fwfu0eg" path="res://scenes/objects/player.tscn" id="4_p7rwu"]
 
 [node name="Node2D" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.3, 0.3)
-
 [node name="BoidFlockManager" type="Node" parent="."]
 script = ExtResource("1_wj1i5")
+chunk_size = 75.0
 metadata/_custom_type_script = "uid://b7gk42klnf12u"
 
 [node name="BoidPopulator" type="Node" parent="." node_paths=PackedStringArray("flock_manager")]
 script = ExtResource("2_p7rwu")
 boid_scene = ExtResource("2_cgxnh")
 flock_manager = NodePath("../BoidFlockManager")
-bounds = Rect2(-1200, -700, 2400, 1400)
-count = 150
+bounds = Rect2(-700, -700, 1400, 1400)
+count = 200
+
+[node name="PlayerBody" parent="." instance=ExtResource("4_p7rwu")]
+
+[node name="Camera2D" type="Camera2D" parent="PlayerBody"]

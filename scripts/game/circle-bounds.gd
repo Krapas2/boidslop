@@ -8,4 +8,4 @@ class_name CircleBounds
 
 func _physics_process(_delta: float) -> void:
 	if body.global_position.distance_to(center) > radius:
-		body.global_position = -body.global_position
+		body.global_position = body.global_position.normalized() * -radius

@@ -14,6 +14,7 @@ gravity_scale = 0.0
 lock_rotation = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("1_2147m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -21,6 +22,6 @@ shape = SubResource("CircleShape2D_p7rwu")
 
 [node name="PlayerWalk" type="Node" parent="."]
 script = ExtResource("2_h5uus")
-speed = 600.0
-acceleration = 10.0
+speed = 250.0
+acceleration = 12.0
 metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
