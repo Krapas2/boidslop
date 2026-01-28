@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=6 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Texture2D" uid="uid://copgn73blnket" path="res://sprites/icon.svg" id="1_2147m"]
 [ext_resource type="Script" uid="uid://d4f7a1g66u5pb" path="res://scripts/game/player/player-walk.gd" id="2_h5uus"]
+[ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="3_h5uus"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -25,3 +26,7 @@ script = ExtResource("2_h5uus")
 speed = 250.0
 acceleration = 12.0
 metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
+
+[node name="PointForward" type="Node" parent="."]
+script = ExtResource("3_h5uus")
+metadata/_custom_type_script = "uid://cjdac54qa2tx8"
