@@ -31,6 +31,5 @@ func _get_random_color() -> Color:
 		clamp(base_color.v + val_mult, 0.0, 1.0),
 		base_color.a
 	)
-	print("madeit ", hue_shift)
 	
 	return hsv_color
