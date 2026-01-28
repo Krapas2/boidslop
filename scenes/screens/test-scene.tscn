@@ -17,7 +17,7 @@ script = ExtResource("2_p7rwu")
 boid_scene = ExtResource("2_cgxnh")
 flock_manager = NodePath("../BoidFlockManager")
 bounds = Rect2(-700, -700, 1400, 1400)
-count = 200
+count = 250
 
 [node name="PlayerBody" parent="." instance=ExtResource("4_p7rwu")]
 
