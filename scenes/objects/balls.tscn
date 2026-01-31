@@ -1,0 +1,84 @@
+[gd_scene load_steps=10 format=3 uid="uid://xrsx6q033jy2"]
+
+[ext_resource type="Texture2D" uid="uid://hpxqciep7u5i" path="res://sprites/balls/balls-idle-spritesheet.png" id="1_87qgs"]
+[ext_resource type="Texture2D" uid="uid://djhkbirm2e484" path="res://sprites/balls/balls-hand.png" id="2_pscfi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pscfi"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(0, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsusj"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(434, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcxoj"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(868, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um5xy"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(1302, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inj2g"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(1736, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e87a3"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(2170, 0, 434, 415)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_50ro1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsusj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcxoj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inj2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e87a3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="BallsRoot" type="Node2D"]
+
+[node name="BallsHead" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BallsHead"]
+sprite_frames = SubResource("SpriteFrames_50ro1")
+frame = 1
+frame_progress = 0.46709818
+
+[node name="BallsRightHand" type="Node2D" parent="."]
+position = Vector2(-400, 172)
+rotation = -2.7121732
+
+[node name="Sprite2D" type="Sprite2D" parent="BallsRightHand"]
+texture = ExtResource("2_pscfi")
+
+[node name="BallsLeftHand" type="Node2D" parent="."]
+position = Vector2(400, 172)
+rotation = 2.7122416
+
+[node name="Sprite2D" type="Sprite2D" parent="BallsLeftHand"]
+scale = Vector2(-1, 1)
+texture = ExtResource("2_pscfi")
