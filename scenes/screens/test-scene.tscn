@@ -30,6 +30,7 @@ script = ExtResource("5_1qp8t")
 target = NodePath("../../PlayerBody")
 leading_distance = 100.0
 movement_lerp_speed = 5.0
+pixel_units_height = 500.0
 zoom_out_power = 0.95
 zoom_lerp_speed = 3.0
 metadata/_custom_type_script = "uid://c54178coumdbg"

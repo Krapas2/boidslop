@@ -5,14 +5,11 @@ class_name PlayerCameraController
 @export var leading_distance: float
 @export var movement_lerp_speed: float
 
+@export var pixel_units_height: float
 @export var zoom_out_power: float
 @export var zoom_lerp_speed: float
 
 @onready var camera: Camera2D = get_parent()
-var original_zoom: Vector2
-
-func _ready() -> void:
-	original_zoom = camera.zoom
 
 func _process(delta: float) -> void:
 	var screen_center: Vector2 = get_viewport().size/2
@@ -36,9 +33,11 @@ func movement(vector: Vector2, delta: float) -> void:
 	)
 
 func zoom(intensity: float, delta: float) -> void:
+	var zoom_ratio: float = get_viewport().size.y / pixel_units_height
+	var base_zoom: Vector2 = zoom_ratio * Vector2.ONE
 	var desired_zoom: Vector2 = lerp(
-		original_zoom,
-		original_zoom * zoom_out_power,
+		base_zoom,
+		base_zoom * zoom_out_power,
 		intensity
 	)
 	
