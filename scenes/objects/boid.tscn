@@ -67,6 +67,8 @@ animations = [{
 radius = 8.0
 
 [node name="Boid" type="RigidBody2D" groups=["boid"]]
+collision_layer = 2
+collision_mask = 2
 gravity_scale = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
