@@ -40,7 +40,6 @@ func get_average(values: Array[float]) -> float:
 	return sum/values.size()
 
 func _physics_process(delta: float) -> void:
-	#print("blender priority: ", priority())
 	if enabled:
 		spin_hands(delta)
 	

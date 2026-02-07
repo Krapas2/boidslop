@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dt0kpn6jrje2r"]
+
+[ext_resource type="Shader" uid="uid://dme41x2d05bqn" path="res://shaders/water-background.gdshader" id="1_x7a2x"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x7a2x"]
+noise_type = 0
+frequency = 0.1
+fractal_type = 2
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_8ajcd"]
+width = 256
+height = 256
+depth = 128
+noise = SubResource("FastNoiseLite_x7a2x")
+seamless = true
+seamless_blend_skirt = 0.5
+
+[resource]
+shader = ExtResource("1_x7a2x")
+shader_parameter/noise_texture = SubResource("NoiseTexture3D_8ajcd")
+shader_parameter/noise_zoom = 1000.0
+shader_parameter/time_scale = 0.01
+shader_parameter/color_threshold = 1.5
+shader_parameter/base_color = Color(0.13800001, 0.16109988, 0.6, 1)
+shader_parameter/highlight_color = Color(0.10240001, 0.22784016, 0.64, 1)

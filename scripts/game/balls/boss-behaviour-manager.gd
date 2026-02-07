@@ -11,13 +11,10 @@ func behaviour_routine() -> void:
 	while true:
 		active_behaviour = highest_priority_behaviour()
 		pick_behaviour(active_behaviour)
-		print("selected behaviour: ", active_behaviour.name)
 		
 		var timer: Timer = active_behaviour.get_node("Length")
-		print("starting wait")
 		timer.start()
 		await timer.timeout
-		print("ending wait")
 
 func pick_behaviour(behaviour_to_enable: BossBehaviour) -> void:
 	for behaviour: BossBehaviour in behaviours:
