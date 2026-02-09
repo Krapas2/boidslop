@@ -116,8 +116,8 @@ collision_layer = 0
 collision_mask = 2
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 1000.0
-distance_scale = 0.01
+strength = 1600.0
+distance_unit = 100.0
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallsHead/RepulsionField"]
@@ -143,8 +143,8 @@ collision_layer = 0
 collision_mask = 2
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 500.0
-distance_scale = 0.01
+strength = 1600.0
+distance_unit = 100.0
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallsRightHand/RepulsionField"]
@@ -171,8 +171,8 @@ collision_layer = 0
 collision_mask = 2
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 500.0
-distance_scale = 0.01
+strength = 1600.0
+distance_unit = 100.0
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallsLeftHand/RepulsionField"]

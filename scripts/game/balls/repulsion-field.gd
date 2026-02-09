@@ -2,11 +2,11 @@ extends Area2D
 class_name RepulsionField
 
 @export var strength: float
-@export var distance_scale: float
+@export var distance_unit: float
 
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	var relevant_bodies: Array[RigidBody2D] = bodies_in_radius()
-	apply_force(relevant_bodies)
+	apply_force(relevant_bodies, delta)
 	
 func bodies_in_radius() -> Array[RigidBody2D]:
 	var bodies: Array[RigidBody2D] = []
@@ -17,13 +17,13 @@ func bodies_in_radius() -> Array[RigidBody2D]:
 			bodies.append(body)
 	return bodies
 	
-func apply_force(bodies: Array[RigidBody2D]) -> void:
+func apply_force(bodies: Array[RigidBody2D], delta: float) -> void:
 	for body: RigidBody2D in bodies:
 		var relative_position: Vector2 = body.global_position-global_position
-		var force: float = force_magnitude(relative_position.length())
+		var force: float = force_magnitude(relative_position.length()) * delta
 		
-		body.apply_central_force(relative_position.normalized() * force)
+		body.linear_velocity += relative_position.normalized() * force
 
 func force_magnitude(distance: float) -> float:
-	var scaled_distance: float = distance * distance_scale
+	var scaled_distance: float = distance / distance_unit
 	return strength / (scaled_distance * scaled_distance + 1.0)
