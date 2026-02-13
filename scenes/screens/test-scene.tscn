@@ -64,6 +64,11 @@ grow_vertical = 2
 
 [node name="BallsRoot" parent="." instance=ExtResource("6_mitsk")]
 
+[node name="ChaseBossBehaviour" parent="BallsRoot/BossBehaviourManager" index="2" node_paths=PackedStringArray("player_body")]
+player_body = NodePath("../../../PlayerBody")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_i767o")
 position = Vector2(-864, 71)
+
+[editable path="BallsRoot"]

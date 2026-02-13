@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://xrsx6q033jy2"]
+[gd_scene load_steps=21 format=3 uid="uid://xrsx6q033jy2"]
 
 [ext_resource type="Texture2D" uid="uid://hpxqciep7u5i" path="res://sprites/balls/balls-idle-spritesheet.png" id="1_87qgs"]
 [ext_resource type="Texture2D" uid="uid://djhkbirm2e484" path="res://sprites/balls/balls-hand.png" id="2_pscfi"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://djxwkdn0wvttp" path="res://scripts/game/balls/boss-behaviour-manager.gd" id="3_vsusj"]
 [ext_resource type="Script" uid="uid://c62u4v6atbyhr" path="res://scripts/game/balls/behaviours/blender-boss-behaviour.gd" id="4_lcxoj"]
 [ext_resource type="Script" uid="uid://b6ta0nu4u3gua" path="res://scripts/game/balls/behaviours/nothing-boss-behaviour.gd" id="6_inj2g"]
+[ext_resource type="Script" uid="uid://2snsvifn3lre" path="res://scripts/game/balls/behaviours/chase-boss-behaviour.gd" id="7_e87a3"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vsusj"]
 atlas = ExtResource("1_87qgs")
@@ -273,4 +274,16 @@ base_priority = 5.0
 metadata/_custom_type_script = "uid://b6ta0nu4u3gua"
 
 [node name="Length" type="Timer" parent="BossBehaviourManager/NothingBossBehaviour"]
+wait_time = 10.0
+
+[node name="ChaseBossBehaviour" type="Node" parent="BossBehaviourManager" node_paths=PackedStringArray("chasing_bodies")]
+script = ExtResource("7_e87a3")
+chasing_bodies = [NodePath("../../BallsRightHand"), NodePath("../../BallsLeftHand")]
+max_speed = 1000.0
+max_force = 300.0
+base_travel_speed = 10.0
+distance_priority_unit = 30.0
+metadata/_custom_type_script = "uid://2snsvifn3lre"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/ChaseBossBehaviour"]
 wait_time = 10.0
