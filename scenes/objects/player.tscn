@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=9 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Texture2D" uid="uid://copgn73blnket" path="res://sprites/icon.svg" id="1_2147m"]
 [ext_resource type="Script" uid="uid://d4f7a1g66u5pb" path="res://scripts/game/player/player-walk.gd" id="2_h5uus"]
 [ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="3_h5uus"]
+[ext_resource type="Script" uid="uid://dem3ghakbxd8" path="res://scripts/game/health/health.gd" id="4_54rde"]
+[ext_resource type="Script" uid="uid://y4gyqihs7j1s" path="res://scripts/game/health/death-behaviour/destroy-self-death-behaviour.gd" id="5_ksjmp"]
+[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player_health_drain.gd" id="6_2rlf8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -31,3 +34,24 @@ metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
 [node name="PointForward" type="Node" parent="."]
 script = ExtResource("3_h5uus")
 metadata/_custom_type_script = "uid://cjdac54qa2tx8"
+
+[node name="PlayerHealth" type="Node" parent="." node_paths=PackedStringArray("death_behaviours")]
+script = ExtResource("4_54rde")
+max_health = 5.0
+death_behaviours = [NodePath("DeathBehaviours/DestroyNodeDeathBehaviour")]
+metadata/_custom_type_script = "uid://dem3ghakbxd8"
+
+[node name="DeathBehaviours" type="Node" parent="PlayerHealth"]
+
+[node name="DestroyNodeDeathBehaviour" type="Node" parent="PlayerHealth/DeathBehaviours" node_paths=PackedStringArray("node_to_destroy")]
+script = ExtResource("5_ksjmp")
+node_to_destroy = NodePath("../../..")
+metadata/_custom_type_script = "uid://y4gyqihs7j1s"
+
+[node name="PlayerHealthDrain" type="Node" parent="PlayerHealth"]
+script = ExtResource("6_2rlf8")
+health_drain = 1.0
+metadata/_custom_type_script = "uid://c0as8w58wumy3"
+
+[node name="InvincibilityTimer" type="Timer" parent="PlayerHealth"]
+wait_time = 0.3

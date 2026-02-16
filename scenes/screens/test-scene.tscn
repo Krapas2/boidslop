@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2qo1nalqy85m"]
+[gd_scene load_steps=11 format=3 uid="uid://b2qo1nalqy85m"]
 
 [ext_resource type="Script" uid="uid://b7gk42klnf12u" path="res://scripts/game/boid/boid-flock-manager.gd" id="1_wj1i5"]
 [ext_resource type="PackedScene" uid="uid://cw80rud4gnng3" path="res://scenes/objects/boid.tscn" id="2_cgxnh"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://xrsx6q033jy2" path="res://scenes/objects/balls.tscn" id="6_mitsk"]
 [ext_resource type="Shader" uid="uid://dme41x2d05bqn" path="res://shaders/water-background.gdshader" id="7_yj36l"]
 [ext_resource type="Material" uid="uid://dt0kpn6jrje2r" path="res://materials/water-background.tres" id="8_i767o"]
+[ext_resource type="PackedScene" uid="uid://fu8ae8nhs6g6" path="res://scenes/gui/game-gui/game-gui.tscn" id="9_ps628"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i767o"]
 shader = ExtResource("7_yj36l")
@@ -47,7 +48,7 @@ zoom_out_power = 0.95
 zoom_lerp_speed = 3.0
 metadata/_custom_type_script = "uid://c54178coumdbg"
 
-[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+[node name="WaterBackground" type="ColorRect" parent="Camera2D"]
 z_index = -10
 material = ExtResource("8_i767o")
 anchors_preset = 8
@@ -64,6 +65,9 @@ grow_vertical = 2
 
 [node name="BallsRoot" parent="." instance=ExtResource("6_mitsk")]
 
+[node name="BossBehaviourManager" parent="BallsRoot" index="3" node_paths=PackedStringArray("player")]
+player = NodePath("../../PlayerBody")
+
 [node name="ChaseBossBehaviour" parent="BallsRoot/BossBehaviourManager" index="2" node_paths=PackedStringArray("player_body")]
 player_body = NodePath("../../../PlayerBody")
 
@@ -71,4 +75,12 @@ player_body = NodePath("../../../PlayerBody")
 material = SubResource("ShaderMaterial_i767o")
 position = Vector2(-864, 71)
 
+[node name="CanvasLayer" parent="." instance=ExtResource("9_ps628")]
+
+[node name="PlayerHealthGUI" parent="CanvasLayer" index="0" node_paths=PackedStringArray("player_health")]
+player_health = NodePath("../../PlayerBody/PlayerHealth")
+lerp_speed = 1.0
+
+[editable path="PlayerBody"]
 [editable path="BallsRoot"]
+[editable path="CanvasLayer"]

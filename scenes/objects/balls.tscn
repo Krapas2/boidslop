@@ -180,6 +180,7 @@ metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 shape = SubResource("CircleShape2D_e87a3")
 
 [node name="BossBehaviourManager" type="Node" parent="."]
+process_priority = -1
 script = ExtResource("3_vsusj")
 metadata/_custom_type_script = "uid://djxwkdn0wvttp"
 

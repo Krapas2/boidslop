@@ -16,14 +16,16 @@ var traveled_distance: float = 0
 var passed_time: float = 0
 
 func _physics_process(delta: float) -> void:
-	cound_player_travel(delta)
+	count_player_travel(delta)
 	if enabled:
 		chase_behaviour(delta)
-	
-func cound_player_travel(delta: float) -> void:
+
+func count_player_travel(delta: float) -> void:
+	if !player_body:
+		return
 	traveled_distance += player_body.linear_velocity.length() * delta
 	passed_time += delta
-	
+
 func reset_player_travel() -> void:
 	traveled_distance = 0
 	passed_time = 0
@@ -32,7 +34,7 @@ func priority() -> float:
 	var calculated_priority = base_travel_speed - (traveled_distance / passed_time) / distance_priority_unit
 	reset_player_travel()
 	return calculated_priority
-	
+
 func chase_behaviour(delta: float) -> void:
 	for chasing_body: RigidBody2D in chasing_bodies:
 		individual_chase_behaviour(chasing_body, delta)

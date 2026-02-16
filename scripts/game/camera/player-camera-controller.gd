@@ -11,6 +11,11 @@ class_name PlayerCameraController
 
 @onready var camera: Camera2D = get_parent()
 
+var position_to_follow: Vector2
+
+func _ready() -> void:
+	position_to_follow = camera.global_position
+
 func _process(delta: float) -> void:
 	var screen_center: Vector2 = get_viewport().size/2
 	var screen_mouse_position: Vector2 = get_viewport().get_mouse_position() 
@@ -20,11 +25,16 @@ func _process(delta: float) -> void:
 		1
 	)
 	
+	set_position_to_follow()
 	call_deferred("movement", camera_vector, delta)
 	call_deferred("zoom", camera_vector.length(), delta)
 
+func set_position_to_follow() -> void:
+	if target:
+		position_to_follow = target.global_position
+
 func movement(vector: Vector2, delta: float) -> void:
-	var desired_position: Vector2 = target.global_position + (vector * leading_distance)
+	var desired_position: Vector2 = position_to_follow + (vector * leading_distance)
 	
 	camera.global_position = lerp(
 		camera.global_position,

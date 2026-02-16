@@ -1,14 +1,21 @@
 extends Node
 class_name BossBehaviourManager
 
+@export var player: Node
+
 var behaviours: Array[BossBehaviour]
 var active_behaviour: BossBehaviour
 
 func _ready() -> void:
 	behaviour_routine()
 
+func _process(_delta: float) -> void:
+	if not player:
+		for behaviour: BossBehaviour in behaviours:
+			behaviour.enabled = false
+
 func behaviour_routine() -> void:
-	while true:
+	while player:
 		active_behaviour = highest_priority_behaviour()
 		pick_behaviour(active_behaviour)
 		

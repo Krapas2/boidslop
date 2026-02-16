@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://fu8ae8nhs6g6"]
+
+[ext_resource type="Material" uid="uid://d4a4sa2tpuef5" path="res://materials/player-health-vignette.tres" id="1_qi3bl"]
+[ext_resource type="Script" uid="uid://d0imtuvc4swes" path="res://scripts/gui/player-gui/player-health-gui.gd" id="1_slhy6"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="PlayerHealthGUI" type="ColorRect" parent="."]
+material = ExtResource("1_qi3bl")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+script = ExtResource("1_slhy6")
+lerp_speed = 100.0
+health_curve_exponent = 0.5
