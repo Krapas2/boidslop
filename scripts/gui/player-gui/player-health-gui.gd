@@ -11,18 +11,13 @@ func _ready() -> void:
 	normalized_health = 1.
 
 func _process(delta: float) -> void:
-	var desired_value: float
-	if player_health:
-		desired_value = pow(
+	if player_health && player_health.current_health > 0:
+		normalized_health = pow(
 			player_health.current_health / player_health.max_health,
 			health_curve_exponent
 		)
 	else:
-		desired_value = 1.
+		normalized_health += (1. - normalized_health) * lerp_speed * delta
 	
-	normalized_health = lerp(
-		desired_value,
-		normalized_health,
-		pow(.5, lerp_speed * delta)
-	)
+	
 	material.set_shader_parameter("normalized_health", normalized_health)

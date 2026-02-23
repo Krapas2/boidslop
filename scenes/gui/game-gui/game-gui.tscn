@@ -14,5 +14,5 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(1, 1, 1, 0)
 script = ExtResource("1_slhy6")
-lerp_speed = 100.0
+lerp_speed = 0.3
 health_curve_exponent = 0.5
