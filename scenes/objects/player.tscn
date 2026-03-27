@@ -1,11 +1,13 @@
-[gd_scene load_steps=9 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=11 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Texture2D" uid="uid://copgn73blnket" path="res://sprites/icon.svg" id="1_2147m"]
 [ext_resource type="Script" uid="uid://d4f7a1g66u5pb" path="res://scripts/game/player/player-walk.gd" id="2_h5uus"]
 [ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="3_h5uus"]
 [ext_resource type="Script" uid="uid://dem3ghakbxd8" path="res://scripts/game/health/health.gd" id="4_54rde"]
 [ext_resource type="Script" uid="uid://y4gyqihs7j1s" path="res://scripts/game/health/death-behaviour/destroy-self-death-behaviour.gd" id="5_ksjmp"]
-[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player_health_drain.gd" id="6_2rlf8"]
+[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
+[ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
+[ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -13,6 +15,7 @@ friction = 0.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_p7rwu"]
 
 [node name="PlayerBody" type="RigidBody2D"]
+collision_mask = 0
 physics_material_override = SubResource("PhysicsMaterial_p7rwu")
 gravity_scale = 0.0
 lock_rotation = true
@@ -37,7 +40,7 @@ metadata/_custom_type_script = "uid://cjdac54qa2tx8"
 
 [node name="PlayerHealth" type="Node" parent="." node_paths=PackedStringArray("death_behaviours")]
 script = ExtResource("4_54rde")
-max_health = 5.0
+max_health = 30.0
 death_behaviours = [NodePath("DeathBehaviours/DestroyNodeDeathBehaviour")]
 metadata/_custom_type_script = "uid://dem3ghakbxd8"
 
@@ -55,3 +58,10 @@ metadata/_custom_type_script = "uid://c0as8w58wumy3"
 
 [node name="InvincibilityTimer" type="Timer" parent="PlayerHealth"]
 wait_time = 0.3
+
+[node name="PlayerLaunch" type="Node" parent="." node_paths=PackedStringArray("origin")]
+script = ExtResource("7_2rlf8")
+origin = NodePath("..")
+net = ExtResource("8_0ay4w")
+launch_speed = 400.0
+metadata/_custom_type_script = "uid://uxdvtw2j0lqt"

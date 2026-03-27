@@ -21,3 +21,10 @@ func _enter_manager() -> void:
 func _physics_process(_delta: float) -> void:
 	for behaviour: BoidMovementBehaviour in behaviours:
 		body.linear_velocity += behaviour.boid_velocity()
+		
+func _exit_tree() -> void:
+	if flock_manager:
+		_exit_manager()
+	
+func _exit_manager() -> void:
+	flock_manager.flock.erase(body)
