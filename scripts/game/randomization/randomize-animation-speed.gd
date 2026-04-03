@@ -5,5 +5,5 @@ class_name RandomizeAnimationSpeed
 @export var max_speed: float
 @onready var sprite: AnimatedSprite2D = get_parent()
 
-func _ready():
+func _ready() -> void:
 	sprite.speed_scale = randf_range(min_speed, max_speed)

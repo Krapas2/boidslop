@@ -8,7 +8,7 @@ class_name PlayerNetBehaviour
 
 @export_group("Picking")
 @export var pick_area: Area2D
-@export var health_factor: float
+@export var health_per_body: float
 @export var min_catch_speed: float
 @export var max_catch_speed: float
 
@@ -43,13 +43,13 @@ func pick_behaviour() -> void:
 		return
 	
 	var player_health: Health = overlapping_bodies[0].get_node("PlayerHealth")
-	player_health.current_health += bodies_consumed * health_factor
+	player_health.current_health += bodies_consumed * health_per_body
 	net_body.queue_free()
 
 func consume_bodies() -> void:
 	var overlapping_bodies: Array[Node2D] = catch_area.get_overlapping_bodies()
 	for overlapping_body: RigidBody2D in overlapping_bodies:
-		for child in overlapping_body.get_children():
+		for child: Node in overlapping_body.get_children():
 			if not child is AnimatedSprite2D:
 				child.queue_free()
 		overlapping_body.reparent(captured_bodies)

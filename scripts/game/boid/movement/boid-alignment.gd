@@ -25,7 +25,7 @@ func boid_velocity() -> Vector2:
 	
 	var force: Vector2 = alignment(flockmates)
 	
-	return VectorUtils.clamp_magnitude(
+	return VectorUtils.clamp_magnitude_v2(
 		force,
 		max_force
 	)
@@ -34,7 +34,7 @@ func alignment(flockmates: Array[RigidBody2D]) -> Vector2:
 	var mates_velocity_sum: Vector2 = Vector2.ZERO
 	for flockmate: RigidBody2D in flockmates:
 		mates_velocity_sum += flockmate.linear_velocity
-	var desired_velocity = mates_velocity_sum.normalized() * strength
-	var steering = desired_velocity - movement_manager.body.linear_velocity
+	var desired_velocity: Vector2 = mates_velocity_sum.normalized() * strength
+	var steering: Vector2 = desired_velocity - movement_manager.body.linear_velocity
 	
 	return steering

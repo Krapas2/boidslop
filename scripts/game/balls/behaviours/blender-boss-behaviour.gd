@@ -25,19 +25,13 @@ func get_samples() -> Array[float]:
 	return result
 	
 func get_stardard_deviation(values: Array[float]) -> float:
-	var average: float = get_average(values)
+	var average: float = FloatUtils.get_average(values)
 	var deviations: Array[float] = []
 	for value: int in values:
 		deviations.append(pow(value-average, 2))
-	var variance = get_average(deviations)
+	var variance: float = FloatUtils.get_average(deviations)
 	
 	return sqrt(variance)
-	
-func get_average(values: Array[float]) -> float:
-	var sum: float = 0
-	for value: int in values:
-		sum += value
-	return sum/values.size()
 
 func _physics_process(delta: float) -> void:
 	if enabled:
@@ -48,7 +42,7 @@ func spin_hands(delta: float) -> void:
 	angle_step(delta)
 
 func move_hands() -> void:
-	for i in range(hands.size()):
+	for i: int in range(hands.size()):
 		var hand_angle: float = angle+(2*PI/hands.size())*i
 		var desired_position: Vector2 = Vector2(
 			cos(hand_angle),

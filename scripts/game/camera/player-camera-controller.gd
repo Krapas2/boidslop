@@ -20,7 +20,7 @@ func _process(delta: float) -> void:
 	var screen_center: Vector2 = get_viewport().size/2
 	var screen_mouse_position: Vector2 = get_viewport().get_mouse_position() 
 	
-	var camera_vector: Vector2 = VectorUtils.clamp_magnitude(
+	var camera_vector: Vector2 = VectorUtils.clamp_magnitude_v2(
 		(screen_mouse_position - screen_center) / screen_center.y,
 		1
 	)

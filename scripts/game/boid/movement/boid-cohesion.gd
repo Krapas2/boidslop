@@ -25,7 +25,7 @@ func boid_velocity() -> Vector2:
 	
 	var force: Vector2 = cohesion(flockmates)
 	
-	return VectorUtils.clamp_magnitude(
+	return VectorUtils.clamp_magnitude_v2(
 		force,
 		max_force
 	)

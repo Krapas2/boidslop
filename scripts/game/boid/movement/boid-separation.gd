@@ -25,7 +25,7 @@ func boid_velocity() -> Vector2:
 	
 	var force: Vector2 = separation(flockmates)
 	
-	return VectorUtils.clamp_magnitude(
+	return VectorUtils.clamp_magnitude_v2(
 		force,
 		max_force
 	)
@@ -33,10 +33,10 @@ func boid_velocity() -> Vector2:
 func separation(flockmates: Array[RigidBody2D]) -> Vector2:
 	var mate_avoid_sum: Vector2 = Vector2.ZERO
 	for flockmate: RigidBody2D in flockmates:
-		var relative_position = movement_manager.body.global_position - flockmate.global_position;
+		var relative_position: Vector2 = movement_manager.body.global_position - flockmate.global_position;
 		mate_avoid_sum += relative_position / movement_manager.body.global_position.distance_squared_to(flockmate.global_position)
-	var mate_avoid_average = mate_avoid_sum / flockmates.size()
-	var desired_velocity = mate_avoid_average.normalized() * strength
-	var steering = desired_velocity - movement_manager.body.linear_velocity
+	var mate_avoid_average: Vector2 = mate_avoid_sum / flockmates.size()
+	var desired_velocity: Vector2 = mate_avoid_average.normalized() * strength
+	var steering: Vector2 = desired_velocity - movement_manager.body.linear_velocity
 	
 	return steering

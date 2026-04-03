@@ -7,7 +7,7 @@ class_name BoidPopulator
 @export var count: int
 
 func _ready() -> void:
-	for n in count:
+	for _n: int in count:
 		spawn_boid()
 
 func spawn_boid() -> void:

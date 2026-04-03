@@ -5,11 +5,11 @@ class_name RandomizeRigidbodyScale
 @export var max_scale: float
 @onready var parent: Node2D = get_parent()
 
-func _ready():
+func _ready() -> void:
 	call_deferred("_apply_scale")
 
-func _apply_scale():
+func _apply_scale() -> void:
 	var random_scale: float = randf_range(min_scale, max_scale)
-	for child in parent.get_children():
+	for child: Node in parent.get_children():
 		if child is Node2D:
 			child.scale *= Vector2.ONE * random_scale

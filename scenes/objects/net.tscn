@@ -40,7 +40,6 @@ catch_area = NodePath("../CatchArea")
 damping_factor = 0.25
 growing_factor = 0.25
 pick_area = NodePath("../PickArea")
-health_factor = 1.0
 min_catch_speed = 50.0
 max_catch_speed = 380.0
 metadata/_custom_type_script = "uid://5by6vspplfdt"
