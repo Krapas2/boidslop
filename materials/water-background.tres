@@ -22,5 +22,5 @@ shader_parameter/noise_texture = SubResource("NoiseTexture3D_8ajcd")
 shader_parameter/noise_zoom = 1000.0
 shader_parameter/time_scale = 0.01
 shader_parameter/color_threshold = 1.5
-shader_parameter/base_color = Color(0.13800001, 0.16109988, 0.6, 1)
-shader_parameter/highlight_color = Color(0.10240001, 0.22784016, 0.64, 1)
+shader_parameter/base_color = Color(0.15750001, 0.1721249, 0.45, 1)
+shader_parameter/highlight_color = Color(0.13999999, 0.22400007, 0.5, 1)

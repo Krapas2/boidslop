@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2qo1nalqy85m"]
+[gd_scene load_steps=13 format=3 uid="uid://b2qo1nalqy85m"]
 
 [ext_resource type="Script" uid="uid://b7gk42klnf12u" path="res://scripts/game/boid/boid-flock-manager.gd" id="1_wj1i5"]
 [ext_resource type="PackedScene" uid="uid://cw80rud4gnng3" path="res://scenes/objects/boid.tscn" id="2_cgxnh"]
@@ -6,9 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://bk4dc6fwfu0eg" path="res://scenes/objects/player.tscn" id="4_p7rwu"]
 [ext_resource type="Script" uid="uid://c54178coumdbg" path="res://scripts/game/camera/player-camera-controller.gd" id="5_1qp8t"]
 [ext_resource type="PackedScene" uid="uid://xrsx6q033jy2" path="res://scenes/objects/balls.tscn" id="6_mitsk"]
+[ext_resource type="Script" uid="uid://covxm3dnmhshi" path="res://scripts/game/camera/fit-camera.gd" id="7_ftd5t"]
 [ext_resource type="Shader" uid="uid://dme41x2d05bqn" path="res://shaders/water-background.gdshader" id="7_yj36l"]
 [ext_resource type="Material" uid="uid://dt0kpn6jrje2r" path="res://materials/water-background.tres" id="8_i767o"]
 [ext_resource type="PackedScene" uid="uid://fu8ae8nhs6g6" path="res://scenes/gui/game-gui/game-gui.tscn" id="9_ps628"]
+[ext_resource type="Script" uid="uid://b11dkl4nl2dr0" path="res://scripts/game/camera/mosaic-shader-renderer.gd" id="11_1fstr"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i767o"]
 shader = ExtResource("7_yj36l")
@@ -48,22 +50,6 @@ zoom_out_power = 0.95
 zoom_lerp_speed = 3.0
 metadata/_custom_type_script = "uid://c54178coumdbg"
 
-[node name="WaterBackground" type="ColorRect" parent="Camera2D"]
-z_index = -10
-material = ExtResource("8_i767o")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1000.0
-offset_top = -1000.0
-offset_right = 1000.0
-offset_bottom = 1000.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="BallsRoot" parent="." instance=ExtResource("6_mitsk")]
 
 [node name="BossBehaviourManager" parent="BallsRoot" index="3" node_paths=PackedStringArray("player")]
@@ -81,6 +67,33 @@ position = Vector2(-864, 71)
 [node name="PlayerHealthGUI" parent="CanvasLayer" index="0" node_paths=PackedStringArray("player_health")]
 player_health = NodePath("../../PlayerBody/PlayerHealth")
 lerp_speed = 1.0
+
+[node name="WaterBackground" type="ColorRect" parent="."]
+visible = false
+z_index = -10
+material = ExtResource("8_i767o")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FitCamera" type="Node" parent="WaterBackground" node_paths=PackedStringArray("camera")]
+script = ExtResource("7_ftd5t")
+camera = NodePath("../../Camera2D")
+metadata/_custom_type_script = "uid://covxm3dnmhshi"
+
+[node name="MosaicShaderRenderer" type="Node2D" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("11_1fstr")
+camera = NodePath("../Camera2D")
+shader_material = ExtResource("8_i767o")
+overlap_amount = 2.0
+columns = 10
+rows = 10
+metadata/_custom_type_script = "uid://b11dkl4nl2dr0"
 
 [editable path="PlayerBody"]
 [editable path="BallsRoot"]

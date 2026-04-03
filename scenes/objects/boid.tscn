@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cw80rud4gnng3"]
+[gd_scene load_steps=21 format=3 uid="uid://cw80rud4gnng3"]
 
 [ext_resource type="Texture2D" uid="uid://6wonyd1p2a8m" path="res://sprites/fish/fish1-spritesheet.png" id="1_ny18s"]
 [ext_resource type="Script" uid="uid://bieidrc2wf6c5" path="res://scripts/game/randomization/randomize-animation-start.gd" id="2_acsp6"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dkemqu0ujp6aa" path="res://scripts/game/boid/movement/boid-cohesion.gd" id="4_rmqti"]
 [ext_resource type="Script" uid="uid://cefyj1tb5b2tc" path="res://scripts/game/randomization/randomize-sprite-color.gd" id="4_x7gc6"]
 [ext_resource type="Script" uid="uid://clqnrvkncoydx" path="res://scripts/game/boid/movement/boid-separation.gd" id="5_o8dcb"]
+[ext_resource type="Texture2D" uid="uid://st8yxfni4lx3" path="res://sprites/radial-gradient/fish-light.tres" id="5_ytk2o"]
 [ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="7_acsp6"]
 [ext_resource type="Script" uid="uid://d3oxkpyb38ewl" path="res://scripts/game/randomization/randomize-rigidbody-scale.gd" id="10_acsp6"]
 
@@ -95,6 +96,12 @@ hue_shift_range = 0.08
 saturation_range = 0.1
 value_range = 0.15
 metadata/_custom_type_script = "uid://cefyj1tb5b2tc"
+
+[node name="PointLight2D" type="PointLight2D" parent="AnimatedSprite2D"]
+scale = Vector2(8.333333, 8.333333)
+shadow_enabled = true
+texture = ExtResource("5_ytk2o")
+texture_scale = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_4n1no")
