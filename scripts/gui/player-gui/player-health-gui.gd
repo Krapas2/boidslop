@@ -19,5 +19,4 @@ func _process(delta: float) -> void:
 	else:
 		normalized_health += (1. - normalized_health) * lerp_speed * delta
 	
-	
 	material.set_shader_parameter("normalized_health", normalized_health)

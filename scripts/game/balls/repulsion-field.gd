@@ -12,7 +12,7 @@ func bodies_in_radius() -> Array[RigidBody2D]:
 	var bodies: Array[RigidBody2D] = []
 	var overlapping_bodies: Array[Node2D] = get_overlapping_bodies()
 	
-	for body in overlapping_bodies:
+	for body: RigidBody2D in overlapping_bodies:
 		if body is RigidBody2D:
 			bodies.append(body)
 	return bodies

@@ -38,8 +38,8 @@ func _physics_process(_delta: float) -> void:
 
 func pick_behaviour() -> void:
 	var overlapping_bodies: Array[Node2D] = pick_area.get_overlapping_bodies()
-	var spoiled_net = !net_body.linear_velocity.length() < min_catch_speed
-	if !overlapping_bodies.size() || (bodies_consumed <= 0 && spoiled_net):
+	var net_is_spoiled: bool = !net_body.linear_velocity.length() < min_catch_speed
+	if !overlapping_bodies.size() || (bodies_consumed <= 0 && net_is_spoiled):
 		return
 	
 	var player_health: Health = overlapping_bodies[0].get_node("PlayerHealth")

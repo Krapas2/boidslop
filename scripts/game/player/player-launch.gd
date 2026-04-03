@@ -11,7 +11,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func shoot() -> void:
 	var mouse_position: Vector2 = get_viewport().get_mouse_position()
-	var canvas_transform = get_viewport().get_canvas_transform()
+	var canvas_transform: Transform2D = get_viewport().get_canvas_transform()
 	var global_mouse_pos: Vector2 = canvas_transform.affine_inverse() * mouse_position
 	var net_body: RigidBody2D = net.instantiate()
 	add_child(net_body)

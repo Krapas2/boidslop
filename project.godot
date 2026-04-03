@@ -15,6 +15,11 @@ run/main_scene="uid://b2qo1nalqy85m"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://sprites/icon.svg"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/inferred_declaration=1
+
 [global_group]
 
 boid=""

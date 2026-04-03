@@ -34,9 +34,9 @@ func cohesion(flockmates: Array[RigidBody2D]) -> Vector2:
 	var mates_position_sum: Vector2 = Vector2.ZERO
 	for flockmate: Node2D in flockmates:
 		mates_position_sum += flockmate.global_position
-	var mates_position_average = mates_position_sum / flockmates.size()
-	var desired_velocity = mates_position_average - movement_manager.body.global_position
+	var mates_position_average: Vector2 = mates_position_sum / flockmates.size()
+	var desired_velocity: Vector2 = mates_position_average - movement_manager.body.global_position
 	desired_velocity = desired_velocity.normalized() * strength
-	var steering = desired_velocity - movement_manager.body.linear_velocity
+	var steering: Vector2 = desired_velocity - movement_manager.body.linear_velocity
 	
 	return steering

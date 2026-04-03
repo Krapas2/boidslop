@@ -31,7 +31,8 @@ func reset_player_travel() -> void:
 	passed_time = 0
 
 func priority() -> float:
-	var calculated_priority = base_travel_speed - (traveled_distance / passed_time) / distance_priority_unit
+	var calculated_priority: float = \
+		base_travel_speed - (traveled_distance / passed_time) / distance_priority_unit
 	reset_player_travel()
 	return calculated_priority
 
@@ -43,7 +44,7 @@ func chase_behaviour(delta: float) -> void:
 func individual_chase_behaviour(chasing_body: RigidBody2D, delta: float) -> void:
 	var relative_position: Vector2 = player_body.global_position-chasing_body.global_position
 	var desired_velocity: Vector2 = relative_position.normalized() * max_speed
-	var acceleration = VectorUtils.clamp_magnitude(
+	var acceleration: Vector2 = VectorUtils.clamp_magnitude(
 		desired_velocity-chasing_body.linear_velocity,
 		max_force
 	)

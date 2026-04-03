@@ -16,8 +16,8 @@ func get_flockmates(boid: Node2D, perception: float) -> Array[RigidBody2D]:
 	var relevant_flock: Array[RigidBody2D]
 	var node_chunk: Vector2i = chunk_from_position(boid.global_position)
 	
-	for x in range(-1, 2):
-		for y in range(-1, 2):
+	for x: int in range(-1, 2):
+		for y: int in range(-1, 2):
 			var relevant_chunk: Vector2i = node_chunk + Vector2i(x, y)
 			if chunks.has(relevant_chunk):
 				relevant_flock.append_array(chunks[relevant_chunk])
@@ -36,7 +36,7 @@ func get_flockmates(boid: Node2D, perception: float) -> Array[RigidBody2D]:
 func chunk_map() -> Dictionary[Vector2i, Array]:
 	var map: Dictionary[Vector2i, Array] = {}
 	
-	for boid in flock:
+	for boid: RigidBody2D in flock:
 		var chunk: Vector2i = chunk_from_position(boid.global_position)
 		if not map.has(chunk):
 			map[chunk] = []

@@ -3,7 +3,7 @@ class_name BossBehaviour
 
 @onready var manager: BossBehaviourManager = get_parent()
 
-var enabled
+var enabled: bool
 
 func _ready() -> void:
 	enabled = false
