@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://drqm5e11el5g8"]
+[gd_scene load_steps=6 format=3 uid="uid://drqm5e11el5g8"]
 
 [ext_resource type="Texture2D" uid="uid://wcwdehr44elt" path="res://sprites/net/net.png" id="1_gklon"]
 [ext_resource type="Script" uid="uid://5by6vspplfdt" path="res://scripts/game/player/player-net.gd" id="2_gklon"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gklon"]
+friction = 0.0
+bounce = 1.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gklon"]
 
@@ -9,7 +13,8 @@
 
 [node name="NetBody" type="RigidBody2D"]
 collision_layer = 8
-collision_mask = 0
+collision_mask = 16
+physics_material_override = SubResource("PhysicsMaterial_gklon")
 gravity_scale = 0.0
 linear_damp = 0.5
 
@@ -40,6 +45,7 @@ catch_area = NodePath("../CatchArea")
 damping_factor = 0.25
 growing_factor = 0.25
 pick_area = NodePath("../PickArea")
+health_per_body = 1.5
 min_catch_speed = 50.0
 max_catch_speed = 380.0
 metadata/_custom_type_script = "uid://5by6vspplfdt"

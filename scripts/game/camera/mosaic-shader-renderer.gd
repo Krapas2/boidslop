@@ -1,9 +1,10 @@
-extends Node2D
+extends Node
 class_name MosaicShaderRenderer
 
 @export var camera: Camera2D
 @export var shader_material: ShaderMaterial
 @export var overlap_amount: float
+@export var z_index: int
 @export var columns: int:
 	set(v):
 		columns = v
@@ -17,11 +18,8 @@ class_name MosaicShaderRenderer
 			_rebuild_tiles()
 
 var _tiles: Array[ColorRect] = []
-var _container: Node2D
 
 func _ready() -> void:
-	_container = Node2D.new()
-	add_child(_container)
 	_rebuild_tiles()
 
 func _process(_delta: float) -> void:
@@ -41,9 +39,9 @@ func _rebuild_tiles() -> void:
 	for _i: int in range(rows * columns):
 		var rect: ColorRect = ColorRect.new()
 		rect.material = shader_material.duplicate()
-		rect.use_parent_material = false
 		rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_container.add_child(rect)
+		rect.z_index = z_index
+		add_child(rect)
 		_tiles.append(rect)
 
 func _fit_tiles_to_camera() -> void:

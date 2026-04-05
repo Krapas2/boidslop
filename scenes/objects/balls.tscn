@@ -196,7 +196,8 @@ metadata/_custom_type_script = "uid://c62u4v6atbyhr"
 [node name="Length" type="Timer" parent="BossBehaviourManager/BlenderBossBehaviour"]
 wait_time = 5.0
 
-[node name="SampleAreas" type="Node" parent="BossBehaviourManager/BlenderBossBehaviour"]
+[node name="SampleAreas" type="Node2D" parent="BossBehaviourManager/BlenderBossBehaviour"]
+visible = false
 
 [node name="SampleArea1" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
 position = Vector2(400, 0)

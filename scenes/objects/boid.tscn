@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cw80rud4gnng3"]
+[gd_scene load_steps=25 format=3 uid="uid://cw80rud4gnng3"]
 
 [ext_resource type="Texture2D" uid="uid://6wonyd1p2a8m" path="res://sprites/fish/fish1-spritesheet.png" id="1_ny18s"]
 [ext_resource type="Script" uid="uid://bieidrc2wf6c5" path="res://scripts/game/randomization/randomize-animation-start.gd" id="2_acsp6"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://st8yxfni4lx3" path="res://sprites/radial-gradient/fish-light.tres" id="5_ytk2o"]
 [ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="7_acsp6"]
 [ext_resource type="Script" uid="uid://d3oxkpyb38ewl" path="res://scripts/game/randomization/randomize-rigidbody-scale.gd" id="10_acsp6"]
+[ext_resource type="Texture2D" uid="uid://mbtkdjnw08td" path="res://sprites/radial-gradient/bubble-particle.tres" id="13_1ntvn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x7gc6"]
 atlas = ExtResource("1_ny18s")
@@ -66,6 +67,30 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4n1no"]
 radius = 8.0
+
+[sub_resource type="Curve" id="Curve_1ntvn"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_vebrs"]
+curve = SubResource("Curve_1ntvn")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1ntvn"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 8.0
+inherit_velocity_ratio = -1.0
+spread = 180.0
+initial_velocity_min = 25.0
+initial_velocity_max = 75.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_vebrs")
+turbulence_enabled = true
+turbulence_noise_strength = 10.0
+turbulence_noise_scale = 10.0
+collision_mode = 2
+collision_use_scale = true
 
 [node name="Boid" type="RigidBody2D" groups=["boid"]]
 collision_layer = 2
@@ -145,3 +170,9 @@ script = ExtResource("10_acsp6")
 min_scale = 1.5
 max_scale = 0.75
 metadata/_custom_type_script = "uid://d3oxkpyb38ewl"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+z_index = -1
+amount = 20
+texture = ExtResource("13_1ntvn")
+process_material = SubResource("ParticleProcessMaterial_1ntvn")

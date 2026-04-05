@@ -15,7 +15,7 @@ friction = 0.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_p7rwu"]
 
 [node name="PlayerBody" type="RigidBody2D"]
-collision_mask = 0
+collision_mask = 16
 physics_material_override = SubResource("PhysicsMaterial_p7rwu")
 gravity_scale = 0.0
 lock_rotation = true
@@ -53,7 +53,6 @@ metadata/_custom_type_script = "uid://y4gyqihs7j1s"
 
 [node name="PlayerHealthDrain" type="Node" parent="PlayerHealth"]
 script = ExtResource("6_2rlf8")
-health_drain = 1.0
 metadata/_custom_type_script = "uid://c0as8w58wumy3"
 
 [node name="InvincibilityTimer" type="Timer" parent="PlayerHealth"]
