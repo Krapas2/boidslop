@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw7yfxriinsc3"
-path="res://.godot/imported/hubius.png-1825911d2a358629c583fd45ceff4acd.ctex"
+uid="uid://0yrda1w7p0xg"
+path="res://.godot/imported/hubius-head-spritesheet.png-3d8f781307f3cdffc13623f96820fcf2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/hubius/hubius.png"
-dest_files=["res://.godot/imported/hubius.png-1825911d2a358629c583fd45ceff4acd.ctex"]
+source_file="res://sprites/player/hubius-head-spritesheet.png"
+dest_files=["res://.godot/imported/hubius-head-spritesheet.png-3d8f781307f3cdffc13623f96820fcf2.ctex"]
 
 [params]
 
