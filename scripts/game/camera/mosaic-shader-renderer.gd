@@ -4,6 +4,7 @@ class_name MosaicShaderRenderer
 @export var camera: Camera2D
 @export var shader_material: ShaderMaterial
 @export var overlap_amount: float
+@export var padding: float
 @export var z_index: int
 @export var columns: int:
 	set(v):
@@ -46,7 +47,10 @@ func _rebuild_tiles() -> void:
 
 func _fit_tiles_to_camera() -> void:
 	var viewport: Viewport = get_viewport()
-	var viewport_size: Vector2 = Vector2(viewport.get_visible_rect().size)
+	var viewport_size: Vector2 = (
+		Vector2(viewport.get_visible_rect().size) +
+		Vector2(padding, padding)
+	)
 	var zoom: Vector2 = camera.zoom
 	var world_size: Vector2 = viewport_size / zoom
 	var origin: Vector2 = camera.get_screen_center_position() - world_size / 2.0
