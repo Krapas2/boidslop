@@ -1,9 +1,9 @@
-[gd_scene load_steps=26 format=3 uid="uid://cw80rud4gnng3"]
+[gd_scene load_steps=32 format=3 uid="uid://cw80rud4gnng3"]
 
 [ext_resource type="Texture2D" uid="uid://6wonyd1p2a8m" path="res://sprites/fish/fish1-spritesheet.png" id="1_ny18s"]
 [ext_resource type="Script" uid="uid://bieidrc2wf6c5" path="res://scripts/game/randomization/randomize-animation-start.gd" id="2_acsp6"]
 [ext_resource type="Script" uid="uid://dplu3s6lm2ywv" path="res://scripts/game/boid/movement/boid-movement-manager.gd" id="2_qy03a"]
-[ext_resource type="Script" uid="uid://cuun88qfb41fr" path="res://scripts/game/square-bounds.gd" id="3_mp35r"]
+[ext_resource type="Script" uid="uid://cuun88qfb41fr" path="res://scripts/game/misc/square-bounds.gd" id="3_mp35r"]
 [ext_resource type="Script" uid="uid://bmhvb88dkxmnk" path="res://scripts/game/boid/movement/boid-alignment.gd" id="3_ny18s"]
 [ext_resource type="Script" uid="uid://ckspc8tqgd8v5" path="res://scripts/game/randomization/randomize-animation-speed.gd" id="3_x7gc6"]
 [ext_resource type="Script" uid="uid://dkemqu0ujp6aa" path="res://scripts/game/boid/movement/boid-cohesion.gd" id="4_rmqti"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="7_acsp6"]
 [ext_resource type="Script" uid="uid://d3oxkpyb38ewl" path="res://scripts/game/randomization/randomize-rigidbody-scale.gd" id="10_acsp6"]
 [ext_resource type="Texture2D" uid="uid://mbtkdjnw08td" path="res://sprites/radial-gradient/bubble-particle.tres" id="13_1ntvn"]
-[ext_resource type="Material" uid="uid://b4qfteuvikylq" path="res://materials/bubble-particle-process.tres" id="14_vebrs"]
+[ext_resource type="Script" uid="uid://bvmxfb6u2tys8" path="res://scripts/game/health/hurt-area-behaviour.gd" id="14_vebrs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x7gc6"]
 atlas = ExtResource("1_ny18s")
@@ -91,6 +91,65 @@ turbulence_enabled = true
 turbulence_noise_strength = 10.0
 turbulence_noise_scale = 10.0
 collision_use_scale = true
+
+[sub_resource type="Shader" id="Shader_2degq"]
+code = "shader_type particles;
+
+uniform sampler3D curl_base;
+uniform vec3 curl_scale;
+uniform float curl_strength;
+
+
+vec2 normal_from_tex(sampler3D tex, vec3 uv)
+{
+	float h_top = textureLod(tex, uv + vec3(0., 1., 0.), 0.).x;
+	float h_bottom = textureLod(tex, uv + vec3(0., -1., 0.), 0.).x;
+	float h_right = textureLod(tex, uv + vec3(1.0, 0.0, 0.), 0.).x;
+	float h_left = textureLod(tex, uv + vec3(-1., 0., 0.), 0.).x;
+
+	vec2 diff = vec2(h_right - h_left, h_top - h_bottom);
+	return normalize(diff);
+}
+
+vec3 curl(vec2 pos)
+{
+	vec3 uv = vec3(pos, TIME) * curl_scale;
+	vec2 normal = normal_from_tex(curl_base, uv) * curl_strength;
+	return vec3(-normal.y, normal.x, 0.);
+}
+
+void start() {
+	
+}
+
+void process() {
+    VELOCITY = curl(TRANSFORM[3].xy);
+}
+"
+
+[sub_resource type="Gradient" id="Gradient_pfj70"]
+colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pfj70"]
+noise_type = 0
+frequency = 0.05
+fractal_type = 0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_b3go4"]
+noise = SubResource("FastNoiseLite_pfj70")
+color_ramp = SubResource("Gradient_pfj70")
+seamless = true
+seamless_blend_skirt = 0.3
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1f8l"]
+shader = SubResource("Shader_2degq")
+shader_parameter/curl_base = SubResource("NoiseTexture3D_b3go4")
+shader_parameter/curl_scale = Vector3(500, 500, 0)
+shader_parameter/curl_strength = 300.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vebrs"]
+radius = 6.0
 
 [node name="Boid" type="RigidBody2D" groups=["boid"]]
 rotation = 1.5707964
@@ -183,4 +242,16 @@ visible = false
 z_index = -1
 amount = 20
 texture = ExtResource("13_1ntvn")
-process_material = ExtResource("14_vebrs")
+process_material = SubResource("ShaderMaterial_r1f8l")
+
+[node name="HurtArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtArea"]
+shape = SubResource("CircleShape2D_vebrs")
+
+[node name="HurtAreaBehaviour" type="Node" parent="HurtArea"]
+script = ExtResource("14_vebrs")
+damage = 1.0
+trigger_iframes = true
+metadata/_custom_type_script = "uid://bvmxfb6u2tys8"

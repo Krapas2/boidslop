@@ -162,6 +162,7 @@ collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/HeadPivot/NetDetectArea"]
+visible = false
 shape = SubResource("CircleShape2D_37b34")
 
 [node name="PointAtTarget" type="Node" parent="Sprites/HeadPivot"]
@@ -215,13 +216,14 @@ swim_threshold = 64.0
 metadata/_custom_type_script = "uid://dktlfjfc4a5d1"
 
 [node name="BodyCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -9)
+position = Vector2(0.27357167, -6.1312275)
+rotation = -0.020592188
 shape = SubResource("RectangleShape2D_0ay4w")
 
 [node name="PlayerWalk" type="Node" parent="."]
 script = ExtResource("2_h5uus")
 speed = 250.0
-acceleration = 12.0
+acceleration = 8.0
 metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
 
 [node name="PointForward" type="Node" parent="."]
