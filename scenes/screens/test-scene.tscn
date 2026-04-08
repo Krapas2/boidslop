@@ -1,9 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2qo1nalqy85m"]
+[gd_scene load_steps=16 format=3 uid="uid://b2qo1nalqy85m"]
 
 [ext_resource type="Script" uid="uid://b7gk42klnf12u" path="res://scripts/game/boid/boid-flock-manager.gd" id="1_wj1i5"]
 [ext_resource type="PackedScene" uid="uid://cw80rud4gnng3" path="res://scenes/objects/boid.tscn" id="2_cgxnh"]
 [ext_resource type="Script" uid="uid://mgrkskhoild8" path="res://scripts/game/boid/boid-populator.gd" id="2_p7rwu"]
 [ext_resource type="PackedScene" uid="uid://bk4dc6fwfu0eg" path="res://scenes/objects/player.tscn" id="4_p7rwu"]
+[ext_resource type="Script" uid="uid://c54178coumdbg" path="res://scripts/game/camera/player-camera-controller.gd" id="5_1qp8t"]
+[ext_resource type="PackedScene" uid="uid://xrsx6q033jy2" path="res://scenes/objects/balls.tscn" id="6_mitsk"]
+[ext_resource type="Material" uid="uid://dt0kpn6jrje2r" path="res://materials/water-background.tres" id="8_i767o"]
+[ext_resource type="PackedScene" uid="uid://fu8ae8nhs6g6" path="res://scenes/gui/game-gui/game-gui.tscn" id="9_ps628"]
+[ext_resource type="Texture2D" uid="uid://bupqx5g8nnsyn" path="res://sprites/walls/walls.png" id="10_ftd5t"]
+[ext_resource type="Script" uid="uid://b11dkl4nl2dr0" path="res://scripts/game/camera/mosaic-shader-renderer.gd" id="11_1fstr"]
+[ext_resource type="Texture2D" uid="uid://bvhgeluwgsje6" path="res://sprites/radial-gradient/arena-light.tres" id="11_ye0oj"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d5vg1"]
+normal = Vector2(0, 1)
+distance = -700.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_1fstr"]
+normal = Vector2(1, 0)
+distance = -700.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ye0oj"]
+normal = Vector2(-1, 0)
+distance = -700.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_8xgpk"]
+distance = -700.0
 
 [node name="Node2D" type="Node2D"]
 
@@ -17,8 +39,75 @@ script = ExtResource("2_p7rwu")
 boid_scene = ExtResource("2_cgxnh")
 flock_manager = NodePath("../BoidFlockManager")
 bounds = Rect2(-700, -700, 1400, 1400)
-count = 200
+count = 250
 
 [node name="PlayerBody" parent="." instance=ExtResource("4_p7rwu")]
+position = Vector2(0, 471)
 
-[node name="Camera2D" type="Camera2D" parent="PlayerBody"]
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.2, 1.2)
+
+[node name="PlayerCameraController" type="Node" parent="Camera2D" node_paths=PackedStringArray("target")]
+script = ExtResource("5_1qp8t")
+target = NodePath("../../PlayerBody")
+leading_distance = 100.0
+movement_lerp_speed = 5.0
+pixel_units_height = 500.0
+zoom_out_power = 0.95
+zoom_lerp_speed = 3.0
+metadata/_custom_type_script = "uid://c54178coumdbg"
+
+[node name="BallsRoot" parent="." instance=ExtResource("6_mitsk")]
+
+[node name="BossBehaviourManager" parent="BallsRoot" index="3" node_paths=PackedStringArray("player")]
+player = NodePath("../../PlayerBody")
+
+[node name="ChaseBossBehaviour" parent="BallsRoot/BossBehaviourManager" index="2" node_paths=PackedStringArray("player_body", "chasing_bodies")]
+player_body = NodePath("../../../PlayerBody")
+chasing_bodies = []
+
+[node name="CanvasLayer" parent="." instance=ExtResource("9_ps628")]
+
+[node name="PlayerHealthGUI" parent="CanvasLayer" index="0" node_paths=PackedStringArray("player_health")]
+player_health = NodePath("../../PlayerBody/PlayerHealth")
+lerp_speed = 1.0
+
+[node name="Walls" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 9
+
+[node name="TopBound" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("WorldBoundaryShape2D_d5vg1")
+
+[node name="LeftBound" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("WorldBoundaryShape2D_1fstr")
+
+[node name="RightBound" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("WorldBoundaryShape2D_ye0oj")
+
+[node name="BottomBound" type="CollisionShape2D" parent="Walls"]
+shape = SubResource("WorldBoundaryShape2D_8xgpk")
+
+[node name="Spite2D" type="Sprite2D" parent="Walls"]
+light_mask = 0
+z_index = 2
+texture = ExtResource("10_ftd5t")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.4
+texture = ExtResource("11_ye0oj")
+texture_scale = 6.0
+
+[node name="MosaicShaderRenderer" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("11_1fstr")
+camera = NodePath("../Camera2D")
+shader_material = ExtResource("8_i767o")
+overlap_amount = 2.0
+z_index = -2
+columns = 6
+rows = 6
+metadata/_custom_type_script = "uid://b11dkl4nl2dr0"
+
+[editable path="PlayerBody"]
+[editable path="BallsRoot"]
+[editable path="CanvasLayer"]

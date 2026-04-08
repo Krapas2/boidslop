@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://drqm5e11el5g8"]
+
+[ext_resource type="Texture2D" uid="uid://wcwdehr44elt" path="res://sprites/net/net.png" id="1_gklon"]
+[ext_resource type="Script" uid="uid://5by6vspplfdt" path="res://scripts/game/player/player-net.gd" id="2_gklon"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gklon"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gklon"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kr0od"]
+
+[node name="NetBody" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 16
+physics_material_override = SubResource("PhysicsMaterial_gklon")
+gravity_scale = 0.0
+linear_damp = 0.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gklon")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_gklon")
+
+[node name="CatchArea" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea"]
+shape = SubResource("CircleShape2D_kr0od")
+
+[node name="PickArea" type="Area2D" parent="."]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickArea"]
+shape = SubResource("CircleShape2D_kr0od")
+
+[node name="PlayerNetBehaviour" type="Node" parent="." node_paths=PackedStringArray("catch_area", "pick_area")]
+script = ExtResource("2_gklon")
+catch_area = NodePath("../CatchArea")
+damping_factor = 0.25
+growing_factor = 0.25
+pick_area = NodePath("../PickArea")
+health_per_body = 1.5
+min_catch_speed = 50.0
+max_catch_speed = 380.0
+metadata/_custom_type_script = "uid://5by6vspplfdt"
+
+[node name="CapturedBodies" type="Node2D" parent="PlayerNetBehaviour"]

@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d4a4sa2tpuef5"]
+
+[ext_resource type="Shader" uid="uid://blp1gkqjh1lk8" path="res://shaders/player-health-vignette.gdshader" id="1_cl0sg"]
+
+[resource]
+shader = ExtResource("1_cl0sg")
+shader_parameter/normalized_health = 1.0
+shader_parameter/low_health_color = Color(0, 0, 0, 1)
+shader_parameter/high_health_color = Color(0.9999985, 0.124935366, 0.08294404, 1)

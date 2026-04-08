@@ -1,0 +1,291 @@
+[gd_scene load_steps=21 format=3 uid="uid://xrsx6q033jy2"]
+
+[ext_resource type="Texture2D" uid="uid://hpxqciep7u5i" path="res://sprites/balls/balls-idle-spritesheet.png" id="1_87qgs"]
+[ext_resource type="Texture2D" uid="uid://djhkbirm2e484" path="res://sprites/balls/balls-hand.png" id="2_pscfi"]
+[ext_resource type="Script" uid="uid://dmfk3q4rka5ng" path="res://scripts/game/balls/repulsion-field.gd" id="2_um5xy"]
+[ext_resource type="Script" uid="uid://djxwkdn0wvttp" path="res://scripts/game/balls/boss-behaviour-manager.gd" id="3_vsusj"]
+[ext_resource type="Script" uid="uid://c62u4v6atbyhr" path="res://scripts/game/balls/behaviours/blender-boss-behaviour.gd" id="4_lcxoj"]
+[ext_resource type="Script" uid="uid://b6ta0nu4u3gua" path="res://scripts/game/balls/behaviours/nothing-boss-behaviour.gd" id="6_inj2g"]
+[ext_resource type="Script" uid="uid://2snsvifn3lre" path="res://scripts/game/balls/behaviours/chase-boss-behaviour.gd" id="7_e87a3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsusj"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(434, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcxoj"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(868, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um5xy"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(1302, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inj2g"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(1736, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e87a3"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(2170, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pscfi"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(0, 0, 434, 415)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_50ro1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsusj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcxoj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inj2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e87a3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_um5xy"]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_inj2g"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_50ro1"]
+radius = 150.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcxoj"]
+radius = 60.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e87a3"]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_etnwh"]
+radius = 200.0
+
+[node name="BallsRoot" type="Node2D"]
+
+[node name="BallsHead" type="RigidBody2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BallsHead"]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_50ro1")
+autoplay = "default"
+
+[node name="HeadCollision2D" type="CollisionShape2D" parent="BallsHead"]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_um5xy")
+
+[node name="LeftChinCollision2D" type="CollisionShape2D" parent="BallsHead"]
+position = Vector2(-75, 65)
+shape = SubResource("CircleShape2D_inj2g")
+
+[node name="RightChinCollision2D" type="CollisionShape2D" parent="BallsHead"]
+position = Vector2(75, 65)
+shape = SubResource("CircleShape2D_inj2g")
+
+[node name="RepulsionField" type="Area2D" parent="BallsHead"]
+collision_layer = 0
+collision_mask = 2
+priority = 1
+script = ExtResource("2_um5xy")
+strength = 1600.0
+distance_unit = 100.0
+metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallsHead/RepulsionField"]
+shape = SubResource("CircleShape2D_50ro1")
+
+[node name="BallsRightHand" type="RigidBody2D" parent="."]
+position = Vector2(-250, 100)
+rotation = -2.7121732
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="BallsRightHand"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_pscfi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallsRightHand"]
+position = Vector2(0.578, -30)
+shape = SubResource("CircleShape2D_lcxoj")
+
+[node name="RepulsionField" type="Area2D" parent="BallsRightHand"]
+collision_layer = 0
+collision_mask = 2
+priority = 1
+script = ExtResource("2_um5xy")
+strength = 1600.0
+distance_unit = 100.0
+metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallsRightHand/RepulsionField"]
+shape = SubResource("CircleShape2D_e87a3")
+
+[node name="BallsLeftHand" type="RigidBody2D" parent="."]
+position = Vector2(250, 100)
+rotation = 2.7122416
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="BallsLeftHand"]
+rotation = 3.1415927
+scale = Vector2(0.5, -0.5)
+texture = ExtResource("2_pscfi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallsLeftHand"]
+position = Vector2(0, -30)
+shape = SubResource("CircleShape2D_lcxoj")
+
+[node name="RepulsionField" type="Area2D" parent="BallsLeftHand"]
+collision_layer = 0
+collision_mask = 2
+priority = 1
+script = ExtResource("2_um5xy")
+strength = 1600.0
+distance_unit = 100.0
+metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallsLeftHand/RepulsionField"]
+shape = SubResource("CircleShape2D_e87a3")
+
+[node name="BossBehaviourManager" type="Node" parent="."]
+process_priority = -1
+script = ExtResource("3_vsusj")
+metadata/_custom_type_script = "uid://djxwkdn0wvttp"
+
+[node name="BlenderBossBehaviour" type="Node" parent="BossBehaviourManager" node_paths=PackedStringArray("hands", "sample_areas")]
+script = ExtResource("4_lcxoj")
+hands = [NodePath("../../BallsLeftHand"), NodePath("../../BallsRightHand")]
+radius = 500.0
+delta_angle = 1.5
+sample_areas = [NodePath("SampleAreas/SampleArea1"), NodePath("SampleAreas/SampleArea2"), NodePath("SampleAreas/SampleArea3"), NodePath("SampleAreas/SampleArea4"), NodePath("SampleAreas/SampleArea5"), NodePath("SampleAreas/SampleArea6"), NodePath("SampleAreas/SampleArea7"), NodePath("SampleAreas/SampleArea8"), NodePath("SampleAreas/SampleArea9")]
+deviation_multiplier = 1.0
+metadata/_custom_type_script = "uid://c62u4v6atbyhr"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/BlenderBossBehaviour"]
+wait_time = 5.0
+
+[node name="SampleAreas" type="Node2D" parent="BossBehaviourManager/BlenderBossBehaviour"]
+visible = false
+
+[node name="SampleArea1" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(400, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea1"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea2" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(0, 400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea2"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea3" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(-400, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea3"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea4" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(0, -400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea4"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea5" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(400, -400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea5"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea6" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(400, 400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea6"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea7" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(-400, 400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea7"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea8" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+position = Vector2(-400, -400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea8"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea9" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea9"]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="NothingBossBehaviour" type="Node" parent="BossBehaviourManager"]
+script = ExtResource("6_inj2g")
+base_priority = 5.0
+metadata/_custom_type_script = "uid://b6ta0nu4u3gua"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/NothingBossBehaviour"]
+wait_time = 10.0
+
+[node name="ChaseBossBehaviour" type="Node" parent="BossBehaviourManager" node_paths=PackedStringArray("chasing_bodies")]
+script = ExtResource("7_e87a3")
+chasing_bodies = [NodePath("../../BallsRightHand"), NodePath("../../BallsLeftHand")]
+max_speed = 1000.0
+max_force = 300.0
+base_travel_speed = 10.0
+distance_priority_unit = 30.0
+metadata/_custom_type_script = "uid://2snsvifn3lre"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/ChaseBossBehaviour"]
+wait_time = 10.0

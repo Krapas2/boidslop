@@ -1,27 +1,257 @@
-[gd_scene load_steps=5 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=26 format=3 uid="uid://bk4dc6fwfu0eg"]
 
-[ext_resource type="Texture2D" uid="uid://copgn73blnket" path="res://sprites/icon.svg" id="1_2147m"]
+[ext_resource type="Script" uid="uid://lixfhmmv5rqg" path="res://scripts/game/misc/point-at-mouse.gd" id="1_0ay4w"]
+[ext_resource type="Texture2D" uid="uid://0yrda1w7p0xg" path="res://sprites/player/hubius-head-spritesheet.png" id="1_4c2uj"]
+[ext_resource type="Script" uid="uid://cosi1iaemd1m3" path="res://scripts/game/player/visual/player-head-chomp.gd" id="2_2lybl"]
+[ext_resource type="Script" uid="uid://cpxb6aleolks7" path="res://scripts/game/misc/point-at-target.gd" id="2_68atb"]
 [ext_resource type="Script" uid="uid://d4f7a1g66u5pb" path="res://scripts/game/player/player-walk.gd" id="2_h5uus"]
+[ext_resource type="Texture2D" uid="uid://bpb3nbw4hht16" path="res://sprites/player/hubius-body-spritesheet.png" id="3_dunks"]
+[ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="3_h5uus"]
+[ext_resource type="Texture2D" uid="uid://c5cd2an1f8wsi" path="res://sprites/player/hubius-hand-gun.png" id="4_6uaar"]
+[ext_resource type="Script" uid="uid://dem3ghakbxd8" path="res://scripts/game/health/health.gd" id="4_54rde"]
+[ext_resource type="Script" uid="uid://dktlfjfc4a5d1" path="res://scripts/game/player/visual/player-body-animation-player.gd" id="4_dunks"]
+[ext_resource type="Script" uid="uid://y4gyqihs7j1s" path="res://scripts/game/health/death-behaviour/destroy-self-death-behaviour.gd" id="5_ksjmp"]
+[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
+[ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
+[ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_p7rwu"]
+[sub_resource type="Animation" id="Animation_2iaiu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_g4pvk"]
+resource_name = "chomp-gape"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_6uaar"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fcc4x"]
+_data = {
+&"RESET": SubResource("Animation_2iaiu"),
+&"chomp-gape": SubResource("Animation_g4pvk"),
+&"idle": SubResource("Animation_6uaar")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
+radius = 512.0
+
+[sub_resource type="Animation" id="Animation_jfdn7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_ae4o8"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_0ay4w"]
+resource_name = "swim"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16666667, 0.33333334, 0.5, 0.6666667, 0.8333333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tuhu7"]
+_data = {
+&"RESET": SubResource("Animation_jfdn7"),
+&"idle": SubResource("Animation_ae4o8"),
+&"swim": SubResource("Animation_0ay4w")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ay4w"]
+size = Vector2(16, 32)
 
 [node name="PlayerBody" type="RigidBody2D"]
+collision_mask = 16
 physics_material_override = SubResource("PhysicsMaterial_p7rwu")
 gravity_scale = 0.0
 lock_rotation = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("1_2147m")
+[node name="Sprites" type="Node2D" parent="."]
+scale = Vector2(0.3, 0.3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_p7rwu")
+[node name="HeadPivot" type="Node2D" parent="Sprites"]
+position = Vector2(-1.2139504, -66.318054)
+rotation = -1.5707964
+
+[node name="HeadSprite" type="Sprite2D" parent="Sprites/HeadPivot"]
+z_index = 12
+rotation = 1.5707964
+scale = Vector2(0.99999994, 0.99999994)
+texture = ExtResource("1_4c2uj")
+offset = Vector2(-20.26, -38.735)
+vframes = 2
+
+[node name="HeadAnimationPlayer" type="AnimationPlayer" parent="Sprites/HeadPivot/HeadSprite"]
+libraries = {
+&"": SubResource("AnimationLibrary_fcc4x")
+}
+
+[node name="NetDetectArea" type="Area2D" parent="Sprites/HeadPivot"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/HeadPivot/NetDetectArea"]
+visible = false
+shape = SubResource("CircleShape2D_37b34")
+
+[node name="PointAtTarget" type="Node" parent="Sprites/HeadPivot"]
+script = ExtResource("2_68atb")
+metadata/_custom_type_script = "uid://cpxb6aleolks7"
+
+[node name="PlayerHeadChomp" type="Node" parent="Sprites/HeadPivot" node_paths=PackedStringArray("head_animation_player", "point_at_target_behaviour", "detect_net_area")]
+script = ExtResource("2_2lybl")
+head_animation_player = NodePath("../HeadSprite/HeadAnimationPlayer")
+point_at_target_behaviour = NodePath("../PointAtTarget")
+detect_net_area = NodePath("../NetDetectArea")
+metadata/_custom_type_script = "uid://cosi1iaemd1m3"
+
+[node name="GunPivot" type="Node2D" parent="Sprites"]
+position = Vector2(36.846855, 7.8455715)
+rotation = 0.24364012
+
+[node name="GunSprite" type="Sprite2D" parent="Sprites/GunPivot"]
+z_index = 13
+rotation = -0.24364011
+scale = Vector2(0.9999998, 0.9999998)
+texture = ExtResource("4_6uaar")
+offset = Vector2(73.105, 4.13)
+
+[node name="GunPoint" type="Node2D" parent="Sprites/GunPivot"]
+position = Vector2(140.3711, -38.321407)
+rotation = -0.24364011
+scale = Vector2(0.9999998, 0.9999998)
+
+[node name="PointAtMouse" type="Node" parent="Sprites/GunPivot"]
+script = ExtResource("1_0ay4w")
+metadata/_custom_type_script = "uid://lixfhmmv5rqg"
+
+[node name="BodySprite" type="Sprite2D" parent="Sprites"]
+z_index = 10
+scale = Vector2(0.99999976, 0.99999976)
+texture = ExtResource("3_dunks")
+offset = Vector2(-7.07, 11.54)
+hframes = 6
+vframes = 2
+
+[node name="BodyAnimationPlayer" type="AnimationPlayer" parent="Sprites/BodySprite"]
+libraries = {
+&"": SubResource("AnimationLibrary_tuhu7")
+}
+
+[node name="PlayerBodyAnimationController" type="Node" parent="Sprites/BodySprite/BodyAnimationPlayer" node_paths=PackedStringArray("physics_body")]
+script = ExtResource("4_dunks")
+physics_body = NodePath("../../../..")
+swim_threshold = 64.0
+metadata/_custom_type_script = "uid://dktlfjfc4a5d1"
+
+[node name="BodyCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0.27357167, -6.1312275)
+rotation = -0.020592188
+shape = SubResource("RectangleShape2D_0ay4w")
 
 [node name="PlayerWalk" type="Node" parent="."]
 script = ExtResource("2_h5uus")
 speed = 250.0
-acceleration = 12.0
+acceleration = 8.0
 metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
+
+[node name="PointForward" type="Node" parent="."]
+script = ExtResource("3_h5uus")
+metadata/_custom_type_script = "uid://cjdac54qa2tx8"
+
+[node name="PlayerHealth" type="Node" parent="." node_paths=PackedStringArray("death_behaviours")]
+script = ExtResource("4_54rde")
+max_health = 30.0
+death_behaviours = [NodePath("DeathBehaviours/DestroyNodeDeathBehaviour")]
+metadata/_custom_type_script = "uid://dem3ghakbxd8"
+
+[node name="DeathBehaviours" type="Node" parent="PlayerHealth"]
+
+[node name="DestroyNodeDeathBehaviour" type="Node" parent="PlayerHealth/DeathBehaviours" node_paths=PackedStringArray("node_to_destroy")]
+script = ExtResource("5_ksjmp")
+node_to_destroy = NodePath("../../..")
+metadata/_custom_type_script = "uid://y4gyqihs7j1s"
+
+[node name="PlayerHealthDrain" type="Node" parent="PlayerHealth"]
+script = ExtResource("6_2rlf8")
+health_drain = 1.0
+metadata/_custom_type_script = "uid://c0as8w58wumy3"
+
+[node name="InvincibilityTimer" type="Timer" parent="PlayerHealth"]
+wait_time = 0.3
+
+[node name="PlayerLaunch" type="Node" parent="." node_paths=PackedStringArray("origin")]
+script = ExtResource("7_2rlf8")
+origin = NodePath("../Sprites/GunPivot/GunPoint")
+net = ExtResource("8_0ay4w")
+launch_speed = 400.0
+metadata/_custom_type_script = "uid://uxdvtw2j0lqt"
