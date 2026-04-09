@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://dem3ghakbxd8" path="res://scripts/game/health/health.gd" id="4_54rde"]
 [ext_resource type="Script" uid="uid://dktlfjfc4a5d1" path="res://scripts/game/player/visual/player-body-animation-player.gd" id="4_dunks"]
 [ext_resource type="Script" uid="uid://y4gyqihs7j1s" path="res://scripts/game/health/death-behaviour/destroy-self-death-behaviour.gd" id="5_ksjmp"]
-[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
+[ext_resource type="Script" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
 [ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
 [ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
 
@@ -230,7 +230,7 @@ metadata/_custom_type_script = "uid://cjdac54qa2tx8"
 
 [node name="PlayerHealth" type="Node" parent="." node_paths=PackedStringArray("death_behaviours")]
 script = ExtResource("4_54rde")
-max_health = 30.0
+max_health = 300.0
 death_behaviours = [NodePath("DeathBehaviours/DestroyNodeDeathBehaviour")]
 metadata/_custom_type_script = "uid://dem3ghakbxd8"
 
@@ -244,7 +244,6 @@ metadata/_custom_type_script = "uid://y4gyqihs7j1s"
 [node name="PlayerHealthDrain" type="Node" parent="PlayerHealth"]
 script = ExtResource("6_2rlf8")
 health_drain = 1.0
-metadata/_custom_type_script = "uid://c0as8w58wumy3"
 
 [node name="InvincibilityTimer" type="Timer" parent="PlayerHealth"]
 wait_time = 0.3

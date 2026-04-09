@@ -25,10 +25,7 @@ func boid_velocity() -> Vector2:
 	
 	var force: Vector2 = separation(flockmates)
 	
-	return VectorUtils.clamp_magnitude_v2(
-		force,
-		max_force
-	)
+	return force.limit_length(max_force)
 
 func separation(flockmates: Array[RigidBody2D]) -> Vector2:
 	var mate_avoid_sum: Vector2 = Vector2.ZERO
