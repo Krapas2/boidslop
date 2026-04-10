@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://dem3ghakbxd8" path="res://scripts/game/health/health.gd" id="4_54rde"]
 [ext_resource type="Script" uid="uid://dktlfjfc4a5d1" path="res://scripts/game/player/visual/player-body-animation-player.gd" id="4_dunks"]
 [ext_resource type="Script" uid="uid://y4gyqihs7j1s" path="res://scripts/game/health/death-behaviour/destroy-self-death-behaviour.gd" id="5_ksjmp"]
-[ext_resource type="Script" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
+[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
 [ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
 [ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
 [ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/player/visual/player-launch-charge-zoom.gd" id="15_2iaiu"]
@@ -128,7 +128,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ay4w"]
-size = Vector2(16, 32)
+size = Vector2(16, 20)
 
 [node name="PlayerBody" type="RigidBody2D"]
 collision_mask = 16
@@ -187,7 +187,7 @@ texture = ExtResource("4_6uaar")
 offset = Vector2(73.105, 4.13)
 
 [node name="GunPoint" type="Node2D" parent="Sprites/GunPivot"]
-position = Vector2(140.3711, -38.321407)
+position = Vector2(31.588593, -34.736645)
 rotation = -0.24364011
 scale = Vector2(0.9999998, 0.9999998)
 
@@ -215,7 +215,6 @@ swim_threshold = 64.0
 metadata/_custom_type_script = "uid://dktlfjfc4a5d1"
 
 [node name="BodyCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0.27357167, -6.1312275)
 rotation = -0.020592188
 shape = SubResource("RectangleShape2D_0ay4w")
 
@@ -253,12 +252,12 @@ wait_time = 0.3
 script = ExtResource("7_2rlf8")
 origin = NodePath("../Sprites/GunPivot/GunPoint")
 net = ExtResource("8_0ay4w")
-charge_time = 2.0
+charge_time = 1.0
 min_launch_speed = 250.0
 max_launch_speed = 550.0
 metadata/_custom_type_script = "uid://uxdvtw2j0lqt"
 
 [node name="PlayerLaunchChargeZoom" type="Node" parent="PlayerLaunch"]
 script = ExtResource("15_2iaiu")
-zoom_power = 0.35
+zoom_power = 0.5
 metadata/_custom_type_script = "uid://mu54084wosf3"

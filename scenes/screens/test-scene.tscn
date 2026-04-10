@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b2qo1nalqy85m"]
+[gd_scene load_steps=18 format=3 uid="uid://b2qo1nalqy85m"]
 
 [ext_resource type="Script" uid="uid://b7gk42klnf12u" path="res://scripts/game/boid/boid-flock-manager.gd" id="1_wj1i5"]
 [ext_resource type="PackedScene" uid="uid://cw80rud4gnng3" path="res://scenes/objects/boid.tscn" id="2_cgxnh"]
@@ -12,6 +12,11 @@
 [ext_resource type="Texture2D" uid="uid://bupqx5g8nnsyn" path="res://sprites/walls/walls.png" id="10_ftd5t"]
 [ext_resource type="Script" uid="uid://b11dkl4nl2dr0" path="res://scripts/game/camera/mosaic-shader-renderer.gd" id="11_1fstr"]
 [ext_resource type="Texture2D" uid="uid://bvhgeluwgsje6" path="res://sprites/radial-gradient/arena-light.tres" id="11_ye0oj"]
+
+[sub_resource type="Curve" id="Curve_ye0oj"]
+_limits = [50.0, 250.0, 0.0, 1.0]
+_data = [Vector2(0, 50), 0.0, 435.19986, 0, 0, Vector2(1, 250), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d5vg1"]
 normal = Vector2(0, 1)
@@ -51,18 +56,18 @@ zoom = Vector2(1.2, 1.2)
 [node name="CameraController" type="Node" parent="Camera2D"]
 script = ExtResource("6_8xgpk")
 move_speed = 3.0
+move_damping = 0.9
 zoom_speed = 8.0
-damping = 0.8
+zoom_damping = 0.8
 minimum_zoom = 0.1
-maximum_zoom = 2.0
-zoom_margin = 100.0
+maximum_zoom = 1.5
+zoom_margin = 150.0
 metadata/_custom_type_script = "uid://ckkvm6iiiptd4"
 
 [node name="PlayerMouseCamera" type="Node" parent="Camera2D" node_paths=PackedStringArray("player")]
 script = ExtResource("5_1qp8t")
 player = NodePath("../../PlayerBody")
-min_leading_distance = 100.0
-max_leading_distance = 250.0
+leading_distance_curve = SubResource("Curve_ye0oj")
 metadata/_custom_type_script = "uid://c54178coumdbg"
 
 [node name="MosaicShaderRenderer" type="Node" parent="Camera2D"]
@@ -71,8 +76,8 @@ shader_material = ExtResource("8_i767o")
 overlap_amount = 2.0
 padding = 64.0
 z_index = -2
-columns = 6
-rows = 6
+columns = 8
+rows = 8
 
 [node name="BallsRoot" parent="." instance=ExtResource("6_mitsk")]
 
