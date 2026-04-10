@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=27 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Script" uid="uid://lixfhmmv5rqg" path="res://scripts/game/misc/point-at-mouse.gd" id="1_0ay4w"]
 [ext_resource type="Texture2D" uid="uid://0yrda1w7p0xg" path="res://sprites/player/hubius-head-spritesheet.png" id="1_4c2uj"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
 [ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
 [ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
+[ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/player/visual/player-launch-charge-zoom.gd" id="15_2iaiu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -252,5 +253,12 @@ wait_time = 0.3
 script = ExtResource("7_2rlf8")
 origin = NodePath("../Sprites/GunPivot/GunPoint")
 net = ExtResource("8_0ay4w")
-launch_speed = 400.0
+charge_time = 2.0
+min_launch_speed = 250.0
+max_launch_speed = 550.0
 metadata/_custom_type_script = "uid://uxdvtw2j0lqt"
+
+[node name="PlayerLaunchChargeZoom" type="Node" parent="PlayerLaunch"]
+script = ExtResource("15_2iaiu")
+zoom_power = 0.35
+metadata/_custom_type_script = "uid://mu54084wosf3"

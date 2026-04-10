@@ -1,7 +1,6 @@
 extends Node
 class_name MosaicShaderRenderer
 
-@export var camera: Camera2D
 @export var shader_material: ShaderMaterial
 @export var overlap_amount: float
 @export var padding: float
@@ -19,6 +18,8 @@ class_name MosaicShaderRenderer
 			_rebuild_tiles()
 
 var _tiles: Array[ColorRect] = []
+
+@onready var camera: Camera2D = get_parent()
 
 func _ready() -> void:
 	_rebuild_tiles()

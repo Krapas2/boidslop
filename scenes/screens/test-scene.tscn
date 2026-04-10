@@ -65,6 +65,15 @@ min_leading_distance = 100.0
 max_leading_distance = 250.0
 metadata/_custom_type_script = "uid://c54178coumdbg"
 
+[node name="MosaicShaderRenderer" type="Node" parent="Camera2D"]
+script = ExtResource("11_1fstr")
+shader_material = ExtResource("8_i767o")
+overlap_amount = 2.0
+padding = 64.0
+z_index = -2
+columns = 6
+rows = 6
+
 [node name="BallsRoot" parent="." instance=ExtResource("6_mitsk")]
 
 [node name="BossBehaviourManager" parent="BallsRoot" index="3" node_paths=PackedStringArray("player")]
@@ -111,16 +120,6 @@ texture = ExtResource("10_ftd5t")
 energy = 0.4
 texture = ExtResource("11_ye0oj")
 texture_scale = 6.0
-
-[node name="MosaicShaderRenderer" type="Node" parent="Level" node_paths=PackedStringArray("camera")]
-script = ExtResource("11_1fstr")
-camera = NodePath("../../Camera2D")
-shader_material = ExtResource("8_i767o")
-overlap_amount = 2.0
-padding = 64.0
-z_index = -2
-columns = 6
-rows = 6
 
 [editable path="PlayerBody"]
 [editable path="BallsRoot"]
