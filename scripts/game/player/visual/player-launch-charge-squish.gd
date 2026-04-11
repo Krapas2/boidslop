@@ -1,6 +1,7 @@
 extends Node
 class_name PlayerLaunchChargeSquish
 
+# TODO: curve could achieve the same behaviour while giving more control
 @export var squish_power: float
 @export var squised_sprite: Node2D
 
