@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=28 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Script" uid="uid://lixfhmmv5rqg" path="res://scripts/game/misc/point-at-mouse.gd" id="1_0ay4w"]
 [ext_resource type="Texture2D" uid="uid://0yrda1w7p0xg" path="res://sprites/player/hubius-head-spritesheet.png" id="1_4c2uj"]
@@ -15,6 +15,7 @@
 [ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
 [ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
 [ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/player/visual/player-launch-charge-zoom.gd" id="15_2iaiu"]
+[ext_resource type="Script" uid="uid://ch5v7rlypcvrp" path="res://scripts/game/player/visual/player-launch-charge-squish.gd" id="16_ae4o8"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -261,3 +262,9 @@ metadata/_custom_type_script = "uid://uxdvtw2j0lqt"
 script = ExtResource("15_2iaiu")
 zoom_power = 0.5
 metadata/_custom_type_script = "uid://mu54084wosf3"
+
+[node name="PlayerLaunchChargeSquish" type="Node" parent="PlayerLaunch" node_paths=PackedStringArray("squised_sprite")]
+script = ExtResource("16_ae4o8")
+squish_power = 0.75
+squised_sprite = NodePath("../../Sprites/GunPivot")
+metadata/_custom_type_script = "uid://ch5v7rlypcvrp"
