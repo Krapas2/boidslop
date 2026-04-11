@@ -271,6 +271,6 @@ metadata/_custom_type_script = "uid://mu54084wosf3"
 
 [node name="PlayerLaunchChargeSquish" type="Node" parent="PlayerLaunch" node_paths=PackedStringArray("squised_sprite")]
 script = ExtResource("16_ae4o8")
-squish_power = 0.75
+squish_power = 0.5
 squised_sprite = NodePath("../../Sprites/GunPivot")
 metadata/_custom_type_script = "uid://ch5v7rlypcvrp"

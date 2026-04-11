@@ -23,9 +23,6 @@ var captured_bodies_offset: Vector2
 func _ready() -> void:
 	captured_bodies_offset = Vector2.ZERO
 
-# TODO: when moving fast, collisions get skipped. 
-# try to hook into the body's signal for detecting collision directly to
-# replace .get_overlapping_bodies()
 func _physics_process(_delta: float) -> void:
 	pick_behaviour()
 	set_captured_position()
