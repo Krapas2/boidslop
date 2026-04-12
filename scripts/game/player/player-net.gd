@@ -23,6 +23,7 @@ var captured_bodies_offset: Vector2
 func _ready() -> void:
 	captured_bodies_offset = Vector2.ZERO
 
+# TODO: player can pick nets instantly if a fish is consumed on the first frame
 func _physics_process(_delta: float) -> void:
 	pick_behaviour()
 	set_captured_position()
@@ -70,6 +71,6 @@ func set_captured_position() -> void:
 
 func set_captured_offset(new_pos: Vector2) -> void:
 	captured_bodies_offset = -(
-			(-captured_bodies_offset * bodies_consumed + new_pos) /
-			(bodies_consumed + 1)
-		)
+		(-captured_bodies_offset * bodies_consumed + new_pos) /
+		(bodies_consumed + 1)
+	)

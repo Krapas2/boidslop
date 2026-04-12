@@ -12,6 +12,7 @@ class_name CameraController
 @export var zoom_margin: float
 
 var targets: Dictionary[String, Vector2]
+var additional_offsets: Dictionary[String, Vector2]
 var additional_zooms: Dictionary[String, float]
 
 var _move_velocity: Vector2 = Vector2.ZERO
@@ -33,7 +34,7 @@ func _process(delta: float) -> void:
 	_apply_zoom(delta)
 
 func _apply_position(delta: float) -> void:
-	var desired: Vector2 = _get_position()
+	var desired: Vector2 = _get_targets_average() + _get_offset()
 	var displacement: Vector2 = desired - camera.global_position
 	
 	_move_velocity = _move_velocity.lerp(displacement * move_speed, 1.0 - move_damping)
@@ -47,11 +48,20 @@ func _apply_zoom(delta: float) -> void:
 	var new_zoom: float = camera.zoom.x + _zoom_velocity * delta
 	camera.zoom = Vector2.ONE * new_zoom
 
-func _get_position() -> Vector2:
+func _get_targets_average() -> Vector2:
 	return Vector2Utils.get_average(targets.values())
+	
+func _get_offset() -> Vector2:
+	var sum: Vector2 = Vector2.ONE;
+	for offset: Vector2 in additional_offsets.values():
+		sum += offset
+	return sum
 
 func _get_additional_zoom() -> float:
-	return FloatUtils.get_average(additional_zooms.values())
+	var sum: float = 0;
+	for zoom: float in additional_zooms.values():
+		sum += zoom
+	return sum
 
 func _get_fit_zoom() -> float:
 	if targets.is_empty():
