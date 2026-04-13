@@ -76,11 +76,11 @@ func _calculate_targets_bounding_circle() -> BoundingCircle:
 	var center: Vector2 = target_positions[0]
 	var radius: float = 0.0
 
-	for pos: Vector2 in target_positions:
-		var dist: float = center.distance_to(pos)
+	for target_position: Vector2 in target_positions:
+		var dist: float = center.distance_to(target_position)
 		if dist > radius:
 			var new_radius: float = (radius + dist) / 2.0
-			center = center + (pos - center).normalized() * (new_radius - radius)
+			center = center + (target_position - center).normalized() * (new_radius - radius)
 			radius = new_radius
 
 	return BoundingCircle.new(center, radius)

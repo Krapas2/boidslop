@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=34 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Script" uid="uid://lixfhmmv5rqg" path="res://scripts/game/misc/point-at-mouse.gd" id="1_0ay4w"]
 [ext_resource type="Texture2D" uid="uid://0yrda1w7p0xg" path="res://sprites/player/hubius-head-spritesheet.png" id="1_4c2uj"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://dem3ghakbxd8" path="res://scripts/game/health/health.gd" id="4_54rde"]
 [ext_resource type="Script" uid="uid://dktlfjfc4a5d1" path="res://scripts/game/player/visual/player-body-animation-player.gd" id="4_dunks"]
 [ext_resource type="Script" uid="uid://y4gyqihs7j1s" path="res://scripts/game/health/death-behaviour/destroy-self-death-behaviour.gd" id="5_ksjmp"]
-[ext_resource type="Script" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
+[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
 [ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
 [ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
 [ext_resource type="Script" uid="uid://bw6m7204obdvr" path="res://scripts/game/health/damage-behaviour/camera-shake-damage-behaviour.gd" id="12_fcc4x"]
@@ -20,6 +20,8 @@
 [ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/camera/camera-behaviours/player-launch-charge-zoom.gd" id="15_2iaiu"]
 [ext_resource type="Script" uid="uid://ch5v7rlypcvrp" path="res://scripts/game/player/visual/player-launch-charge-squish.gd" id="16_ae4o8"]
 [ext_resource type="Script" uid="uid://crsb5hlksbbjg" path="res://scripts/game/camera/camera-behaviours/player-net-proximity-zoom.gd" id="20_jfdn7"]
+[ext_resource type="Script" uid="uid://cmr7jpmd8tuuh" path="res://scripts/game/player/filled-net-detector.gd" id="21_xeqme"]
+[ext_resource type="Script" uid="uid://b8l0bynv3ydn3" path="res://scripts/game/camera/camera-behaviours/player-net-camera-target.gd" id="22_x3mv4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -165,11 +167,11 @@ libraries = {
 script = ExtResource("2_68atb")
 metadata/_custom_type_script = "uid://cpxb6aleolks7"
 
-[node name="PlayerHeadChomp" type="Node" parent="Sprites/HeadPivot" node_paths=PackedStringArray("head_animation_player", "point_at_target_behaviour", "detect_net_area")]
+[node name="PlayerHeadChomp" type="Node" parent="Sprites/HeadPivot" node_paths=PackedStringArray("head_animation_player", "point_at_target_behaviour", "filled_net_detector")]
 script = ExtResource("2_2lybl")
 head_animation_player = NodePath("../HeadSprite/HeadAnimationPlayer")
 point_at_target_behaviour = NodePath("../PointAtTarget")
-detect_net_area = NodePath("../../../NetDetectArea")
+filled_net_detector = NodePath("../../../DetectNetArea/FilledNetDetector")
 metadata/_custom_type_script = "uid://cosi1iaemd1m3"
 
 [node name="GunPivot" type="Node2D" parent="Sprites"]
@@ -285,17 +287,25 @@ squish_power = 0.5
 squised_sprite = NodePath("../../Sprites/GunPivot")
 metadata/_custom_type_script = "uid://ch5v7rlypcvrp"
 
-[node name="PlayerNetProximityZoom" type="Node" parent="." node_paths=PackedStringArray("detect_net_area")]
-script = ExtResource("20_jfdn7")
-zoom_power = 0.25
-max_distance = 700.0
-detect_net_area = NodePath("../NetDetectArea")
-metadata/_custom_type_script = "uid://crsb5hlksbbjg"
-
-[node name="NetDetectArea" type="Area2D" parent="."]
+[node name="DetectNetArea" type="Area2D" parent="."]
 rotation = -1.5707964
 collision_layer = 0
 collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="NetDetectArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectNetArea"]
 shape = SubResource("CircleShape2D_37b34")
+
+[node name="FilledNetDetector" type="Node" parent="DetectNetArea"]
+script = ExtResource("21_xeqme")
+
+[node name="PlayerNetProximityZoom" type="Node" parent="." node_paths=PackedStringArray("filled_net_detector")]
+script = ExtResource("20_jfdn7")
+zoom_power = 0.25
+max_distance = 700.0
+filled_net_detector = NodePath("../DetectNetArea/FilledNetDetector")
+metadata/_custom_type_script = "uid://crsb5hlksbbjg"
+
+[node name="PlayerNetCameraTarget" type="Node" parent="." node_paths=PackedStringArray("filled_net_detector")]
+script = ExtResource("22_x3mv4")
+filled_net_detector = NodePath("../DetectNetArea/FilledNetDetector")
+metadata/_custom_type_script = "uid://b8l0bynv3ydn3"

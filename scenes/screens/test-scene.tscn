@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cw80rud4gnng3" path="res://scenes/objects/boid.tscn" id="2_cgxnh"]
 [ext_resource type="Script" uid="uid://mgrkskhoild8" path="res://scripts/game/boid/boid-populator.gd" id="2_p7rwu"]
 [ext_resource type="PackedScene" uid="uid://bk4dc6fwfu0eg" path="res://scenes/objects/player.tscn" id="4_p7rwu"]
-[ext_resource type="Script" uid="uid://c54178coumdbg" path="res://scripts/game/camera/player-mouse-camera.gd" id="5_1qp8t"]
+[ext_resource type="Script" uid="uid://c54178coumdbg" path="res://scripts/game/camera/camera-behaviours/player-mouse-camera.gd" id="5_1qp8t"]
 [ext_resource type="Script" uid="uid://ckkvm6iiiptd4" path="res://scripts/game/camera/camera-controller.gd" id="6_8xgpk"]
 [ext_resource type="PackedScene" uid="uid://xrsx6q033jy2" path="res://scenes/objects/balls.tscn" id="6_mitsk"]
 [ext_resource type="Material" uid="uid://dt0kpn6jrje2r" path="res://materials/water-background.tres" id="8_i767o"]
