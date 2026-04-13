@@ -14,8 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://bvhgeluwgsje6" path="res://sprites/radial-gradient/arena-light.tres" id="11_ye0oj"]
 
 [sub_resource type="Curve" id="Curve_ye0oj"]
-_limits = [50.0, 250.0, 0.0, 1.0]
-_data = [Vector2(0, 50), 0.0, 435.19986, 0, 0, Vector2(1, 250), 0.0, 0.0, 0, 0]
+_limits = [100.0, 250.0, 0.0, 1.0]
+_data = [Vector2(0, 100), 0.0, 435.19986, 0, 0, Vector2(1, 250), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d5vg1"]

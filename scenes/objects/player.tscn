@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=32 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Script" uid="uid://lixfhmmv5rqg" path="res://scripts/game/misc/point-at-mouse.gd" id="1_0ay4w"]
 [ext_resource type="Texture2D" uid="uid://0yrda1w7p0xg" path="res://sprites/player/hubius-head-spritesheet.png" id="1_4c2uj"]
@@ -11,14 +11,15 @@
 [ext_resource type="Script" uid="uid://dem3ghakbxd8" path="res://scripts/game/health/health.gd" id="4_54rde"]
 [ext_resource type="Script" uid="uid://dktlfjfc4a5d1" path="res://scripts/game/player/visual/player-body-animation-player.gd" id="4_dunks"]
 [ext_resource type="Script" uid="uid://y4gyqihs7j1s" path="res://scripts/game/health/death-behaviour/destroy-self-death-behaviour.gd" id="5_ksjmp"]
-[ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
+[ext_resource type="Script" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
 [ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
 [ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
 [ext_resource type="Script" uid="uid://bw6m7204obdvr" path="res://scripts/game/health/damage-behaviour/camera-shake-damage-behaviour.gd" id="12_fcc4x"]
 [ext_resource type="Script" uid="uid://vebhiqowde2f" path="res://scripts/game/health/damage-behaviour/slow-time-damage-behaviour.gd" id="13_37b34"]
-[ext_resource type="Script" uid="uid://b6gloicqe6tyv" path="res://scripts/game/player/visual/player-health-zoom.gd" id="13_g4pvk"]
-[ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/player/visual/player-launch-charge-zoom.gd" id="15_2iaiu"]
+[ext_resource type="Script" uid="uid://b6gloicqe6tyv" path="res://scripts/game/camera/camera-behaviours/player-health-zoom.gd" id="13_g4pvk"]
+[ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/camera/camera-behaviours/player-launch-charge-zoom.gd" id="15_2iaiu"]
 [ext_resource type="Script" uid="uid://ch5v7rlypcvrp" path="res://scripts/game/player/visual/player-launch-charge-squish.gd" id="16_ae4o8"]
+[ext_resource type="Script" uid="uid://crsb5hlksbbjg" path="res://scripts/game/camera/camera-behaviours/player-net-proximity-zoom.gd" id="20_jfdn7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -74,9 +75,6 @@ _data = {
 &"chomp-gape": SubResource("Animation_g4pvk"),
 &"idle": SubResource("Animation_6uaar")
 }
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
-radius = 512.0
 
 [sub_resource type="Animation" id="Animation_jfdn7"]
 length = 0.001
@@ -134,6 +132,9 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ay4w"]
 size = Vector2(16, 20)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
+radius = 256.0
+
 [node name="PlayerBody" type="RigidBody2D"]
 collision_mask = 16
 physics_material_override = SubResource("PhysicsMaterial_p7rwu")
@@ -160,14 +161,6 @@ libraries = {
 &"": SubResource("AnimationLibrary_fcc4x")
 }
 
-[node name="NetDetectArea" type="Area2D" parent="Sprites/HeadPivot"]
-collision_layer = 0
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/HeadPivot/NetDetectArea"]
-visible = false
-shape = SubResource("CircleShape2D_37b34")
-
 [node name="PointAtTarget" type="Node" parent="Sprites/HeadPivot"]
 script = ExtResource("2_68atb")
 metadata/_custom_type_script = "uid://cpxb6aleolks7"
@@ -176,7 +169,7 @@ metadata/_custom_type_script = "uid://cpxb6aleolks7"
 script = ExtResource("2_2lybl")
 head_animation_player = NodePath("../HeadSprite/HeadAnimationPlayer")
 point_at_target_behaviour = NodePath("../PointAtTarget")
-detect_net_area = NodePath("../NetDetectArea")
+detect_net_area = NodePath("../../../NetDetectArea")
 metadata/_custom_type_script = "uid://cosi1iaemd1m3"
 
 [node name="GunPivot" type="Node2D" parent="Sprites"]
@@ -291,3 +284,18 @@ script = ExtResource("16_ae4o8")
 squish_power = 0.5
 squised_sprite = NodePath("../../Sprites/GunPivot")
 metadata/_custom_type_script = "uid://ch5v7rlypcvrp"
+
+[node name="PlayerNetProximityZoom" type="Node" parent="." node_paths=PackedStringArray("detect_net_area")]
+script = ExtResource("20_jfdn7")
+zoom_power = 0.25
+max_distance = 700.0
+detect_net_area = NodePath("../NetDetectArea")
+metadata/_custom_type_script = "uid://crsb5hlksbbjg"
+
+[node name="NetDetectArea" type="Area2D" parent="."]
+rotation = -1.5707964
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NetDetectArea"]
+shape = SubResource("CircleShape2D_37b34")
