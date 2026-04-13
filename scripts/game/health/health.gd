@@ -5,13 +5,12 @@ class_name Health
 @export var damage_behaviours: Array[DamageBehaviour]
 @export var death_behaviours: Array[DeathBehaviour]
 
-var current_health: float
+@onready var current_health: float = max_health:
+	set(value):
+		current_health = min(value, max_health)
 var invincible: bool
 
 @onready var invincibility_timer: Timer = $InvincibilityTimer
-
-func _ready() -> void:
-	current_health = max_health
 
 func _process(_delta: float) -> void:
 	death_behaviour()
