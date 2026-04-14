@@ -48,7 +48,11 @@ growing_factor = 0.25
 pick_area = NodePath("../PickArea")
 health_per_body = 1.5
 min_catch_speed = 50.0
-max_catch_speed = 500.0
 metadata/_custom_type_script = "uid://5by6vspplfdt"
 
 [node name="CapturedBodies" type="Node2D" parent="PlayerNetBehaviour"]
+
+[node name="PickTimer" type="Timer" parent="PlayerNetBehaviour"]
+wait_time = 0.1
+one_shot = true
+autostart = true
