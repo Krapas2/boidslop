@@ -271,9 +271,9 @@ metadata/_custom_type_script = "uid://b6gloicqe6tyv"
 script = ExtResource("7_2rlf8")
 origin = NodePath("../Sprites/GunPivot/GunPoint")
 net = ExtResource("8_0ay4w")
-charge_time = 1.5
-min_launch_speed = 250.0
-max_launch_speed = 550.0
+charge_time = 2.0
+min_launch_speed = 50.0
+max_launch_speed = 500.0
 metadata/_custom_type_script = "uid://uxdvtw2j0lqt"
 
 [node name="PlayerLaunchChargeZoom" type="Node" parent="PlayerLaunch"]
