@@ -1,16 +1,22 @@
-[gd_scene load_steps=16 format=3 uid="uid://b2qo1nalqy85m"]
+[gd_scene load_steps=18 format=3 uid="uid://b2qo1nalqy85m"]
 
 [ext_resource type="Script" uid="uid://b7gk42klnf12u" path="res://scripts/game/boid/boid-flock-manager.gd" id="1_wj1i5"]
 [ext_resource type="PackedScene" uid="uid://cw80rud4gnng3" path="res://scenes/objects/boid.tscn" id="2_cgxnh"]
 [ext_resource type="Script" uid="uid://mgrkskhoild8" path="res://scripts/game/boid/boid-populator.gd" id="2_p7rwu"]
 [ext_resource type="PackedScene" uid="uid://bk4dc6fwfu0eg" path="res://scenes/objects/player.tscn" id="4_p7rwu"]
-[ext_resource type="Script" uid="uid://c54178coumdbg" path="res://scripts/game/camera/player-camera-controller.gd" id="5_1qp8t"]
+[ext_resource type="Script" uid="uid://c54178coumdbg" path="res://scripts/game/camera/camera-behaviours/player-mouse-camera.gd" id="5_1qp8t"]
+[ext_resource type="Script" uid="uid://ckkvm6iiiptd4" path="res://scripts/game/camera/camera-controller.gd" id="6_8xgpk"]
 [ext_resource type="PackedScene" uid="uid://xrsx6q033jy2" path="res://scenes/objects/balls.tscn" id="6_mitsk"]
 [ext_resource type="Material" uid="uid://dt0kpn6jrje2r" path="res://materials/water-background.tres" id="8_i767o"]
 [ext_resource type="PackedScene" uid="uid://fu8ae8nhs6g6" path="res://scenes/gui/game-gui/game-gui.tscn" id="9_ps628"]
 [ext_resource type="Texture2D" uid="uid://bupqx5g8nnsyn" path="res://sprites/walls/walls.png" id="10_ftd5t"]
 [ext_resource type="Script" uid="uid://b11dkl4nl2dr0" path="res://scripts/game/camera/mosaic-shader-renderer.gd" id="11_1fstr"]
 [ext_resource type="Texture2D" uid="uid://bvhgeluwgsje6" path="res://sprites/radial-gradient/arena-light.tres" id="11_ye0oj"]
+
+[sub_resource type="Curve" id="Curve_ye0oj"]
+_limits = [100.0, 250.0, 0.0, 1.0]
+_data = [Vector2(0, 100), 0.0, 435.19986, 0, 0, Vector2(1, 250), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d5vg1"]
 normal = Vector2(0, 1)
@@ -47,15 +53,31 @@ position = Vector2(0, 471)
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.2, 1.2)
 
-[node name="PlayerCameraController" type="Node" parent="Camera2D" node_paths=PackedStringArray("target")]
+[node name="CameraController" type="Node" parent="Camera2D"]
+script = ExtResource("6_8xgpk")
+move_speed = 3.0
+move_damping = 0.9
+zoom_speed = 8.0
+zoom_damping = 0.8
+minimum_zoom = 0.1
+maximum_zoom = 1.5
+zoom_margin = 150.0
+metadata/_custom_type_script = "uid://ckkvm6iiiptd4"
+
+[node name="PlayerMouseCamera" type="Node" parent="Camera2D" node_paths=PackedStringArray("player")]
 script = ExtResource("5_1qp8t")
-target = NodePath("../../PlayerBody")
-leading_distance = 100.0
-movement_lerp_speed = 5.0
-pixel_units_height = 500.0
-zoom_out_power = 0.95
-zoom_lerp_speed = 3.0
+player = NodePath("../../PlayerBody")
+leading_distance_curve = SubResource("Curve_ye0oj")
 metadata/_custom_type_script = "uid://c54178coumdbg"
+
+[node name="MosaicShaderRenderer" type="Node" parent="Camera2D"]
+script = ExtResource("11_1fstr")
+shader_material = ExtResource("8_i767o")
+overlap_amount = 2.0
+padding = 64.0
+z_index = -2
+columns = 8
+rows = 8
 
 [node name="BallsRoot" parent="." instance=ExtResource("6_mitsk")]
 
@@ -72,41 +94,37 @@ chasing_bodies = []
 player_health = NodePath("../../PlayerBody/PlayerHealth")
 lerp_speed = 1.0
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Walls" type="StaticBody2D" parent="Level"]
 collision_layer = 16
 collision_mask = 9
 
-[node name="TopBound" type="CollisionShape2D" parent="Walls"]
+[node name="TopBound" type="CollisionShape2D" parent="Level/Walls"]
 shape = SubResource("WorldBoundaryShape2D_d5vg1")
 
-[node name="LeftBound" type="CollisionShape2D" parent="Walls"]
+[node name="LeftBound" type="CollisionShape2D" parent="Level/Walls"]
 shape = SubResource("WorldBoundaryShape2D_1fstr")
 
-[node name="RightBound" type="CollisionShape2D" parent="Walls"]
+[node name="RightBound" type="CollisionShape2D" parent="Level/Walls"]
 shape = SubResource("WorldBoundaryShape2D_ye0oj")
 
-[node name="BottomBound" type="CollisionShape2D" parent="Walls"]
+[node name="BottomBound" type="CollisionShape2D" parent="Level/Walls"]
 shape = SubResource("WorldBoundaryShape2D_8xgpk")
 
-[node name="Spite2D" type="Sprite2D" parent="Walls"]
+[node name="DetailedCollision" type="CollisionPolygon2D" parent="Level/Walls"]
+build_mode = 1
+polygon = PackedVector2Array(619, 632, 641, 632, 655, 609, 636, 565, 647, 517, 623, 470, 624, 429, 632, 418, 623, 387, 645, 348, 665, 345, 666, 322, 651, 274, 664, 250, 658, 240, 658, 187, 644, 165, 658, 126, 651, 110, 661, 71, 641, 27, 651, 3, 651, -45, 637, -62, 635, -122, 664, -148, 652, -160, 661, -229, 642, -299, 650, -327, 638, -367, 642, -395, 621, -454, 633, -490, 654, -505, 629, -550, 637, -610, 601, -622, 582, -647, 560, -632, 511, -642, 469, -628, 446, -638, 414, -615, 364, -608, 343, -618, 291, -589, 242, -612, 223, -638, 187, -651, 137, -638, 117, -657, 77, -643, 37, -653, 11, -671, -34, -653, -46, -628, -78, -618, -100, -633, -111, -651, -145, -628, -174, -643, -213, -634, -233, -618, -267, -629, -289, -651, -319, -650, -335, -664, -362, -652, -392, -652, -405, -665, -415, -656, -444, -654, -470, -669, -496, -668, -509, -677, -548, -654, -576, -670, -599, -659, -632, -658, -653, -671, -668, -641, -654, -589, -666, -557, -664, -526, -631, -485, -645, -432, -642, -396, -651, -365, -636, -348, -634, -304, -644, -291, -631, -243, -654, -197, -645, -183, -670, -124, -664, -97, -647, -84, -651, -52, -638, -31, -642, 17, -654, 33, -663, 91, -654, 101, -654, 169, -641, 203, -653, 252, -671, 271, -667, 297, -677, 323, -673, 372, -652, 412, -661, 444, -664, 477, -649, 526, -664, 567, -657, 580, -657, 612, -662, 627, -630, 656, -594, 638, -565, 668, -484, 647, -452, 670, -440, 654, -394, 655, -386, 661, -346, 648, -332, 661, -317, 646, -291, 646, -281, 658, -257, 660, -248, 669, -224, 639, -162, 661, -131, 657, -127, 674, -69, 651, -33, 665, 24, 656, 73, 663, 107, 643, 147, 647, 159, 665, 183, 676, 207, 657, 250, 659, 265, 671, 288, 660, 325, 669, 350, 645, 382, 647, 387, 653, 421, 633, 461, 635, 481, 663, 512, 669, 526, 654, 565, 642, 588, 651)
+
+[node name="Spite2D" type="Sprite2D" parent="Level/Walls"]
 light_mask = 0
 z_index = 2
 texture = ExtResource("10_ftd5t")
 
-[node name="PointLight2D" type="PointLight2D" parent="."]
+[node name="CenterLight" type="PointLight2D" parent="Level"]
 energy = 0.4
 texture = ExtResource("11_ye0oj")
 texture_scale = 6.0
-
-[node name="MosaicShaderRenderer" type="Node" parent="." node_paths=PackedStringArray("camera")]
-script = ExtResource("11_1fstr")
-camera = NodePath("../Camera2D")
-shader_material = ExtResource("8_i767o")
-overlap_amount = 2.0
-z_index = -2
-columns = 6
-rows = 6
-metadata/_custom_type_script = "uid://b11dkl4nl2dr0"
 
 [editable path="PlayerBody"]
 [editable path="BallsRoot"]

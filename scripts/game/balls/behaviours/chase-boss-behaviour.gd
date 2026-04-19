@@ -44,10 +44,8 @@ func chase_behaviour(delta: float) -> void:
 func individual_chase_behaviour(chasing_body: RigidBody2D, delta: float) -> void:
 	var relative_position: Vector2 = player_body.global_position-chasing_body.global_position
 	var desired_velocity: Vector2 = relative_position.normalized() * max_speed
-	var acceleration: Vector2 = VectorUtils.clamp_magnitude_v2(
-		desired_velocity-chasing_body.linear_velocity,
-		max_force
-	)
+	var acceleration: Vector2 = \
+		desired_velocity-chasing_body.linear_velocity.limit_length(max_force)
 	
 	chasing_body.linear_velocity += acceleration * delta
 

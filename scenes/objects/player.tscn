@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bk4dc6fwfu0eg"]
+[gd_scene load_steps=34 format=3 uid="uid://bk4dc6fwfu0eg"]
 
 [ext_resource type="Script" uid="uid://lixfhmmv5rqg" path="res://scripts/game/misc/point-at-mouse.gd" id="1_0ay4w"]
 [ext_resource type="Texture2D" uid="uid://0yrda1w7p0xg" path="res://sprites/player/hubius-head-spritesheet.png" id="1_4c2uj"]
@@ -14,6 +14,14 @@
 [ext_resource type="Script" uid="uid://c0as8w58wumy3" path="res://scripts/game/player/player-health-drain.gd" id="6_2rlf8"]
 [ext_resource type="Script" uid="uid://uxdvtw2j0lqt" path="res://scripts/game/player/player-launch.gd" id="7_2rlf8"]
 [ext_resource type="PackedScene" uid="uid://drqm5e11el5g8" path="res://scenes/objects/net.tscn" id="8_0ay4w"]
+[ext_resource type="Script" uid="uid://bw6m7204obdvr" path="res://scripts/game/health/damage-behaviour/camera-shake-damage-behaviour.gd" id="12_fcc4x"]
+[ext_resource type="Script" uid="uid://vebhiqowde2f" path="res://scripts/game/health/damage-behaviour/slow-time-damage-behaviour.gd" id="13_37b34"]
+[ext_resource type="Script" uid="uid://b6gloicqe6tyv" path="res://scripts/game/camera/camera-behaviours/player-health-zoom.gd" id="13_g4pvk"]
+[ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/camera/camera-behaviours/player-launch-charge-zoom.gd" id="15_2iaiu"]
+[ext_resource type="Script" uid="uid://ch5v7rlypcvrp" path="res://scripts/game/player/visual/player-launch-charge-squish.gd" id="16_ae4o8"]
+[ext_resource type="Script" uid="uid://crsb5hlksbbjg" path="res://scripts/game/camera/camera-behaviours/player-net-proximity-zoom.gd" id="20_jfdn7"]
+[ext_resource type="Script" uid="uid://cmr7jpmd8tuuh" path="res://scripts/game/player/filled-net-detector.gd" id="21_xeqme"]
+[ext_resource type="Script" uid="uid://b8l0bynv3ydn3" path="res://scripts/game/camera/camera-behaviours/player-net-camera-target.gd" id="22_x3mv4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -70,9 +78,6 @@ _data = {
 &"idle": SubResource("Animation_6uaar")
 }
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
-radius = 512.0
-
 [sub_resource type="Animation" id="Animation_jfdn7"]
 length = 0.001
 tracks/0/type = "value"
@@ -127,7 +132,10 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0ay4w"]
-size = Vector2(16, 32)
+size = Vector2(16, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
+radius = 256.0
 
 [node name="PlayerBody" type="RigidBody2D"]
 collision_mask = 16
@@ -155,23 +163,15 @@ libraries = {
 &"": SubResource("AnimationLibrary_fcc4x")
 }
 
-[node name="NetDetectArea" type="Area2D" parent="Sprites/HeadPivot"]
-collision_layer = 0
-collision_mask = 8
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprites/HeadPivot/NetDetectArea"]
-visible = false
-shape = SubResource("CircleShape2D_37b34")
-
 [node name="PointAtTarget" type="Node" parent="Sprites/HeadPivot"]
 script = ExtResource("2_68atb")
 metadata/_custom_type_script = "uid://cpxb6aleolks7"
 
-[node name="PlayerHeadChomp" type="Node" parent="Sprites/HeadPivot" node_paths=PackedStringArray("head_animation_player", "point_at_target_behaviour", "detect_net_area")]
+[node name="PlayerHeadChomp" type="Node" parent="Sprites/HeadPivot" node_paths=PackedStringArray("head_animation_player", "point_at_target_behaviour", "filled_net_detector")]
 script = ExtResource("2_2lybl")
 head_animation_player = NodePath("../HeadSprite/HeadAnimationPlayer")
 point_at_target_behaviour = NodePath("../PointAtTarget")
-detect_net_area = NodePath("../NetDetectArea")
+filled_net_detector = NodePath("../../../DetectNetArea/FilledNetDetector")
 metadata/_custom_type_script = "uid://cosi1iaemd1m3"
 
 [node name="GunPivot" type="Node2D" parent="Sprites"]
@@ -186,7 +186,7 @@ texture = ExtResource("4_6uaar")
 offset = Vector2(73.105, 4.13)
 
 [node name="GunPoint" type="Node2D" parent="Sprites/GunPivot"]
-position = Vector2(140.3711, -38.321407)
+position = Vector2(31.588593, -34.736645)
 rotation = -0.24364011
 scale = Vector2(0.9999998, 0.9999998)
 
@@ -214,7 +214,6 @@ swim_threshold = 64.0
 metadata/_custom_type_script = "uid://dktlfjfc4a5d1"
 
 [node name="BodyCollision" type="CollisionShape2D" parent="."]
-position = Vector2(0.27357167, -6.1312275)
 rotation = -0.020592188
 shape = SubResource("RectangleShape2D_0ay4w")
 
@@ -228,9 +227,10 @@ metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
 script = ExtResource("3_h5uus")
 metadata/_custom_type_script = "uid://cjdac54qa2tx8"
 
-[node name="PlayerHealth" type="Node" parent="." node_paths=PackedStringArray("death_behaviours")]
+[node name="PlayerHealth" type="Node" parent="." node_paths=PackedStringArray("damage_behaviours", "death_behaviours")]
 script = ExtResource("4_54rde")
 max_health = 30.0
+damage_behaviours = [NodePath("DamageBehaviours/SlowTimeDamageBehaviour"), NodePath("DamageBehaviours/CameraShakeDamageBehaviour")]
 death_behaviours = [NodePath("DeathBehaviours/DestroyNodeDeathBehaviour")]
 metadata/_custom_type_script = "uid://dem3ghakbxd8"
 
@@ -241,17 +241,71 @@ script = ExtResource("5_ksjmp")
 node_to_destroy = NodePath("../../..")
 metadata/_custom_type_script = "uid://y4gyqihs7j1s"
 
+[node name="DamageBehaviours" type="Node" parent="PlayerHealth"]
+
+[node name="CameraShakeDamageBehaviour" type="Node" parent="PlayerHealth/DamageBehaviours"]
+script = ExtResource("12_fcc4x")
+intensity = 800.0
+length = 0.1
+metadata/_custom_type_script = "uid://bw6m7204obdvr"
+
+[node name="SlowTimeDamageBehaviour" type="Node" parent="PlayerHealth/DamageBehaviours"]
+script = ExtResource("13_37b34")
+duration = 0.1
+time_scale = 0.2
+metadata/_custom_type_script = "uid://vebhiqowde2f"
+
 [node name="PlayerHealthDrain" type="Node" parent="PlayerHealth"]
 script = ExtResource("6_2rlf8")
 health_drain = 1.0
-metadata/_custom_type_script = "uid://c0as8w58wumy3"
 
 [node name="InvincibilityTimer" type="Timer" parent="PlayerHealth"]
 wait_time = 0.3
+
+[node name="PlayerHealthZoom" type="Node" parent="PlayerHealth"]
+script = ExtResource("13_g4pvk")
+zoom_power = 0.75
+metadata/_custom_type_script = "uid://b6gloicqe6tyv"
 
 [node name="PlayerLaunch" type="Node" parent="." node_paths=PackedStringArray("origin")]
 script = ExtResource("7_2rlf8")
 origin = NodePath("../Sprites/GunPivot/GunPoint")
 net = ExtResource("8_0ay4w")
-launch_speed = 400.0
+charge_time = 2.0
+min_launch_speed = 50.0
+max_launch_speed = 500.0
 metadata/_custom_type_script = "uid://uxdvtw2j0lqt"
+
+[node name="PlayerLaunchChargeZoom" type="Node" parent="PlayerLaunch"]
+script = ExtResource("15_2iaiu")
+zoom_power = 0.25
+metadata/_custom_type_script = "uid://mu54084wosf3"
+
+[node name="PlayerLaunchChargeSquish" type="Node" parent="PlayerLaunch" node_paths=PackedStringArray("squised_sprite")]
+script = ExtResource("16_ae4o8")
+squish_power = 0.5
+squised_sprite = NodePath("../../Sprites/GunPivot")
+metadata/_custom_type_script = "uid://ch5v7rlypcvrp"
+
+[node name="DetectNetArea" type="Area2D" parent="."]
+rotation = -1.5707964
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectNetArea"]
+shape = SubResource("CircleShape2D_37b34")
+
+[node name="FilledNetDetector" type="Node" parent="DetectNetArea"]
+script = ExtResource("21_xeqme")
+
+[node name="PlayerNetProximityZoom" type="Node" parent="." node_paths=PackedStringArray("filled_net_detector")]
+script = ExtResource("20_jfdn7")
+zoom_power = 0.25
+max_distance = 700.0
+filled_net_detector = NodePath("../DetectNetArea/FilledNetDetector")
+metadata/_custom_type_script = "uid://crsb5hlksbbjg"
+
+[node name="PlayerNetCameraTarget" type="Node" parent="." node_paths=PackedStringArray("filled_net_detector")]
+script = ExtResource("22_x3mv4")
+filled_net_detector = NodePath("../DetectNetArea/FilledNetDetector")
+metadata/_custom_type_script = "uid://b8l0bynv3ydn3"

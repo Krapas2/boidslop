@@ -25,10 +25,7 @@ func boid_velocity() -> Vector2:
 	
 	var force: Vector2 = alignment(flockmates)
 	
-	return VectorUtils.clamp_magnitude_v2(
-		force,
-		max_force
-	)
+	return force.limit_length(max_force)
 
 func alignment(flockmates: Array[RigidBody2D]) -> Vector2:
 	var mates_velocity_sum: Vector2 = Vector2.ZERO
