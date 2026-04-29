@@ -19,10 +19,11 @@
 [ext_resource type="Script" uid="uid://b6gloicqe6tyv" path="res://scripts/game/camera/camera-behaviours/player-health-zoom.gd" id="13_g4pvk"]
 [ext_resource type="Script" uid="uid://mu54084wosf3" path="res://scripts/game/camera/camera-behaviours/player-launch-charge-zoom.gd" id="15_2iaiu"]
 [ext_resource type="Script" uid="uid://ch5v7rlypcvrp" path="res://scripts/game/player/visual/player-launch-charge-squish.gd" id="16_ae4o8"]
-[ext_resource type="Script" uid="uid://8b06djq3kqsv" path="res://scripts/audio/audio-health-fade.gd" id="16_kyf6x"]
+[ext_resource type="Script" uid="uid://8b06djq3kqsv" path="res://scripts/audio/value-mapped-audio.gd" id="16_kyf6x"]
 [ext_resource type="AudioStream" uid="uid://bkioka2wfqlyo" path="res://sounds/ambience/underwater-noise.ogg" id="17_6dywr"]
 [ext_resource type="Script" uid="uid://crsb5hlksbbjg" path="res://scripts/game/camera/camera-behaviours/player-net-proximity-zoom.gd" id="20_jfdn7"]
 [ext_resource type="Script" uid="uid://cmr7jpmd8tuuh" path="res://scripts/game/player/filled-net-detector.gd" id="21_xeqme"]
+[ext_resource type="AudioStream" uid="uid://b5bcjov6fq0fc" path="res://sounds/effects/bloon-loop02.ogg" id="22_befyu"]
 [ext_resource type="Script" uid="uid://b8l0bynv3ydn3" path="res://scripts/game/camera/camera-behaviours/player-net-camera-target.gd" id="22_x3mv4"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
@@ -139,6 +140,11 @@ size = Vector2(16, 20)
 [sub_resource type="Curve" id="Curve_6dywr"]
 _limits = [0.0, 5.0, 0.0, 1.0]
 _data = [Vector2(0, 5), 0.0, -11.188351, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_j86q5"]
+_limits = [0.0, 0.1, 0.0, 1.0]
+_data = [Vector2(0, 0), 0.0, 0.1, 0, 1, Vector2(1, 0.1), 0.1, 0.0, 1, 0]
 point_count = 2
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
@@ -270,15 +276,17 @@ script = ExtResource("13_g4pvk")
 zoom_power = 0.75
 metadata/_custom_type_script = "uid://b6gloicqe6tyv"
 
-[node name="AudioHealthFade" type="Node" parent="PlayerHealth" unique_id=11104750]
+[node name="HealthNoiseFade" type="Node" parent="PlayerHealth" unique_id=11104750]
 script = ExtResource("16_kyf6x")
 map = SubResource("Curve_6dywr")
+source_property = "current_health"
+max_property = "max_health"
 metadata/_custom_type_script = "uid://8b06djq3kqsv"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerHealth/AudioHealthFade" unique_id=359032621]
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerHealth/HealthNoiseFade" unique_id=359032621]
 stream = ExtResource("17_6dywr")
 volume_db = -80.0
-pitch_scale = 0.6
+pitch_scale = 0.8
 autoplay = true
 bus = &"Ambience"
 
@@ -301,6 +309,18 @@ script = ExtResource("16_ae4o8")
 squish_power = 0.5
 squised_sprite = NodePath("../../Sprites/GunPivot")
 metadata/_custom_type_script = "uid://ch5v7rlypcvrp"
+
+[node name="ChargeSoundFade" type="Node" parent="PlayerLaunch" unique_id=2051601817]
+script = ExtResource("16_kyf6x")
+map = SubResource("Curve_j86q5")
+source_property = "charge"
+max_property = "charge_time"
+metadata/_custom_type_script = "uid://8b06djq3kqsv"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="PlayerLaunch/ChargeSoundFade" unique_id=513748910]
+stream = ExtResource("22_befyu")
+volume_db = -80.0
+autoplay = true
 
 [node name="DetectNetArea" type="Area2D" parent="." unique_id=1125954056]
 rotation = -1.5707964

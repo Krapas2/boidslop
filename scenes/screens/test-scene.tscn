@@ -79,6 +79,9 @@ z_index = -2
 columns = 8
 rows = 8
 
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D" unique_id=956958350]
+current = true
+
 [node name="BallsRoot" parent="." unique_id=1632646591 instance=ExtResource("6_mitsk")]
 
 [node name="BossBehaviourManager" parent="BallsRoot" index="3" node_paths=PackedStringArray("player")]
