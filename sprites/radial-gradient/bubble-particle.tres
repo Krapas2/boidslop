@@ -1,4 +1,4 @@
-[gd_resource type="ImageTexture" script_class="RadialGradientTexture2D" load_steps=4 format=3 uid="uid://mbtkdjnw08td"]
+[gd_resource type="ImageTexture" script_class="RadialGradientTexture2D" format=3 uid="uid://mbtkdjnw08td"]
 
 [ext_resource type="Script" uid="uid://dxndlo1d3kpji" path="res://scripts/texture-generators/implementations/radial-gradient-texture-2d.gd" id="1_4e2a0"]
 
