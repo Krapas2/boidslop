@@ -23,8 +23,17 @@
 [ext_resource type="AudioStream" uid="uid://bkioka2wfqlyo" path="res://sounds/ambience/underwater-noise.ogg" id="17_6dywr"]
 [ext_resource type="Script" uid="uid://crsb5hlksbbjg" path="res://scripts/game/camera/camera-behaviours/player-net-proximity-zoom.gd" id="20_jfdn7"]
 [ext_resource type="Script" uid="uid://cmr7jpmd8tuuh" path="res://scripts/game/player/filled-net-detector.gd" id="21_xeqme"]
-[ext_resource type="AudioStream" uid="uid://b5bcjov6fq0fc" path="res://sounds/effects/bloon-loop02.ogg" id="22_befyu"]
+[ext_resource type="AudioStream" uid="uid://b5bcjov6fq0fc" path="res://sounds/effects/bloon/bloon-loop02.ogg" id="22_befyu"]
 [ext_resource type="Script" uid="uid://b8l0bynv3ydn3" path="res://scripts/game/camera/camera-behaviours/player-net-camera-target.gd" id="22_x3mv4"]
+[ext_resource type="AudioStream" uid="uid://031tgmkm54kj" path="res://sounds/effects/rope/rope-tight01.ogg" id="23_6nhbw"]
+[ext_resource type="AudioStream" uid="uid://db8qdy4hge2qc" path="res://sounds/effects/rope/rope-tight02.ogg" id="24_fnuka"]
+[ext_resource type="AudioStream" uid="uid://bqd0xe32jqs12" path="res://sounds/effects/rope/rope-tight03.ogg" id="25_udu15"]
+[ext_resource type="AudioStream" uid="uid://dbs5oadhckyna" path="res://sounds/effects/rope/rope-tight04.ogg" id="26_poxlt"]
+[ext_resource type="AudioStream" uid="uid://muj8s7hyu5cj" path="res://sounds/effects/arrow/arrow01.ogg" id="27_4cfq8"]
+[ext_resource type="AudioStream" uid="uid://dqn2dhlt2lkkm" path="res://sounds/effects/arrow/arrow02.ogg" id="28_yoew3"]
+[ext_resource type="AudioStream" uid="uid://o1jj585jsdit" path="res://sounds/effects/arrow/arrow03.ogg" id="29_vpwpc"]
+[ext_resource type="AudioStream" uid="uid://bcf2nci1eeo3d" path="res://sounds/effects/arrow/arrow04.ogg" id="30_1mbqu"]
+[ext_resource type="AudioStream" uid="uid://bs6uctggvc5v7" path="res://sounds/effects/arrow/arrow05.ogg" id="31_084w1"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -144,8 +153,27 @@ point_count = 2
 
 [sub_resource type="Curve" id="Curve_j86q5"]
 _limits = [0.0, 0.1, 0.0, 1.0]
-_data = [Vector2(0, 0), 0.0, 0.1, 0, 1, Vector2(1, 0.1), 0.1, 0.0, 1, 0]
+_data = [Vector2(0, 0), 0.0, 0.04992733, 0, 1, Vector2(1, 0.04992733), 0.04992733, 0.0, 1, 0]
 point_count = 2
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_j86q5"]
+random_pitch = 1.0594631
+random_volume_offset_db = 2.0
+streams_count = 4
+stream_0/stream = ExtResource("23_6nhbw")
+stream_1/stream = ExtResource("24_fnuka")
+stream_2/stream = ExtResource("25_udu15")
+stream_3/stream = ExtResource("26_poxlt")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tm615"]
+random_pitch = 1.0594631
+random_volume_offset_db = 2.0
+streams_count = 5
+stream_0/stream = ExtResource("27_4cfq8")
+stream_1/stream = ExtResource("28_yoew3")
+stream_2/stream = ExtResource("29_vpwpc")
+stream_3/stream = ExtResource("30_1mbqu")
+stream_4/stream = ExtResource("31_084w1")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
 radius = 256.0
@@ -321,6 +349,12 @@ metadata/_custom_type_script = "uid://8b06djq3kqsv"
 stream = ExtResource("22_befyu")
 volume_db = -80.0
 autoplay = true
+
+[node name="FullChargePlayer" type="AudioStreamPlayer2D" parent="PlayerLaunch" unique_id=327292854]
+stream = SubResource("AudioStreamRandomizer_j86q5")
+
+[node name="LaunchPlayer" type="AudioStreamPlayer2D" parent="PlayerLaunch" unique_id=1657649915]
+stream = SubResource("AudioStreamRandomizer_tm615")
 
 [node name="DetectNetArea" type="Area2D" parent="." unique_id=1125954056]
 rotation = -1.5707964
