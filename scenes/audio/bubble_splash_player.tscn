@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://datkuhdsjvy1c"]
+
+[ext_resource type="AudioStream" uid="uid://dq4h0fw0derlc" path="res://sounds/effects/splash-bubbles/splash-bubbles01.ogg" id="1_gimam"]
+[ext_resource type="AudioStream" uid="uid://bgp441l745hhj" path="res://sounds/effects/splash-bubbles/splash-bubbles02.ogg" id="2_l7nwd"]
+[ext_resource type="Script" uid="uid://qrlmon8eed33" path="res://scripts/audio/destroy-on-audio-end.gd" id="3_l7nwd"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e30sf"]
+random_pitch = 1.0594631
+random_volume_offset_db = 2.0
+streams_count = 2
+stream_0/stream = ExtResource("1_gimam")
+stream_1/stream = ExtResource("2_l7nwd")
+
+[node name="BubbleSplashPlayer" type="AudioStreamPlayer2D" unique_id=1316982397]
+stream = SubResource("AudioStreamRandomizer_e30sf")
+volume_db = -20.0
+autoplay = true
+
+[node name="DestroyOnAudioEnd" type="Node" parent="." unique_id=1202426585]
+script = ExtResource("3_l7nwd")
+metadata/_custom_type_script = "uid://qrlmon8eed33"

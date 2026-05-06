@@ -29,11 +29,8 @@
 [ext_resource type="AudioStream" uid="uid://db8qdy4hge2qc" path="res://sounds/effects/rope/rope-tight02.ogg" id="24_fnuka"]
 [ext_resource type="AudioStream" uid="uid://bqd0xe32jqs12" path="res://sounds/effects/rope/rope-tight03.ogg" id="25_udu15"]
 [ext_resource type="AudioStream" uid="uid://dbs5oadhckyna" path="res://sounds/effects/rope/rope-tight04.ogg" id="26_poxlt"]
-[ext_resource type="AudioStream" uid="uid://muj8s7hyu5cj" path="res://sounds/effects/arrow/arrow01.ogg" id="27_4cfq8"]
-[ext_resource type="AudioStream" uid="uid://dqn2dhlt2lkkm" path="res://sounds/effects/arrow/arrow02.ogg" id="28_yoew3"]
-[ext_resource type="AudioStream" uid="uid://o1jj585jsdit" path="res://sounds/effects/arrow/arrow03.ogg" id="29_vpwpc"]
-[ext_resource type="AudioStream" uid="uid://bcf2nci1eeo3d" path="res://sounds/effects/arrow/arrow04.ogg" id="30_1mbqu"]
-[ext_resource type="AudioStream" uid="uid://bs6uctggvc5v7" path="res://sounds/effects/arrow/arrow05.ogg" id="31_084w1"]
+[ext_resource type="PackedScene" uid="uid://c2gobs223x3kj" path="res://scenes/audio/bubbles_player.tscn" id="31_udu15"]
+[ext_resource type="Script" uid="uid://cgi24aan1wse6" path="res://scripts/audio/speed-based-audio-spawner.gd" id="35_1mbqu"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_p7rwu"]
 friction = 0.0
@@ -165,18 +162,13 @@ stream_1/stream = ExtResource("24_fnuka")
 stream_2/stream = ExtResource("25_udu15")
 stream_3/stream = ExtResource("26_poxlt")
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tm615"]
-random_pitch = 1.0594631
-random_volume_offset_db = 2.0
-streams_count = 5
-stream_0/stream = ExtResource("27_4cfq8")
-stream_1/stream = ExtResource("28_yoew3")
-stream_2/stream = ExtResource("29_vpwpc")
-stream_3/stream = ExtResource("30_1mbqu")
-stream_4/stream = ExtResource("31_084w1")
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_37b34"]
 radius = 256.0
+
+[sub_resource type="Curve" id="Curve_udu15"]
+_limits = [0.0, 1.0, 0.0, 300.0]
+_data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(300, 0.05), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [node name="PlayerBody" type="RigidBody2D" unique_id=275984800]
 collision_mask = 16
@@ -353,9 +345,6 @@ autoplay = true
 [node name="FullChargePlayer" type="AudioStreamPlayer2D" parent="PlayerLaunch" unique_id=327292854]
 stream = SubResource("AudioStreamRandomizer_j86q5")
 
-[node name="LaunchPlayer" type="AudioStreamPlayer2D" parent="PlayerLaunch" unique_id=1657649915]
-stream = SubResource("AudioStreamRandomizer_tm615")
-
 [node name="DetectNetArea" type="Area2D" parent="." unique_id=1125954056]
 rotation = -1.5707964
 collision_layer = 0
@@ -378,3 +367,14 @@ metadata/_custom_type_script = "uid://crsb5hlksbbjg"
 script = ExtResource("22_x3mv4")
 filled_net_detector = NodePath("../DetectNetArea/FilledNetDetector")
 metadata/_custom_type_script = "uid://b8l0bynv3ydn3"
+
+[node name="SpeedBasedAudioSpawner" type="Node" parent="." unique_id=2053455653]
+script = ExtResource("35_1mbqu")
+speed_to_cooldown_curve = SubResource("Curve_udu15")
+min_speed = 50.0
+audio_player = ExtResource("31_udu15")
+metadata/_custom_type_script = "uid://cgi24aan1wse6"
+
+[node name="CooldownTimer" type="Timer" parent="SpeedBasedAudioSpawner" unique_id=863434817]
+wait_time = 0.1
+one_shot = true

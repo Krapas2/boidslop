@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c2gobs223x3kj"]
+
+[ext_resource type="AudioStream" uid="uid://cpxulnjxiput5" path="res://sounds/effects/bubbles/bubbles01.ogg" id="1_op54b"]
+[ext_resource type="AudioStream" uid="uid://bubdjbx7w2xq6" path="res://sounds/effects/bubbles/bubbles02.ogg" id="2_gdrtr"]
+[ext_resource type="AudioStream" uid="uid://c6t2nsrycj4v2" path="res://sounds/effects/bubbles/bubbles03.ogg" id="3_fbah3"]
+[ext_resource type="Script" uid="uid://qrlmon8eed33" path="res://scripts/audio/destroy-on-audio-end.gd" id="3_gdrtr"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_e30sf"]
+random_pitch = 1.1892071
+random_volume_offset_db = 10.0
+streams_count = 3
+stream_0/stream = ExtResource("1_op54b")
+stream_1/stream = ExtResource("2_gdrtr")
+stream_2/stream = ExtResource("3_fbah3")
+
+[node name="BubblesPlayer" type="AudioStreamPlayer2D" unique_id=1316982397]
+stream = SubResource("AudioStreamRandomizer_e30sf")
+volume_db = -30.0
+pitch_scale = 0.7
+autoplay = true
+
+[node name="DestroyOnAudioEnd" type="Node" parent="." unique_id=1202426585]
+script = ExtResource("3_gdrtr")
+metadata/_custom_type_script = "uid://qrlmon8eed33"

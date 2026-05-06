@@ -9,7 +9,6 @@ class_name PlayerLaunch
 
 @onready var charge: float = 0
 @onready var full_charge_sound: AudioStreamPlayer2D = $FullChargePlayer
-@onready var launch_player_sound: AudioStreamPlayer2D = $LaunchPlayer
 @onready var full_charge_sound_played: bool = false
 
 func _process(delta: float) -> void:
@@ -22,7 +21,6 @@ func _process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("shoot"):
 		shoot()
-		shoot_sound()
 		charge = 0;
 		full_charge_sound_played = false
 
@@ -37,9 +35,6 @@ func shoot() -> void:
 	net_body.look_at(global_mouse_pos)
 	net_body.linear_velocity = net_body.transform.x * charged_speed()
 
-func shoot_sound() -> void:
-	launch_player_sound.volume_linear = charge / charge_time
-	launch_player_sound.play()
 
 func charged_speed() -> float:
 	return remap(charge, 0, charge_time, min_launch_speed, max_launch_speed)
