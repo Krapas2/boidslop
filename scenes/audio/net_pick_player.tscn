@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ccdimvpemh2py"]
+
+[ext_resource type="AudioStream" uid="uid://b76akcty3iicf" path="res://sounds/effects/crunch/crunch01.ogg" id="1_psa3m"]
+[ext_resource type="AudioStream" uid="uid://ba6eosu717e0p" path="res://sounds/effects/crunch/crunch02.ogg" id="2_75pbn"]
+[ext_resource type="AudioStream" uid="uid://djodaemdetcje" path="res://sounds/effects/crunch/crunch03.ogg" id="3_c877q"]
+[ext_resource type="AudioStream" uid="uid://bkglbn6wfuihd" path="res://sounds/effects/crunch/crunch-double01.ogg" id="4_dk31i"]
+[ext_resource type="AudioStream" uid="uid://cuw834mjfpdwm" path="res://sounds/effects/crunch/crunch-double02.ogg" id="5_y3agg"]
+[ext_resource type="AudioStream" uid="uid://c70b74nm5ly5n" path="res://sounds/effects/crunch/crunch-triple01.ogg" id="6_1opvk"]
+[ext_resource type="Script" uid="uid://qrlmon8eed33" path="res://scripts/audio/destroy-on-audio-end.gd" id="6_y3agg"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7d0ba"]
+random_pitch = 1.0594631
+random_volume_offset_db = 2.0
+streams_count = 6
+stream_0/stream = ExtResource("1_psa3m")
+stream_0/weight = 3.0
+stream_1/stream = ExtResource("2_75pbn")
+stream_1/weight = 3.0
+stream_2/stream = ExtResource("3_c877q")
+stream_2/weight = 3.0
+stream_3/stream = ExtResource("4_dk31i")
+stream_3/weight = 2.0
+stream_4/stream = ExtResource("5_y3agg")
+stream_4/weight = 2.0
+stream_5/stream = ExtResource("6_1opvk")
+
+[node name="NetPickPlayer" type="AudioStreamPlayer2D" unique_id=1316982397]
+stream = SubResource("AudioStreamRandomizer_7d0ba")
+autoplay = true
+
+[node name="DestroyOnAudioEnd" type="Node" parent="." unique_id=1202426585]
+script = ExtResource("6_y3agg")
+metadata/_custom_type_script = "uid://qrlmon8eed33"

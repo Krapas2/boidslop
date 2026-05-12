@@ -3,6 +3,7 @@ class_name PlayerNetBehaviour
 
 @export_group("Catching")
 @export var catch_area: Area2D
+@export var min_catch_speed: float
 @export var damping_factor: float
 @export var growing_factor: float
 @export var catch_audio_player: PackedScene
@@ -10,7 +11,7 @@ class_name PlayerNetBehaviour
 @export_group("Picking")
 @export var pick_area: Area2D
 @export var health_per_body: float
-@export var min_catch_speed: float
+@export var pick_audio_player: PackedScene
 
 var bodies_consumed: int
 var captured_bodies_offset: Vector2
@@ -39,6 +40,7 @@ func _pick_behaviour() -> void:
 	
 	var player_health: Health = overlapping_bodies[0].get_node("PlayerHealth")
 	player_health.current_health += bodies_consumed * health_per_body
+	spawn_audio_player(pick_audio_player)
 	net_body.queue_free()
 
 func _can_be_picked() -> bool:
@@ -70,7 +72,7 @@ func _consume_body(overlapping_body: RigidBody2D) -> void:
 
 func spawn_audio_player(audio_player: PackedScene) -> void:
 	var spawned_audio_player: Variant = audio_player.instantiate()
-	add_child(spawned_audio_player)
+	get_tree().root.add_child(spawned_audio_player)
 
 func _dampen() -> void:
 	net_body.linear_damp = initial_damping + bodies_consumed * damping_factor
