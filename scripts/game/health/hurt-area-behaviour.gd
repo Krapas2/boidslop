@@ -3,6 +3,7 @@ class_name HurtAreaBehaviour
 
 @export var damage: float
 @export var trigger_iframes: bool
+@export var damage_audio_player: PackedScene
 
 @onready var area: Area2D = get_parent()
 
@@ -21,3 +22,5 @@ func _try_damage(target: Node) -> void:
 	var health: Health = NodeUtils.find_node_in(target, Health) as Health
 	if health:
 		health.damage(damage, trigger_iframes)
+		var spawned_audio_player: Variant = damage_audio_player.instantiate()
+		add_child(spawned_audio_player)
