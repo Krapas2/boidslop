@@ -92,8 +92,9 @@ point_count = 2
 [sub_resource type="CircleShape2D" id="CircleShape2D_lcxoj"]
 radius = 60.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_e87a3"]
-radius = 100.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7v2mu"]
+radius = 70.0
+height = 220.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_etnwh"]
 radius = 200.0
@@ -123,8 +124,9 @@ position = Vector2(75, 65)
 shape = SubResource("CircleShape2D_inj2g")
 
 [node name="RepulsionField" type="Area2D" parent="BossHead" unique_id=1251231677]
+visible = false
 collision_layer = 0
-collision_mask = 3
+collision_mask = 11
 priority = 1
 script = ExtResource("2_um5xy")
 strength = 1600.0
@@ -179,16 +181,17 @@ position = Vector2(0.578, -30)
 shape = SubResource("CircleShape2D_lcxoj")
 
 [node name="RepulsionField" type="Area2D" parent="BossRightHand" unique_id=1880759082]
+visible = false
 collision_layer = 0
-collision_mask = 3
+collision_mask = 11
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 1600.0
+strength = 2000.0
 distance_unit = 100.0
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossRightHand/RepulsionField" unique_id=966870903]
-shape = SubResource("CircleShape2D_e87a3")
+shape = SubResource("CapsuleShape2D_7v2mu")
 
 [node name="BossToolset" type="Node" parent="BossRightHand" unique_id=523931812]
 script = ExtResource("3_o7fe0")
@@ -236,16 +239,17 @@ position = Vector2(0, -30)
 shape = SubResource("CircleShape2D_lcxoj")
 
 [node name="RepulsionField" type="Area2D" parent="BossLeftHand" unique_id=1327547678]
+visible = false
 collision_layer = 0
-collision_mask = 3
+collision_mask = 11
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 1600.0
+strength = 2000.0
 distance_unit = 100.0
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossLeftHand/RepulsionField" unique_id=980936123]
-shape = SubResource("CircleShape2D_e87a3")
+shape = SubResource("CapsuleShape2D_7v2mu")
 
 [node name="BossToolset" type="Node" parent="BossLeftHand" unique_id=1900475162]
 script = ExtResource("3_o7fe0")
@@ -291,7 +295,7 @@ deviation_multiplier = 1.0
 metadata/_custom_type_script = "uid://c62u4v6atbyhr"
 
 [node name="Length" type="Timer" parent="BossBehaviourManager/BlenderBossBehaviour" unique_id=1483421144]
-wait_time = 8.0
+wait_time = 7.0
 
 [node name="SampleAreas" type="Node2D" parent="BossBehaviourManager/BlenderBossBehaviour" unique_id=1162033566]
 visible = false

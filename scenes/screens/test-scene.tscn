@@ -37,7 +37,7 @@ distance = -700.0
 
 [node name="BoidFlockManager" type="Node" parent="." unique_id=1176447052]
 script = ExtResource("1_wj1i5")
-chunk_size = 75.0
+chunk_size = 90.0
 metadata/_custom_type_script = "uid://b7gk42klnf12u"
 
 [node name="BoidPopulator" type="Node" parent="." unique_id=1640654531 node_paths=PackedStringArray("flock_manager")]
@@ -76,8 +76,8 @@ shader_material = ExtResource("8_i767o")
 overlap_amount = 2.0
 padding = 64.0
 z_index = -2
-columns = 8
-rows = 8
+columns = 10
+rows = 10
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Camera2D" unique_id=956958350]
 current = true

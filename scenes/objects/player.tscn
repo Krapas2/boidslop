@@ -248,7 +248,7 @@ shape = SubResource("RectangleShape2D_0ay4w")
 
 [node name="PlayerWalk" type="Node" parent="." unique_id=836253023]
 script = ExtResource("2_h5uus")
-speed = 250.0
+speed = 200.0
 acceleration = 8.0
 metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
 
@@ -286,6 +286,7 @@ metadata/_custom_type_script = "uid://vebhiqowde2f"
 
 [node name="PlayerHealthDrain" type="Node" parent="PlayerHealth" unique_id=218823815]
 script = ExtResource("6_2rlf8")
+health_drain = 1.0
 
 [node name="InvincibilityTimer" type="Timer" parent="PlayerHealth" unique_id=1812381796]
 wait_time = 0.3
@@ -345,6 +346,7 @@ autoplay = true
 stream = SubResource("AudioStreamRandomizer_j86q5")
 
 [node name="DetectNetArea" type="Area2D" parent="." unique_id=1125954056]
+visible = false
 rotation = -1.5707964
 collision_layer = 0
 collision_mask = 8
