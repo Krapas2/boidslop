@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dmdi0ibtmmq35"]
+
+[ext_resource type="AudioStream" uid="uid://nlws0pjc187f" path="res://sounds/effects/gurgle/gurgle01.ogg" id="1_ctr7t"]
+[ext_resource type="AudioStream" uid="uid://cq4rs7b1ai8ej" path="res://sounds/effects/gurgle/gurgle02.ogg" id="2_7ldke"]
+[ext_resource type="AudioStream" uid="uid://kea5ewfkf4bs" path="res://sounds/effects/gurgle/gurgle03.ogg" id="3_ewraa"]
+[ext_resource type="AudioStream" uid="uid://bxk0onked6vvn" path="res://sounds/effects/gurgle/gurgle04.ogg" id="4_a1oih"]
+[ext_resource type="AudioStream" uid="uid://cil4c23ic1ro" path="res://sounds/effects/gurgle/gurgle05.ogg" id="5_k55b8"]
+[ext_resource type="Script" uid="uid://qrlmon8eed33" path="res://scripts/audio/destroy-on-audio-end.gd" id="6_ys26g"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7d0ba"]
+random_pitch = 1.0594631
+random_volume_offset_db = 2.0
+streams_count = 5
+stream_0/stream = ExtResource("1_ctr7t")
+stream_1/stream = ExtResource("2_7ldke")
+stream_2/stream = ExtResource("3_ewraa")
+stream_3/stream = ExtResource("4_a1oih")
+stream_4/stream = ExtResource("5_k55b8")
+
+[node name="NetCatchPlayer" type="AudioStreamPlayer2D" unique_id=1316982397]
+stream = SubResource("AudioStreamRandomizer_7d0ba")
+autoplay = true
+
+[node name="DestroyOnAudioEnd" type="Node" parent="." unique_id=1202426585]
+script = ExtResource("6_ys26g")
+metadata/_custom_type_script = "uid://qrlmon8eed33"

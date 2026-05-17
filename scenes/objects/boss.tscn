@@ -1,0 +1,400 @@
+[gd_scene format=3 uid="uid://xrsx6q033jy2"]
+
+[ext_resource type="Texture2D" uid="uid://hpxqciep7u5i" path="res://sprites/balls/balls-idle-spritesheet.png" id="1_87qgs"]
+[ext_resource type="Texture2D" uid="uid://djhkbirm2e484" path="res://sprites/balls/balls-hand.png" id="2_pscfi"]
+[ext_resource type="Script" uid="uid://dmfk3q4rka5ng" path="res://scripts/game/boss/repulsion-field.gd" id="2_um5xy"]
+[ext_resource type="Script" uid="uid://q6mdoofccqig" path="res://scripts/game/boss/tools/boss-toolset.gd" id="3_o7fe0"]
+[ext_resource type="Script" uid="uid://djxwkdn0wvttp" path="res://scripts/game/boss/boss-behaviour-manager.gd" id="3_vsusj"]
+[ext_resource type="Script" uid="uid://c62u4v6atbyhr" path="res://scripts/game/boss/behaviours/blender-boss-behaviour.gd" id="4_lcxoj"]
+[ext_resource type="Script" uid="uid://cjxuuik5y6sl6" path="res://scripts/game/boss/tools/boss-point-forward-tool.gd" id="5_5nd4a"]
+[ext_resource type="Script" uid="uid://b6ta0nu4u3gua" path="res://scripts/game/boss/behaviours/nothing-boss-behaviour.gd" id="6_inj2g"]
+[ext_resource type="Script" uid="uid://2snsvifn3lre" path="res://scripts/game/boss/behaviours/chase-boss-behaviour.gd" id="7_e87a3"]
+[ext_resource type="Script" uid="uid://baxf5jnxwlqh8" path="res://scripts/game/boss/tools/boss-target-tool.gd" id="8_hbtw5"]
+[ext_resource type="Script" uid="uid://b4lq6cbilu3q5" path="res://scripts/game/boss/tools/boss-idle-tool.gd" id="9_5nd4a"]
+[ext_resource type="Script" uid="uid://dj6xova1l4o84" path="res://scripts/game/boss/boss-object-manager.gd" id="12_7v2mu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsusj"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(434, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcxoj"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(868, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um5xy"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(1302, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_inj2g"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(1736, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e87a3"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(2170, 0, 434, 415)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pscfi"]
+atlas = ExtResource("1_87qgs")
+region = Rect2(0, 0, 434, 415)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_50ro1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsusj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcxoj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um5xy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_inj2g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e87a3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pscfi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_um5xy"]
+radius = 100.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_inj2g"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_50ro1"]
+radius = 135.0
+
+[sub_resource type="Curve" id="Curve_hbtw5"]
+_limits = [200.0, 1000.0, 50.0, 200.0]
+_data = [Vector2(50, 200), 0.0, 0.0, 0, 0, Vector2(200, 1000), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lcxoj"]
+radius = 60.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7v2mu"]
+radius = 70.0
+height = 220.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_etnwh"]
+radius = 200.0
+
+[node name="BossRoot" type="Node2D" unique_id=911382286]
+
+[node name="BossHead" type="RigidBody2D" parent="." unique_id=696646987]
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="BossHead" unique_id=440169427]
+scale = Vector2(0.6, 0.6)
+sprite_frames = SubResource("SpriteFrames_50ro1")
+autoplay = "default"
+
+[node name="HeadCollision2D" type="CollisionShape2D" parent="BossHead" unique_id=47278598]
+position = Vector2(0, -28)
+shape = SubResource("CircleShape2D_um5xy")
+
+[node name="LeftChinCollision2D" type="CollisionShape2D" parent="BossHead" unique_id=1040497637]
+position = Vector2(-75, 65)
+shape = SubResource("CircleShape2D_inj2g")
+
+[node name="RightChinCollision2D" type="CollisionShape2D" parent="BossHead" unique_id=2084204562]
+position = Vector2(75, 65)
+shape = SubResource("CircleShape2D_inj2g")
+
+[node name="RepulsionField" type="Area2D" parent="BossHead" unique_id=1251231677]
+visible = false
+collision_layer = 0
+collision_mask = 11
+priority = 1
+script = ExtResource("2_um5xy")
+strength = 1600.0
+distance_unit = 100.0
+metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossHead/RepulsionField" unique_id=1687430388]
+position = Vector2(0, 15)
+shape = SubResource("CircleShape2D_50ro1")
+
+[node name="BossToolset" type="Node" parent="BossHead" unique_id=1088138513]
+script = ExtResource("3_o7fe0")
+metadata/_custom_type_script = "uid://q6mdoofccqig"
+
+[node name="BossTargetTool" type="Node" parent="BossHead" unique_id=27889789]
+script = ExtResource("8_hbtw5")
+velocity_by_distance = SubResource("Curve_hbtw5")
+steering_speed = 10.0
+metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
+
+[node name="Target" type="Node2D" parent="BossHead/BossTargetTool" unique_id=245450195]
+
+[node name="BossIdleTool" type="Node" parent="BossHead" unique_id=706441958]
+script = ExtResource("9_5nd4a")
+radius = 35.0
+acceleration = 100.0
+stay_in_radius_position_weight = 1.0
+stay_in_radius_speed_weight = 0.75
+max_lean_velocity = 300.0
+distance_to_get_new_position = 20.0
+metadata/_custom_type_script = "uid://b4lq6cbilu3q5"
+
+[node name="Center" type="Node2D" parent="BossHead/BossIdleTool" unique_id=2085166772]
+
+[node name="BossPointForwardTool" type="Node" parent="BossHead" unique_id=505634276]
+script = ExtResource("5_5nd4a")
+metadata/_custom_type_script = "uid://cjxuuik5y6sl6"
+
+[node name="BossRightHand" type="RigidBody2D" parent="." unique_id=1558966668]
+position = Vector2(-250, 100)
+rotation = -2.7121732
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="BossRightHand" unique_id=752635122]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_pscfi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossRightHand" unique_id=183859768]
+position = Vector2(0.578, -30)
+shape = SubResource("CircleShape2D_lcxoj")
+
+[node name="RepulsionField" type="Area2D" parent="BossRightHand" unique_id=1880759082]
+visible = false
+collision_layer = 0
+collision_mask = 11
+priority = 1
+script = ExtResource("2_um5xy")
+strength = 2000.0
+distance_unit = 100.0
+metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossRightHand/RepulsionField" unique_id=966870903]
+shape = SubResource("CapsuleShape2D_7v2mu")
+
+[node name="BossToolset" type="Node" parent="BossRightHand" unique_id=523931812]
+script = ExtResource("3_o7fe0")
+metadata/_custom_type_script = "uid://q6mdoofccqig"
+
+[node name="BossTargetTool" type="Node" parent="BossRightHand" unique_id=1427820509]
+script = ExtResource("8_hbtw5")
+velocity_by_distance = SubResource("Curve_hbtw5")
+steering_speed = 10.0
+metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
+
+[node name="Target" type="Node2D" parent="BossRightHand/BossTargetTool" unique_id=1884259781]
+
+[node name="BossIdleTool" type="Node" parent="BossRightHand" unique_id=174028844]
+script = ExtResource("9_5nd4a")
+radius = 20.0
+acceleration = 30.0
+stay_in_radius_position_weight = 1.0
+stay_in_radius_speed_weight = 0.75
+max_lean_velocity = 150.0
+distance_to_get_new_position = 10.0
+metadata/_custom_type_script = "uid://b4lq6cbilu3q5"
+
+[node name="Center" type="Node2D" parent="BossRightHand/BossIdleTool" unique_id=1879604414]
+position = Vector2(-250, 100)
+
+[node name="BossPointForwardTool" type="Node" parent="BossRightHand" unique_id=825457505]
+script = ExtResource("5_5nd4a")
+metadata/_custom_type_script = "uid://cjxuuik5y6sl6"
+
+[node name="BossLeftHand" type="RigidBody2D" parent="." unique_id=1941632349]
+position = Vector2(250, 100)
+rotation = 2.7122416
+collision_layer = 4
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="BossLeftHand" unique_id=1965821830]
+rotation = 3.1415927
+scale = Vector2(0.5, -0.5)
+texture = ExtResource("2_pscfi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossLeftHand" unique_id=841240405]
+position = Vector2(0, -30)
+shape = SubResource("CircleShape2D_lcxoj")
+
+[node name="RepulsionField" type="Area2D" parent="BossLeftHand" unique_id=1327547678]
+visible = false
+collision_layer = 0
+collision_mask = 11
+priority = 1
+script = ExtResource("2_um5xy")
+strength = 2000.0
+distance_unit = 100.0
+metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossLeftHand/RepulsionField" unique_id=980936123]
+shape = SubResource("CapsuleShape2D_7v2mu")
+
+[node name="BossToolset" type="Node" parent="BossLeftHand" unique_id=1900475162]
+script = ExtResource("3_o7fe0")
+metadata/_custom_type_script = "uid://q6mdoofccqig"
+
+[node name="BossTargetTool" type="Node" parent="BossLeftHand" unique_id=235220884]
+script = ExtResource("8_hbtw5")
+velocity_by_distance = SubResource("Curve_hbtw5")
+steering_speed = 10.0
+metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
+
+[node name="Target" type="Node2D" parent="BossLeftHand/BossTargetTool" unique_id=2146147048]
+
+[node name="BossIdleTool" type="Node" parent="BossLeftHand" unique_id=156610737]
+script = ExtResource("9_5nd4a")
+radius = 20.0
+acceleration = 30.0
+stay_in_radius_position_weight = 1.0
+stay_in_radius_speed_weight = 0.75
+max_lean_velocity = 150.0
+distance_to_get_new_position = 10.0
+metadata/_custom_type_script = "uid://b4lq6cbilu3q5"
+
+[node name="Center" type="Node2D" parent="BossLeftHand/BossIdleTool" unique_id=1907810026]
+position = Vector2(250, 100)
+
+[node name="BossPointForwardTool" type="Node" parent="BossLeftHand" unique_id=735337884]
+script = ExtResource("5_5nd4a")
+metadata/_custom_type_script = "uid://cjxuuik5y6sl6"
+
+[node name="BossBehaviourManager" type="Node" parent="." unique_id=2010475185]
+process_priority = -1
+script = ExtResource("3_vsusj")
+metadata/_custom_type_script = "uid://djxwkdn0wvttp"
+
+[node name="BlenderBossBehaviour" type="Node" parent="BossBehaviourManager" unique_id=1272014491 node_paths=PackedStringArray("boss_object_manager", "sample_areas")]
+script = ExtResource("4_lcxoj")
+boss_object_manager = NodePath("../../BossObjectManager")
+radius = 500.0
+delta_angle = 1.5
+sample_areas = [NodePath("SampleAreas/SampleArea1"), NodePath("SampleAreas/SampleArea2"), NodePath("SampleAreas/SampleArea3"), NodePath("SampleAreas/SampleArea4"), NodePath("SampleAreas/SampleArea5"), NodePath("SampleAreas/SampleArea6"), NodePath("SampleAreas/SampleArea7"), NodePath("SampleAreas/SampleArea8"), NodePath("SampleAreas/SampleArea9")]
+deviation_multiplier = 1.0
+metadata/_custom_type_script = "uid://c62u4v6atbyhr"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/BlenderBossBehaviour" unique_id=1483421144]
+wait_time = 7.0
+
+[node name="SampleAreas" type="Node2D" parent="BossBehaviourManager/BlenderBossBehaviour" unique_id=1162033566]
+visible = false
+
+[node name="SampleArea1" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=484954535]
+position = Vector2(400, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea1" unique_id=1577063357]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea2" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=337327131]
+position = Vector2(0, 400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea2" unique_id=976527488]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea3" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=751670085]
+position = Vector2(-400, 0)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea3" unique_id=1615074104]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea4" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=2018510839]
+position = Vector2(0, -400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea4" unique_id=1585586019]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea5" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=242992890]
+position = Vector2(400, -400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea5" unique_id=433046495]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea6" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=1007081227]
+position = Vector2(400, 400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea6" unique_id=1010471765]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea7" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=1614037300]
+position = Vector2(-400, 400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea7" unique_id=631897496]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea8" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=1564520617]
+position = Vector2(-400, -400)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea8" unique_id=1746297254]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="SampleArea9" type="Area2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas" unique_id=1965275544]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossBehaviourManager/BlenderBossBehaviour/SampleAreas/SampleArea9" unique_id=1568495421]
+shape = SubResource("CircleShape2D_etnwh")
+
+[node name="NothingBossBehaviour" type="Node" parent="BossBehaviourManager" unique_id=2135052914 node_paths=PackedStringArray("boss_object_manager")]
+script = ExtResource("6_inj2g")
+boss_object_manager = NodePath("../../BossObjectManager")
+base_priority = 8.0
+metadata/_custom_type_script = "uid://b6ta0nu4u3gua"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/NothingBossBehaviour" unique_id=501624871]
+wait_time = 10.0
+
+[node name="ChaseBossBehaviour" type="Node" parent="BossBehaviourManager" unique_id=49348506 node_paths=PackedStringArray("boss_object_manager", "chasing_bodies")]
+script = ExtResource("7_e87a3")
+boss_object_manager = NodePath("../../BossObjectManager")
+chasing_bodies = [NodePath("../../BossRightHand"), NodePath("../../BossLeftHand")]
+max_speed = 1000.0
+max_force = 300.0
+base_travel_speed = 10.0
+distance_priority_unit = 30.0
+metadata/_custom_type_script = "uid://2snsvifn3lre"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/ChaseBossBehaviour" unique_id=636592172]
+wait_time = 10.0
+
+[node name="BossObjectManager" type="Node" parent="." unique_id=1115027331 node_paths=PackedStringArray("head_toolset", "hand_toolsets")]
+script = ExtResource("12_7v2mu")
+head_toolset = NodePath("../BossHead/BossToolset")
+hand_toolsets = [NodePath("../BossRightHand/BossToolset"), NodePath("../BossLeftHand/BossToolset")]
+metadata/_custom_type_script = "uid://dj6xova1l4o84"

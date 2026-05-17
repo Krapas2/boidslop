@@ -3,6 +3,8 @@ class_name ChaseBossBehaviour
 
 @export var player_body: RigidBody2D
 
+@export var boss_object_manager: BossObjectManager
+
 @export_group("Behaviour")
 @export var chasing_bodies: Array[RigidBody2D]
 @export var max_speed: float
@@ -35,6 +37,12 @@ func priority() -> float:
 		base_travel_speed - (traveled_distance / passed_time) / distance_priority_unit
 	reset_player_travel()
 	return calculated_priority
+	
+func setup() -> void:
+	boss_object_manager.head_toolset.disable_all()
+	boss_object_manager.head_toolset.idle_tool.enabled = true
+	for hand_toolset: BossToolset in boss_object_manager.hand_toolsets:
+		hand_toolset.disable_all()
 
 func chase_behaviour(delta: float) -> void:
 	for chasing_body: RigidBody2D in chasing_bodies:

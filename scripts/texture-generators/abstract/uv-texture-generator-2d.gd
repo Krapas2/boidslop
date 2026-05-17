@@ -6,7 +6,7 @@ extends ImageTexture
 	set(v):
 		resolution = v
 		_generate()
-		
+
 @export_tool_button("Generate") var generate_button: Callable = _generate
 
 func _init() -> void:
@@ -21,14 +21,14 @@ func _generate() -> void:
 		
 	_setup()
 	
-	var image: Image = Image.create_empty(resolution, resolution, false, Image.FORMAT_RGBA8)
+	var generated_image: Image = Image.create_empty(resolution, resolution, false, Image.FORMAT_RGBA8)
 	for y: int in resolution:
 		for x: int in resolution:
 			var uv: Vector2 = Vector2(x,y)/resolution
 			var color: Color = _pixel_from_uv(uv)
-			image.set_pixel(x, y, color)
+			generated_image.set_pixel(x, y, color)
 	
-	set_image(image)
+	set_image(generated_image)
 	emit_changed()
 
 func _setup() -> void:
