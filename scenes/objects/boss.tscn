@@ -151,6 +151,8 @@ metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
 script = ExtResource("9_5nd4a")
 radius = 35.0
 acceleration = 100.0
+stay_in_radius_position_weight = 1.0
+stay_in_radius_speed_weight = 0.75
 max_lean_velocity = 300.0
 distance_to_get_new_position = 20.0
 metadata/_custom_type_script = "uid://b4lq6cbilu3q5"
@@ -204,6 +206,8 @@ metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
 script = ExtResource("9_5nd4a")
 radius = 20.0
 acceleration = 30.0
+stay_in_radius_position_weight = 1.0
+stay_in_radius_speed_weight = 0.75
 max_lean_velocity = 150.0
 distance_to_get_new_position = 10.0
 metadata/_custom_type_script = "uid://b4lq6cbilu3q5"
@@ -259,6 +263,8 @@ metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
 script = ExtResource("9_5nd4a")
 radius = 20.0
 acceleration = 30.0
+stay_in_radius_position_weight = 1.0
+stay_in_radius_speed_weight = 0.75
 max_lean_velocity = 150.0
 distance_to_get_new_position = 10.0
 metadata/_custom_type_script = "uid://b4lq6cbilu3q5"
@@ -364,7 +370,7 @@ shape = SubResource("CircleShape2D_etnwh")
 [node name="NothingBossBehaviour" type="Node" parent="BossBehaviourManager" unique_id=2135052914 node_paths=PackedStringArray("boss_object_manager")]
 script = ExtResource("6_inj2g")
 boss_object_manager = NodePath("../../BossObjectManager")
-base_priority = 5.0
+base_priority = 8.0
 metadata/_custom_type_script = "uid://b6ta0nu4u3gua"
 
 [node name="Length" type="Timer" parent="BossBehaviourManager/NothingBossBehaviour" unique_id=501624871]

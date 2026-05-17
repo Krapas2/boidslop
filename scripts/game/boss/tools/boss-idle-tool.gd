@@ -3,6 +3,8 @@ class_name BossIdleTool
 
 @export var radius: float
 @export var acceleration: float
+@export var stay_in_radius_position_weight: float
+@export var stay_in_radius_speed_weight: float
 @export var max_lean_velocity: float
 @export var distance_to_get_new_position: float
 @export var enabled: bool:
@@ -24,6 +26,7 @@ func _physics_process(delta: float) -> void:
 	
 	_set_following_position()
 	_follow_position(delta)
+	_stay_in_radius(delta)
 	_lean()
 
 func _set_following_position() -> void:
@@ -45,6 +48,20 @@ func _set_following_position() -> void:
 func _follow_position(delta: float) -> void:
 	var displacement: Vector2 = _following_position - body.global_position
 	body.linear_velocity += displacement.normalized() * acceleration * delta
+	
+func _stay_in_radius(delta: float) -> void:
+	var displacement_from_center: Vector2 = center.global_position - body.global_position
+	if displacement_from_center.length() < radius:
+		return
+	
+	body.global_position = body.global_position.lerp(
+		center.global_position,
+		stay_in_radius_position_weight * delta
+	)
+	body.linear_velocity = body.linear_velocity.lerp(
+		Vector2.ZERO,
+		stay_in_radius_speed_weight * delta
+	)
 	
 func _lean() -> void:
 	var lean_intensity: float = body.linear_velocity.x / max_lean_velocity
