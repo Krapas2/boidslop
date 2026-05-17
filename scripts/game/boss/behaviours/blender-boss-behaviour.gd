@@ -1,8 +1,9 @@
 extends BossBehaviour
 class_name BlenderBossBehaviour
 
+@export var boss_object_manager: BossObjectManager
+
 @export_group("Behaviour")
-@export var hands: Array[RigidBody2D]
 @export var boid_samples: Array[CircleShape2D]
 @export var center: Vector2
 @export var radius: float
@@ -33,23 +34,31 @@ func get_stardard_deviation(values: Array[float]) -> float:
 	
 	return sqrt(variance)
 
+func setup() -> void:
+	boss_object_manager.head_toolset.disable_all()
+	boss_object_manager.head_toolset.idle_tool.enabled = true
+	for hand_toolset: BossToolset in boss_object_manager.hand_toolsets:
+		hand_toolset.disable_all()
+		hand_toolset.target_tool.enabled = true
+		hand_toolset.point_forward_tool.enabled = true
+
 func _physics_process(delta: float) -> void:
 	if enabled:
 		spin_hands(delta)
-	
+
 func spin_hands(delta: float) -> void:
 	move_hands()
 	angle_step(delta)
 
 func move_hands() -> void:
-	for i: int in range(hands.size()):
-		var hand_angle: float = angle+(2*PI/hands.size())*i
+	for i: int in range(boss_object_manager.hand_toolsets.size()):
+		var hand_angle: float = angle+(2*PI/boss_object_manager.hand_toolsets.size())*i
 		var desired_position: Vector2 = Vector2(
 			cos(hand_angle),
 			sin(hand_angle),
 		) * radius + center
-		hands[i].global_position = desired_position
-		hands[i].rotation = hand_angle+PI
+		var hand_toolset: BossToolset = boss_object_manager.hand_toolsets[i]
+		hand_toolset.target_tool.target.global_position = desired_position
 
 func angle_step(delta_time: float) -> void:
 	angle = fmod(angle+delta_angle * delta_time, 2*PI)

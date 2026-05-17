@@ -280,13 +280,12 @@ metadata/_custom_type_script = "uid://bw6m7204obdvr"
 
 [node name="SlowTimeDamageBehaviour" type="Node" parent="PlayerHealth/DamageBehaviours" unique_id=678147926]
 script = ExtResource("13_37b34")
-duration = 0.1
+duration = 0.2
 time_scale = 0.2
 metadata/_custom_type_script = "uid://vebhiqowde2f"
 
 [node name="PlayerHealthDrain" type="Node" parent="PlayerHealth" unique_id=218823815]
 script = ExtResource("6_2rlf8")
-health_drain = 1.0
 
 [node name="InvincibilityTimer" type="Timer" parent="PlayerHealth" unique_id=1812381796]
 wait_time = 0.3

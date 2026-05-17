@@ -87,9 +87,8 @@ current = true
 [node name="BossBehaviourManager" parent="BossRoot" index="3" unique_id=2010475185 node_paths=PackedStringArray("player")]
 player = NodePath("../../PlayerBody")
 
-[node name="ChaseBossBehaviour" parent="BossRoot/BossBehaviourManager" index="2" unique_id=49348506 node_paths=PackedStringArray("player_body", "chasing_bodies")]
+[node name="ChaseBossBehaviour" parent="BossRoot/BossBehaviourManager" index="2" unique_id=49348506 node_paths=PackedStringArray("player_body")]
 player_body = NodePath("../../../PlayerBody")
-chasing_bodies = []
 
 [node name="CanvasLayer" parent="." unique_id=308004972 instance=ExtResource("9_ps628")]
 

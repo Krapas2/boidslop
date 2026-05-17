@@ -17,6 +17,8 @@ func _process(_delta: float) -> void:
 func behaviour_routine() -> void:
 	while player:
 		active_behaviour = highest_priority_behaviour()
+		print("activating behaviour: ", active_behaviour.name)
+		active_behaviour.setup()
 		pick_behaviour(active_behaviour)
 		
 		var timer: Timer = active_behaviour.get_node("Length")
