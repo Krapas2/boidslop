@@ -1,8 +1,7 @@
 extends Area2D
 class_name RepulsionField
 
-@export var strength: float
-@export var distance_unit: float
+@export var strength_curve: Curve
 
 func _process(delta: float) -> void:
 	var relevant_bodies: Array[RigidBody2D] = bodies_in_radius()
@@ -25,5 +24,4 @@ func apply_force(bodies: Array[RigidBody2D], delta: float) -> void:
 		body.linear_velocity += relative_position.normalized() * force
 
 func force_magnitude(distance: float) -> float:
-	var scaled_distance: float = distance / distance_unit
-	return strength / (scaled_distance * scaled_distance + 1.0)
+	return strength_curve.sample_baked(distance)

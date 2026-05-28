@@ -4,6 +4,8 @@ class_name BlenderBossBehaviour
 @export var boss_object_manager: BossObjectManager
 
 @export_group("Behaviour")
+@export var velocity_by_distance: Curve
+@export var steering_speed: float
 @export var boid_samples: Array[CircleShape2D]
 @export var center: Vector2
 @export var radius: float
@@ -38,9 +40,16 @@ func setup() -> void:
 	boss_object_manager.head_toolset.disable_all()
 	boss_object_manager.head_toolset.idle_tool.enabled = true
 	for hand_toolset: BossToolset in boss_object_manager.hand_toolsets:
-		hand_toolset.disable_all()
-		hand_toolset.target_tool.enabled = true
-		hand_toolset.point_forward_tool.enabled = true
+		hand_setup(hand_toolset)
+
+func hand_setup(hand_toolset: BossToolset) -> void:
+	var target_tool: BossTargetTool = hand_toolset.target_tool
+	
+	hand_toolset.disable_all()
+	hand_toolset.target_tool.enabled = true
+	target_tool.velocity_by_distance = velocity_by_distance
+	target_tool.steering_speed = steering_speed
+	hand_toolset.point_forward_tool.enabled = true
 
 func _physics_process(delta: float) -> void:
 	if enabled:

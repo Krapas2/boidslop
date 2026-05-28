@@ -10,8 +10,13 @@
 [ext_resource type="Script" uid="uid://b6ta0nu4u3gua" path="res://scripts/game/boss/behaviours/nothing-boss-behaviour.gd" id="6_inj2g"]
 [ext_resource type="Script" uid="uid://2snsvifn3lre" path="res://scripts/game/boss/behaviours/chase-boss-behaviour.gd" id="7_e87a3"]
 [ext_resource type="Script" uid="uid://baxf5jnxwlqh8" path="res://scripts/game/boss/tools/boss-target-tool.gd" id="8_hbtw5"]
+[ext_resource type="PackedScene" uid="uid://i42scodojlq8" path="res://scenes/objects/lightning.tscn" id="8_rogii"]
+[ext_resource type="Script" uid="uid://bvmxfb6u2tys8" path="res://scripts/game/health/hurt-area-behaviour.gd" id="8_uy2kg"]
 [ext_resource type="Script" uid="uid://b4lq6cbilu3q5" path="res://scripts/game/boss/tools/boss-idle-tool.gd" id="9_5nd4a"]
+[ext_resource type="PackedScene" uid="uid://domiklmwbc5rr" path="res://scenes/audio/boid_bite_player.tscn" id="9_jpqed"]
 [ext_resource type="Script" uid="uid://dj6xova1l4o84" path="res://scripts/game/boss/boss-object-manager.gd" id="12_7v2mu"]
+[ext_resource type="Script" uid="uid://civ0psq3decxx" path="res://scripts/game/boss/tools/boss-shoot_tool.gd" id="15_ccioy"]
+[ext_resource type="Script" uid="uid://b7dguq3im0jce" path="res://scripts/game/boss/behaviours/shoot-boss-behaviour.gd" id="16_5mx1b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vsusj"]
 atlas = ExtResource("1_87qgs")
@@ -81,23 +86,67 @@ radius = 100.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_inj2g"]
 radius = 50.0
 
+[sub_resource type="Curve" id="Curve_ehglh"]
+_limits = [0.0, 10000.0, 0.0, 135.0]
+_data = [Vector2(0, 6000), 0.0, 0.0, 0, 0, Vector2(135, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_50ro1"]
 radius = 135.0
 
 [sub_resource type="Curve" id="Curve_hbtw5"]
-_limits = [200.0, 1000.0, 50.0, 200.0]
-_data = [Vector2(50, 200), 0.0, 0.0, 0, 0, Vector2(200, 1000), 0.0, 0.0, 0, 0]
+_limits = [200.0, 500.0, 50.0, 200.0]
+_data = [Vector2(50, 350), 0.0, 0.0, 0, 0, Vector2(200, 500), 0.0, 0.0, 0, 0]
 point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lcxoj"]
 radius = 60.0
+
+[sub_resource type="Curve" id="Curve_7v2mu"]
+_limits = [0.0, 5000.0, 0.0, 100.0]
+_data = [Vector2(0, 3000), 0.0, 0.0, 0, 0, Vector2(90, 0), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7v2mu"]
 radius = 70.0
 height = 220.0
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ccioy"]
+radius = 40.0
+height = 180.0
+
+[sub_resource type="Curve" id="Curve_rogii"]
+_limits = [200.0, 500.0, 50.0, 200.0]
+_data = [Vector2(50, 350), 0.0, 0.0, 0, 0, Vector2(200, 500), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
+
+[sub_resource type="Curve" id="Curve_5mx1b"]
+_limits = [200.0, 500.0, 50.0, 200.0]
+_data = [Vector2(50, 350), 0.0, 0.0, 0, 0, Vector2(200, 500), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
+
+[sub_resource type="Curve" id="Curve_gobgx"]
+_limits = [200.0, 1000.0, 50.0, 200.0]
+_data = [Vector2(50, 200), 0.0, 0.0, 0, 0, Vector2(200, 1000), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_etnwh"]
 radius = 200.0
+
+[sub_resource type="Curve" id="Curve_dug3k"]
+_limits = [200.0, 500.0, 50.0, 200.0]
+_data = [Vector2(50, 350), 0.0, 0.0, 0, 0, Vector2(200, 500), 0.0, 0.0, 0, 0]
+point_count = 2
+metadata/_snap_enabled = true
+metadata/_snap_count = 100
 
 [node name="BossRoot" type="Node2D" unique_id=911382286]
 
@@ -129,8 +178,7 @@ collision_layer = 0
 collision_mask = 11
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 1600.0
-distance_unit = 100.0
+strength_curve = SubResource("Curve_ehglh")
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossHead/RepulsionField" unique_id=1687430388]
@@ -165,6 +213,17 @@ metadata/_custom_type_script = "uid://b4lq6cbilu3q5"
 script = ExtResource("5_5nd4a")
 metadata/_custom_type_script = "uid://cjxuuik5y6sl6"
 
+[node name="BossShootTool" type="Node" parent="BossHead" unique_id=1722972072 node_paths=PackedStringArray("origin")]
+script = ExtResource("15_ccioy")
+origin = NodePath("..")
+projectile = ExtResource("8_rogii")
+shoot_speed = 400.0
+metadata/_custom_type_script = "uid://civ0psq3decxx"
+
+[node name="Cooldown" type="Timer" parent="BossHead/BossShootTool" unique_id=1599645714]
+wait_time = 2.0
+one_shot = true
+
 [node name="BossRightHand" type="RigidBody2D" parent="." unique_id=1558966668]
 position = Vector2(-250, 100)
 rotation = -2.7121732
@@ -186,12 +245,25 @@ collision_layer = 0
 collision_mask = 11
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 2000.0
-distance_unit = 100.0
+strength_curve = SubResource("Curve_7v2mu")
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossRightHand/RepulsionField" unique_id=966870903]
 shape = SubResource("CapsuleShape2D_7v2mu")
+
+[node name="HurtArea" type="Area2D" parent="BossRightHand" unique_id=1053991001]
+visible = false
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossRightHand/HurtArea" unique_id=547295887]
+shape = SubResource("CapsuleShape2D_ccioy")
+
+[node name="HurtAreaBehaviour" type="Node" parent="BossRightHand/HurtArea" unique_id=832053226]
+script = ExtResource("8_uy2kg")
+damage = 2.0
+trigger_iframes = true
+damage_audio_player = ExtResource("9_jpqed")
+metadata/_custom_type_script = "uid://bvmxfb6u2tys8"
 
 [node name="BossToolset" type="Node" parent="BossRightHand" unique_id=523931812]
 script = ExtResource("3_o7fe0")
@@ -199,7 +271,7 @@ metadata/_custom_type_script = "uid://q6mdoofccqig"
 
 [node name="BossTargetTool" type="Node" parent="BossRightHand" unique_id=1427820509]
 script = ExtResource("8_hbtw5")
-velocity_by_distance = SubResource("Curve_hbtw5")
+velocity_by_distance = SubResource("Curve_rogii")
 steering_speed = 10.0
 metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
 
@@ -221,6 +293,17 @@ position = Vector2(-250, 100)
 [node name="BossPointForwardTool" type="Node" parent="BossRightHand" unique_id=825457505]
 script = ExtResource("5_5nd4a")
 metadata/_custom_type_script = "uid://cjxuuik5y6sl6"
+
+[node name="BossShootTool" type="Node" parent="BossRightHand" unique_id=1427393583 node_paths=PackedStringArray("origin")]
+script = ExtResource("15_ccioy")
+origin = NodePath("..")
+projectile = ExtResource("8_rogii")
+shoot_speed = 400.0
+metadata/_custom_type_script = "uid://civ0psq3decxx"
+
+[node name="Cooldown" type="Timer" parent="BossRightHand/BossShootTool" unique_id=1832539212]
+wait_time = 3.0
+one_shot = true
 
 [node name="BossLeftHand" type="RigidBody2D" parent="." unique_id=1941632349]
 position = Vector2(250, 100)
@@ -244,12 +327,25 @@ collision_layer = 0
 collision_mask = 11
 priority = 1
 script = ExtResource("2_um5xy")
-strength = 2000.0
-distance_unit = 100.0
+strength_curve = SubResource("Curve_7v2mu")
 metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BossLeftHand/RepulsionField" unique_id=980936123]
 shape = SubResource("CapsuleShape2D_7v2mu")
+
+[node name="HurtArea" type="Area2D" parent="BossLeftHand" unique_id=1902087234]
+visible = false
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossLeftHand/HurtArea" unique_id=1573209492]
+shape = SubResource("CapsuleShape2D_ccioy")
+
+[node name="HurtAreaBehaviour" type="Node" parent="BossLeftHand/HurtArea" unique_id=1357757937]
+script = ExtResource("8_uy2kg")
+damage = 2.0
+trigger_iframes = true
+damage_audio_player = ExtResource("9_jpqed")
+metadata/_custom_type_script = "uid://bvmxfb6u2tys8"
 
 [node name="BossToolset" type="Node" parent="BossLeftHand" unique_id=1900475162]
 script = ExtResource("3_o7fe0")
@@ -257,7 +353,7 @@ metadata/_custom_type_script = "uid://q6mdoofccqig"
 
 [node name="BossTargetTool" type="Node" parent="BossLeftHand" unique_id=235220884]
 script = ExtResource("8_hbtw5")
-velocity_by_distance = SubResource("Curve_hbtw5")
+velocity_by_distance = SubResource("Curve_5mx1b")
 steering_speed = 10.0
 metadata/_custom_type_script = "uid://baxf5jnxwlqh8"
 
@@ -280,6 +376,17 @@ position = Vector2(250, 100)
 script = ExtResource("5_5nd4a")
 metadata/_custom_type_script = "uid://cjxuuik5y6sl6"
 
+[node name="BossShootTool" type="Node" parent="BossLeftHand" unique_id=65035220 node_paths=PackedStringArray("origin")]
+script = ExtResource("15_ccioy")
+origin = NodePath("..")
+projectile = ExtResource("8_rogii")
+shoot_speed = 400.0
+metadata/_custom_type_script = "uid://civ0psq3decxx"
+
+[node name="Cooldown" type="Timer" parent="BossLeftHand/BossShootTool" unique_id=1481704201]
+wait_time = 3.0
+one_shot = true
+
 [node name="BossBehaviourManager" type="Node" parent="." unique_id=2010475185]
 process_priority = -1
 script = ExtResource("3_vsusj")
@@ -288,6 +395,8 @@ metadata/_custom_type_script = "uid://djxwkdn0wvttp"
 [node name="BlenderBossBehaviour" type="Node" parent="BossBehaviourManager" unique_id=1272014491 node_paths=PackedStringArray("boss_object_manager", "sample_areas")]
 script = ExtResource("4_lcxoj")
 boss_object_manager = NodePath("../../BossObjectManager")
+velocity_by_distance = SubResource("Curve_gobgx")
+steering_speed = 10.0
 radius = 500.0
 delta_angle = 1.5
 sample_areas = [NodePath("SampleAreas/SampleArea1"), NodePath("SampleAreas/SampleArea2"), NodePath("SampleAreas/SampleArea3"), NodePath("SampleAreas/SampleArea4"), NodePath("SampleAreas/SampleArea5"), NodePath("SampleAreas/SampleArea6"), NodePath("SampleAreas/SampleArea7"), NodePath("SampleAreas/SampleArea8"), NodePath("SampleAreas/SampleArea9")]
@@ -393,8 +502,28 @@ metadata/_custom_type_script = "uid://2snsvifn3lre"
 [node name="Length" type="Timer" parent="BossBehaviourManager/ChaseBossBehaviour" unique_id=636592172]
 wait_time = 10.0
 
+[node name="ShootBossBehaviour" type="Node" parent="BossBehaviourManager" unique_id=66303477 node_paths=PackedStringArray("boss_object_manager", "head_target_position")]
+script = ExtResource("16_5mx1b")
+boss_object_manager = NodePath("../../BossObjectManager")
+head_target_position = NodePath("HeadTargetPosition")
+head_roll_distance_unit = 800.0
+hand_velocity_by_distance = SubResource("Curve_dug3k")
+hand_steering_speed = 2.0
+hand_target_distance_to_reset = 20.0
+time_since_picked_factor = 0.2
+metadata/_custom_type_script = "uid://b7dguq3im0jce"
+
+[node name="Length" type="Timer" parent="BossBehaviourManager/ShootBossBehaviour" unique_id=845154630]
+wait_time = 16.0
+
+[node name="HandFollowTimer" type="Timer" parent="BossBehaviourManager/ShootBossBehaviour" unique_id=1225711185]
+wait_time = 2.0
+one_shot = true
+
+[node name="HeadTargetPosition" type="Node2D" parent="BossBehaviourManager/ShootBossBehaviour" unique_id=470066040]
+
 [node name="BossObjectManager" type="Node" parent="." unique_id=1115027331 node_paths=PackedStringArray("head_toolset", "hand_toolsets")]
 script = ExtResource("12_7v2mu")
 head_toolset = NodePath("../BossHead/BossToolset")
-hand_toolsets = [NodePath("../BossRightHand/BossToolset"), NodePath("../BossLeftHand/BossToolset")]
+hand_toolsets = [NodePath("../BossLeftHand/BossToolset"), NodePath("../BossRightHand/BossToolset")]
 metadata/_custom_type_script = "uid://dj6xova1l4o84"

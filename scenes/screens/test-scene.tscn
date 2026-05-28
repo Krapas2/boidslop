@@ -14,8 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://bvhgeluwgsje6" path="res://sprites/radial-gradient/arena-light.tres" id="11_ye0oj"]
 
 [sub_resource type="Curve" id="Curve_ye0oj"]
-_limits = [100.0, 250.0, 0.0, 1.0]
-_data = [Vector2(0, 100), 0.0, 435.19986, 0, 0, Vector2(1, 250), 0.0, 0.0, 0, 0]
+_limits = [175.0, 250.0, 0.0, 1.0]
+_data = [Vector2(0, 175), 0.0, 250.10333, 0, 0, Vector2(1, 250), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_d5vg1"]
@@ -59,7 +59,6 @@ move_speed = 3.0
 move_damping = 0.9
 zoom_speed = 8.0
 zoom_damping = 0.8
-minimum_zoom = 0.1
 maximum_zoom = 1.5
 zoom_margin = 150.0
 metadata/_custom_type_script = "uid://ckkvm6iiiptd4"
@@ -88,6 +87,9 @@ current = true
 player = NodePath("../../PlayerBody")
 
 [node name="ChaseBossBehaviour" parent="BossRoot/BossBehaviourManager" index="2" unique_id=49348506 node_paths=PackedStringArray("player_body")]
+player_body = NodePath("../../../PlayerBody")
+
+[node name="ShootBossBehaviour" parent="BossRoot/BossBehaviourManager" index="3" unique_id=66303477 node_paths=PackedStringArray("player_body")]
 player_body = NodePath("../../../PlayerBody")
 
 [node name="CanvasLayer" parent="." unique_id=308004972 instance=ExtResource("9_ps628")]

@@ -250,6 +250,7 @@ shape = SubResource("RectangleShape2D_0ay4w")
 script = ExtResource("2_h5uus")
 speed = 200.0
 acceleration = 8.0
+enabled = true
 metadata/_custom_type_script = "uid://d4f7a1g66u5pb"
 
 [node name="PointForward" type="Node" parent="." unique_id=1466904351]

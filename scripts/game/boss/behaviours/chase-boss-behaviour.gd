@@ -44,11 +44,13 @@ func setup() -> void:
 	for hand_toolset: BossToolset in boss_object_manager.hand_toolsets:
 		hand_toolset.disable_all()
 
+
 func chase_behaviour(delta: float) -> void:
 	for chasing_body: RigidBody2D in chasing_bodies:
 		individual_chase_behaviour(chasing_body, delta)
 		individual_heading_behaviour(chasing_body)
 
+# TODO: maybe change this to use target tool 
 func individual_chase_behaviour(chasing_body: RigidBody2D, delta: float) -> void:
 	var relative_position: Vector2 = player_body.global_position-chasing_body.global_position
 	var desired_velocity: Vector2 = relative_position.normalized() * max_speed
@@ -57,6 +59,7 @@ func individual_chase_behaviour(chasing_body: RigidBody2D, delta: float) -> void
 	
 	chasing_body.linear_velocity += acceleration * delta
 
+# TODO: change this to use point forward tool 
 func individual_heading_behaviour(chasing_body: RigidBody2D) -> void:
 	var angle: float = atan2(chasing_body.linear_velocity.x, -chasing_body.linear_velocity.y)
 	chasing_body.rotation = angle

@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://i42scodojlq8"]
+
+[ext_resource type="Texture2D" uid="uid://d83ajr55yxhk" path="res://sprites/lightning/lightning.png" id="1_pkuik"]
+[ext_resource type="Script" uid="uid://dmfk3q4rka5ng" path="res://scripts/game/boss/repulsion-field.gd" id="2_434qh"]
+[ext_resource type="Script" uid="uid://bw7wfgkydf8eg" path="res://scripts/game/boss/projectiles/boss-stun-projectile.gd" id="2_dcnan"]
+[ext_resource type="PackedScene" uid="uid://dxrhuvfau4wfv" path="res://scenes/audio/net_launch_player.tscn" id="6_3hj0r"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gklon"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yang0"]
+height = 100.0
+
+[sub_resource type="Animation" id="Animation_pkuik"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.33]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.33]
+}
+
+[sub_resource type="Animation" id="Animation_434qh"]
+resource_name = "idle"
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.33, 0.25]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.2, 0.33]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3s8jk"]
+_data = {
+&"RESET": SubResource("Animation_pkuik"),
+&"idle": SubResource("Animation_434qh")
+}
+
+[sub_resource type="Curve" id="Curve_7v2mu"]
+_limits = [0.0, 5000.0, 0.0, 100.0]
+_data = [Vector2(0, 3000), 0.0, 0.0, 0, 0, Vector2(90, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="NetBody" type="RigidBody2D" unique_id=1297458399]
+collision_layer = 32
+collision_mask = 0
+physics_material_override = SubResource("PhysicsMaterial_gklon")
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1503840590]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_yang0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1412048884]
+z_index = 1
+scale = Vector2(0.33, 0.33)
+texture = ExtResource("1_pkuik")
+offset = Vector2(25.78, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D" unique_id=279447318]
+libraries/ = SubResource("AnimationLibrary_3s8jk")
+autoplay = &"idle"
+
+[node name="StunArea" type="Area2D" parent="." unique_id=954816746]
+rotation = 1.5707964
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StunArea" unique_id=520750835]
+shape = SubResource("CapsuleShape2D_yang0")
+
+[node name="RepulsionField" type="Area2D" parent="." unique_id=884682782]
+collision_layer = 0
+collision_mask = 2
+priority = 1
+script = ExtResource("2_434qh")
+strength_curve = SubResource("Curve_7v2mu")
+metadata/_custom_type_script = "uid://dmfk3q4rka5ng"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RepulsionField" unique_id=717579538]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_yang0")
+
+[node name="LaunchPlayer" parent="." unique_id=1033533058 instance=ExtResource("6_3hj0r")]
+volume_db = -20.0
+bus = &"Effects"
+
+[node name="BossStunProjectile" type="Node" parent="." unique_id=971187273 node_paths=PackedStringArray("stun_area")]
+script = ExtResource("2_dcnan")
+stun_area = NodePath("../StunArea")
+metadata/_custom_type_script = "uid://bw7wfgkydf8eg"
+
+[node name="Length" type="Timer" parent="BossStunProjectile" unique_id=694303761]
+wait_time = 0.5
+one_shot = true
