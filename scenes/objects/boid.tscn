@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://st8yxfni4lx3" path="res://sprites/radial-gradient/fish-light.tres" id="5_ytk2o"]
 [ext_resource type="Script" uid="uid://cjdac54qa2tx8" path="res://scripts/game/misc/point-forward.gd" id="7_acsp6"]
 [ext_resource type="Script" uid="uid://d3oxkpyb38ewl" path="res://scripts/game/randomization/randomize-rigidbody-scale.gd" id="10_acsp6"]
+[ext_resource type="Script" uid="uid://bto1ec1vv361l" path="res://scripts/game/boid/movement/boid-seek.gd" id="11_r1f8l"]
 [ext_resource type="Texture2D" uid="uid://mbtkdjnw08td" path="res://sprites/radial-gradient/bubble-particle.tres" id="13_1ntvn"]
 [ext_resource type="Script" uid="uid://bvmxfb6u2tys8" path="res://scripts/game/health/hurt-area-behaviour.gd" id="14_vebrs"]
 [ext_resource type="PackedScene" uid="uid://domiklmwbc5rr" path="res://scenes/audio/boid_bite_player.tscn" id="15_2degq"]
@@ -69,6 +70,11 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4n1no"]
 radius = 8.0
+
+[sub_resource type="Curve" id="Curve_helt0"]
+_limits = [-10.0, 10.0, 0.0, 1400.0]
+_data = [Vector2(0, -1), 0.0, 0.0, 0, 0, Vector2(1400, 2.5), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="Curve" id="Curve_1ntvn"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.5, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -6.0, 0.0, 0, 0]
@@ -164,6 +170,12 @@ perception_radius = 60.0
 max_force = 12.0
 strength = 300.0
 metadata/_custom_type_script = "uid://clqnrvkncoydx"
+
+[node name="BoidSeek" type="Node" parent="BoidMovementManager" unique_id=592204395 node_paths=PackedStringArray("body")]
+script = ExtResource("11_r1f8l")
+body = NodePath("../..")
+distance_to_strength = SubResource("Curve_helt0")
+metadata/_custom_type_script = "uid://bto1ec1vv361l"
 
 [node name="Bounds" type="Node" parent="." unique_id=2068607920]
 script = ExtResource("3_mp35r")

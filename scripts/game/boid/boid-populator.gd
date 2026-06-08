@@ -3,6 +3,7 @@ class_name BoidPopulator
 
 @export var boid_scene: PackedScene
 @export var flock_manager: BoidFlockManager
+@export var player_body: Node2D
 @export var bounds: Rect2
 @export var count: int
 
@@ -17,6 +18,7 @@ func spawn_boid() -> void:
 	set_boid_manager(boid_body)
 	set_boid_position(boid_body)
 	set_boid_velocity(boid_body)
+	set_boid_seek_target(boid_body)
 
 func set_boid_position(boid_body: RigidBody2D) -> void:
 	var position: Vector2 = Vector2(
@@ -32,3 +34,8 @@ func set_boid_velocity(boid_body: RigidBody2D) -> void:
 func set_boid_manager(boid_body: RigidBody2D) -> void:
 	var movement_manager: BoidMovementManager = boid_body.get_node("BoidMovementManager")
 	movement_manager.flock_manager = flock_manager
+	
+func set_boid_seek_target(boid_body: RigidBody2D) -> void:
+	var movement_manager: BoidMovementManager = boid_body.get_node("BoidMovementManager")
+	var boid_seek: BoidSeek = movement_manager.get_node("BoidSeek")
+	boid_seek.target = player_body

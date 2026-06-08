@@ -40,10 +40,11 @@ script = ExtResource("1_wj1i5")
 chunk_size = 90.0
 metadata/_custom_type_script = "uid://b7gk42klnf12u"
 
-[node name="BoidPopulator" type="Node" parent="." unique_id=1640654531 node_paths=PackedStringArray("flock_manager")]
+[node name="BoidPopulator" type="Node" parent="." unique_id=1640654531 node_paths=PackedStringArray("flock_manager", "player_body")]
 script = ExtResource("2_p7rwu")
 boid_scene = ExtResource("2_cgxnh")
 flock_manager = NodePath("../BoidFlockManager")
+player_body = NodePath("../PlayerBody")
 bounds = Rect2(-700, -700, 1400, 1400)
 count = 250
 
